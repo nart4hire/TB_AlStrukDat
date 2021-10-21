@@ -1,4 +1,5 @@
 # Tugas Besar Alstrukdat
+
 ToDo List:
   - Main Menu:
     - New Game
@@ -53,9 +54,11 @@ ToDo List:
     - Help
     - Save
     - return
+
 Game flow:
   - Start (at base, init todo list)
   - End (when all items done/expired, score + time)
+
 Config:
   - map size
   - hq location
