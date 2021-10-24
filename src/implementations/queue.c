@@ -54,7 +54,7 @@ boolean isFull_Queue(Queue q)
 
 int length_Queue(Queue q)
 {
-    if (isEmpty(q))
+    if (isEmpty_Queue(q))
     {
         return 0;
     }
@@ -66,7 +66,7 @@ int length_Queue(Queue q)
 
 void enqueue(Queue *q, ElType val)
 {
-    if (isEmpty(*q))
+    if (isEmpty_Queue(*q))
     {
         IDX_HEAD(*q) = 0;
         IDX_TAIL(*q) = 0;
@@ -114,7 +114,7 @@ void dequeue(Queue *q, ElType *val)
 
 void displayQueue(Queue q)
 {
-    if (isEmpty(q))
+    if (isEmpty_Queue(q))
     {
         printf("[]");
     }

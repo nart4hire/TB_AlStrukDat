@@ -101,7 +101,7 @@ void readMatrix(Matrix *m, int nRow, int nCol)
         }
     }
 }
-// I.S. isIdxValid(nRow,nCol)
+// I.S. isIdxValid_Matrix(nRow,nCol)
 // F.S. m terdefinisi nilai elemen efektifnya, berukuran nRow x nCol
 // Proses: Melakukan CreateMatrix(m,nRow,nCol) dan mengisi nilai efektifnya
 // Selanjutnya membaca nilai elemen per baris dan kolom

@@ -20,7 +20,7 @@ void start() {
 
 	/* Algoritma */
 	// tape = stdin;
-       tape = fopen("../Config/Config.txt", "r");
+       tape = fopen("./Config/Config.txt", "r");
 	adv();
 }
 

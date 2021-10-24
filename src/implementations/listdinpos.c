@@ -87,7 +87,7 @@ int length_ListDin(ListDin l)
 
 IdxType getLastIdx(ListDin l)
 {
-    IdxType idx = length(l) - 1;
+    IdxType idx = length_ListDin(l) - 1;
     return idx;
 }
 // Prekondisi : List l tidak kosong
@@ -104,7 +104,7 @@ boolean isIdxValid_ListDin(ListDin l, IdxType i)
 
 boolean isIdxEff_ListDin(ListDin l, IdxType i)
 {
-    return (i > IDX_UNDEF && i < length(l));
+    return (i > IDX_UNDEF && i < length_ListDin(l));
 }
 // Mengirimkan true jika i adalah indeks yang terdefinisi utk list
 // yaitu antara 0..getLastIdx(l)
@@ -114,14 +114,14 @@ boolean isIdxEff_ListDin(ListDin l, IdxType i)
 
 boolean isEmpty_ListDin(ListDin l)
 {
-    return (length(l) == 0);
+    return (length_ListDin(l) == 0);
 }
 // Mengirimkan true jika list l kosong, mengirimkan false jika tidak
 // *** Test list penuh ***
 
 boolean isFull_ListDin(ListDin l)
 {
-    return (length(l) == CAPACITY(l));
+    return (length_ListDin(l) == CAPACITY(l));
 }
 // Mengirimkan true jika list l penuh, mengirimkan false jika tidak
 
@@ -159,9 +159,9 @@ void displayList_ListDin(ListDin l)
 {
     int i;
     printf("[");
-    if (!isEmpty(l))
+    if (!isEmpty_ListDin(l))
     {
-        for (i = 0; i < length(l) - 1; i++)
+        for (i = 0; i < length_ListDin(l) - 1; i++)
         {
             printf("%d,", ELMT(l, i));
         }
@@ -182,9 +182,9 @@ void displayList_ListDin(ListDin l)
 
 ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus)
 {
-    int len = length(l1);
+    int len = length_ListDin(l1);
     ListDin l;
-    CreateListDin(&l, length(l1));
+    CreateListDin(&l, length_ListDin(l1));
     if (plus)
     {
         for (int i = 0; i < len; i++)
@@ -211,8 +211,8 @@ ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus)
 
 boolean isListEqual_ListDin(ListDin l1, ListDin l2)
 {
-    int len = length(l1);
-    if (len == length(l2))
+    int len = length_ListDin(l1);
+    if (len == length_ListDin(l2))
     {
         for (int i = 0; i < len; i++)
         {
@@ -232,7 +232,7 @@ boolean isListEqual_ListDin(ListDin l1, ListDin l2)
 
 IdxType indexOf_ListDin(ListDin l, ElType val)
 {
-    for (int i = 0; i < length(l); i++)
+    for (int i = 0; i < length_ListDin(l); i++)
     {
         if (ELMT(l, i) == val)
         {
@@ -253,7 +253,7 @@ void extremes_ListDin(ListDin l, ElType *max, ElType *min)
 {
     *max = ELMT(l, 0);
     *min = ELMT(l, 0);
-    for (int i = 1; i < length(l); i++)
+    for (int i = 1; i < length_ListDin(l); i++)
     {
         if (ELMT(l, i) > *max)
         {
@@ -274,7 +274,7 @@ void extremes_ListDin(ListDin l, ElType *max, ElType *min)
 void copyList(ListDin lIn, ListDin *lOut)
 {
     CreateListDin(lOut, CAPACITY(lIn));
-    for (int i = 0; i < length(lIn); i++)
+    for (int i = 0; i < length_ListDin(lIn); i++)
     {
         ELMT(*lOut, i) = ELMT(lIn, i);
     }
@@ -286,7 +286,7 @@ void copyList(ListDin lIn, ListDin *lOut)
 ElType sumList(ListDin l)
 {
     ElType x = 0;
-    for (int i = 0; i < length(l); i++)
+    for (int i = 0; i < length_ListDin(l); i++)
     {
         x = x + ELMT(l, i);
     }
@@ -298,7 +298,7 @@ ElType sumList(ListDin l)
 int countVal(ListDin l, ElType val)
 {
     int x = 0;
-    for (int i = 0; i < length(l); i++)
+    for (int i = 0; i < length_ListDin(l); i++)
     {
         if (ELMT(l, i) == val)
         {
@@ -312,7 +312,7 @@ int countVal(ListDin l, ElType val)
 
 boolean isAllEven_ListDin(ListDin l)
 {
-    for (int i = 0; i < length(l); i++)
+    for (int i = 0; i < length_ListDin(l); i++)
     {
         if (ELMT(l, i) % 2 == 1)
         {
@@ -330,7 +330,7 @@ void sort_ListDin(ListDin *l, boolean asc)
     int key, i, j;
     if (asc)
     {
-        for (i = 1; i < length(*l); i++)
+        for (i = 1; i < length_ListDin(*l); i++)
         {
             key = ELMT(*l, i);
             j = i - 1;
@@ -344,7 +344,7 @@ void sort_ListDin(ListDin *l, boolean asc)
     }
     else
     {
-        for (i = 1; i < length(*l); i++)
+        for (i = 1; i < length_ListDin(*l); i++)
         {
             key = ELMT(*l, i);
             j = i - 1;
@@ -368,7 +368,7 @@ void sort_ListDin(ListDin *l, boolean asc)
 
 void insertLast_ListDin(ListDin *l, ElType val)
 {
-    ELMT(*l, length(*l)) = val;
+    ELMT(*l, length_ListDin(*l)) = val;
 }
 // Proses: Menambahkan X sebagai elemen terakhir list
 // I.S. List l boleh kosong, tetapi tidak penuh
@@ -400,9 +400,9 @@ void growList(ListDin *l, int num)
 void shrinkList(ListDin *l, int num)
 {
     CAPACITY(*l) = CAPACITY(*l) - num;
-    if (length(*l) > CAPACITY(*l))
+    if (length_ListDin(*l) > CAPACITY(*l))
     {
-        for (int i = (CAPACITY(*l) - 1); i < length(*l); i++)
+        for (int i = (CAPACITY(*l) - 1); i < length_ListDin(*l); i++)
         {
             ELMT(*l, i) = VAL_UNDEF;
         }
@@ -415,7 +415,7 @@ void shrinkList(ListDin *l, int num)
 
 void compactList(ListDin *l)
 {
-    CAPACITY(*l) = length(*l);
+    CAPACITY(*l) = length_ListDin(*l);
     BUFFER(*l) = (ElType *)realloc(BUFFER(*l), CAPACITY(*l) * sizeof(ElType));
 }
 // Proses : Mengurangi kapasitas sehingga nEff = Capacity
