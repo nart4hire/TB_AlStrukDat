@@ -71,7 +71,7 @@ void dealocate(ListDin *l)
 // ********** SELEKTOR (TAMBAHAN) **********
 // *** Banyaknya elemen ***
 
-int length(ListDin l)
+int length_ListDin(ListDin l)
 {
     int i = 0;
     while (i < CAPACITY(l) && ELMT(l, i) != VAL_UNDEF)
@@ -95,14 +95,14 @@ IdxType getLastIdx(ListDin l)
 
 // ********** Test Indeks yang valid **********
 
-boolean isIdxValid(ListDin l, IdxType i)
+boolean isIdxValid_ListDin(ListDin l, IdxType i)
 {
     return (i > IDX_UNDEF && i < CAPACITY(l));
 }
 // Mengirimkan true jika i adalah indeks yang valid utk ukuran list
 // yaitu antara indeks yang terdefinisi utk container
 
-boolean isIdxEff(ListDin l, IdxType i)
+boolean isIdxEff_ListDin(ListDin l, IdxType i)
 {
     return (i > IDX_UNDEF && i < length(l));
 }
@@ -112,14 +112,14 @@ boolean isIdxEff(ListDin l, IdxType i)
 // ********** TEST KOSONG/PENUH **********
 // *** Test list kosong ***
 
-boolean isEmpty(ListDin l)
+boolean isEmpty_ListDin(ListDin l)
 {
     return (length(l) == 0);
 }
 // Mengirimkan true jika list l kosong, mengirimkan false jika tidak
 // *** Test list penuh ***
 
-boolean isFull(ListDin l)
+boolean isFull_ListDin(ListDin l)
 {
     return (length(l) == CAPACITY(l));
 }
@@ -128,7 +128,7 @@ boolean isFull(ListDin l)
 // ********** BACA dan TULIS dengan INPUT/OUTPUT device **********
 // *** Mendefinisikan isi list dari pembacaan ***
 
-void readList(ListDin *l)
+void readList_ListDin(ListDin *l)
 {
     int n;
     ElType x;
@@ -155,7 +155,7 @@ void readList(ListDin *l)
 //   IdxMin satu per satu diakhiri enter
 //    Jika N = 0; hanya terbentuk l kosong
 
-void displayList(ListDin l)
+void displayList_ListDin(ListDin l)
 {
     int i;
     printf("[");
@@ -209,7 +209,7 @@ ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus)
 // ********** OPERATOR RELASIONAL **********
 // *** Operasi pembandingan list : < =, > ***
 
-boolean isListEqual(ListDin l1, ListDin l2)
+boolean isListEqual_ListDin(ListDin l1, ListDin l2)
 {
     int len = length(l1);
     if (len == length(l2))
@@ -230,7 +230,7 @@ boolean isListEqual(ListDin l1, ListDin l2)
 // ********** SEARCHING **********
 // ***  Perhatian : List boleh kosong!! ***
 
-IdxType indexOf(ListDin l, ElType val)
+IdxType indexOf_ListDin(ListDin l, ElType val)
 {
     for (int i = 0; i < length(l); i++)
     {
@@ -249,7 +249,7 @@ IdxType indexOf(ListDin l, ElType val)
 
 // ********** NILAI EKSTREM **********
 
-void extremes(ListDin l, ElType *max, ElType *min)
+void extremes_ListDin(ListDin l, ElType *max, ElType *min)
 {
     *max = ELMT(l, 0);
     *min = ELMT(l, 0);
@@ -310,7 +310,7 @@ int countVal(ListDin l, ElType val)
 // Menghasilkan berapa banyak kemunculan val di l
 // Jika l kosong menghasilkan 0
 
-boolean isAllEven(ListDin l)
+boolean isAllEven_ListDin(ListDin l)
 {
     for (int i = 0; i < length(l); i++)
     {
@@ -325,7 +325,7 @@ boolean isAllEven(ListDin l)
 
 // ********** SORTING **********
 
-void sort(ListDin *l, boolean asc)
+void sort_ListDin(ListDin *l, boolean asc)
 {
     int key, i, j;
     if (asc)
@@ -366,7 +366,7 @@ void sort(ListDin *l, boolean asc)
 // ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR **********
 // *** Menambahkan elemen terakhir ***
 
-void insertLast(ListDin *l, ElType val)
+void insertLast_ListDin(ListDin *l, ElType val)
 {
     ELMT(*l, length(*l)) = val;
 }
@@ -375,7 +375,7 @@ void insertLast(ListDin *l, ElType val)
 // F.S. val adalah elemen terakhir l yang baru
 // ********** MENGHAPUS ELEMEN **********
 
-void deleteLast(ListDin *l, ElType *val)
+void deleteLast_ListDin(ListDin *l, ElType *val)
 {
     *val = ELMT(*l, getLastIdx(*l));
     ELMT(*l, getLastIdx(*l)) = VAL_UNDEF;

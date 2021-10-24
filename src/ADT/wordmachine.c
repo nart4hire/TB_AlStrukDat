@@ -1,6 +1,7 @@
 // File: wordmachine.h
 // Definisi Word Engine
 
+#include <stdio.h>
 #include "wordmachine.h"
 
 // typedef struct {
@@ -14,7 +15,7 @@ Word currentWord;
 
 void ignoreBlank()
 {
-    while (currentChar == BLANK)
+    while (currentChar == BLANK || currentChar == NEWLINE)
     {
         adv();
     }
@@ -49,7 +50,7 @@ void advWord()
 void copyWord()
 {
     currentWord.length = 0;
-    while (currentChar != BLANK && currentChar != MARK)
+    while (currentChar != BLANK && currentChar != NEWLINE && currentChar != MARK)
     {
         if (currentWord.length < CAPACITY)
         {
@@ -65,3 +66,13 @@ void copyWord()
 //           currentChar = BLANK atau currentChar = MARK;
 //           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
 //           Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong
+
+void displayCurrentWord(Word currentWord)
+{
+    for (int i = 0; i < currentWord.length; i++)
+        printf("%c", currentWord.contents[i]);
+}
+/* Menampilkan currrentWord pada terminal
+   I.S. : currentWord berisi kata yang sudah diakuisisi;
+   F.S. : currentWord tertampil pada layar. */
+

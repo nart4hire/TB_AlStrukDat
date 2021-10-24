@@ -35,13 +35,13 @@ void CreateStack(Stack *s)
 
 // ************ Prototype ************ 
 
-boolean isEmpty(Stack s)
+boolean isEmpty_Stack(Stack s)
 {
     return (IDX_TOP(s) == IDX_UNDEF);
 }
 // Mengirim true jika s kosong: lihat definisi di atas
 
-boolean isFull(Stack s)
+boolean isFull_Stack(Stack s)
 {
     return (IDX_TOP(s) == CAPACITY - 1);
 }

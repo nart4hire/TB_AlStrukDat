@@ -55,7 +55,7 @@ void dealocate(ListDin *l);
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int length(ListDin l);
+int length_ListDin(ListDin l);
 /* Mengirimkan banyaknya elemen efektif list */
 /* Mengirimkan nol jika list kosong */
 
@@ -65,24 +65,24 @@ IdxType getLastIdx(ListDin l);
 /* Mengirimkan indeks elemen l terakhir */
 
 /* ********** Test Indeks yang valid ********** */
-boolean isIdxValid(ListDin l, IdxType i);
+boolean isIdxValid_ListDin(ListDin l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran list */
 /* yaitu antara indeks yang terdefinisi utk container*/
-boolean isIdxEff(ListDin l, IdxType i);
+boolean isIdxEff_ListDin(ListDin l, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk list */
 /* yaitu antara 0..getLastIdx(l) */
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
-boolean isEmpty(ListDin l);
+boolean isEmpty_ListDin(ListDin l);
 /* Mengirimkan true jika list l kosong, mengirimkan false jika tidak */
 /* *** Test list penuh *** */
-boolean isFull(ListDin l);
+boolean isFull_ListDin(ListDin l);
 /* Mengirimkan true jika list l penuh, mengirimkan false jika tidak */
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 /* *** Mendefinisikan isi list dari pembacaan *** */
-void readList(ListDin *l);
+void readList_ListDin(ListDin *l);
 /* I.S. l sembarang dan sudah dialokasikan sebelumnya */
 /* F.S. List l terdefinisi */
 /* Proses : membaca banyaknya elemen l dan mengisi nilainya */
@@ -92,7 +92,7 @@ void readList(ListDin *l);
 /* 2. Jika 0 < N <= CAPACITY(l); Lakukan N kali: Baca elemen mulai dari indeks
       IdxMin satu per satu diakhiri enter */
 /*    Jika N = 0; hanya terbentuk l kosong */
-void displayList(ListDin l);
+void displayList_ListDin(ListDin l);
 /* Proses : Menuliskan isi list dengan traversal, list ditulis di antara kurung siku;
    antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
    di tengah, atau di belakang, termasuk spasi dan enter */
@@ -111,7 +111,7 @@ ListDin plusMinusList(ListDin l1, ListDin l2, boolean plus);
 
 /* ********** OPERATOR RELASIONAL ********** */
 /* *** Operasi pembandingan list : < =, > *** */
-boolean isListEqual(ListDin l1, ListDin l2);
+boolean isListEqual_ListDin(ListDin l1, ListDin l2);
 /* Mengirimkan true jika l1 sama dengan l2 yaitu jika nEff l1 = l2 dan semua elemennya sama */
 
 /* ********** SEARCHING ********** */
@@ -124,7 +124,7 @@ IdxType indexOf(ListDin l, ElType val);
 /* Skema Searching yang digunakan bebas */
 
 /* ********** NILAI EKSTREM ********** */
-void extremes(ListDin l, ElType *max, ElType *min);
+void extremes_ListDin(ListDin l, ElType *max, ElType *min);
 /* I.S. List l tidak kosong */
 /* F.S. max berisi nilai maksimum l;
         min berisi nilai minimum l */
@@ -140,11 +140,11 @@ ElType sumList(ListDin l);
 int countVal(ListDin l, ElType val);
 /* Menghasilkan berapa banyak kemunculan val di l */
 /* Jika l kosong menghasilkan 0 */
-boolean isAllEven(ListDin l);
+boolean isAllEven_ListDin(ListDin l);
 /* Menghailkan true jika semua elemen l genap. l boleh kosong */
 
 /* ********** SORTING ********** */
-void sort(ListDin *l, boolean asc);
+void sort_ListDin(ListDin *l, boolean asc);
 /* I.S. l boleh kosong */
 /* F.S. Jika asc = true, l terurut membesar */
 /*      Jika asc = false, l terurut mengecil */
@@ -153,12 +153,12 @@ void sort(ListDin *l, boolean asc);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListDin *l, ElType val);
+void insertLast_ListDin(ListDin *l, ElType val);
 /* Proses: Menambahkan X sebagai elemen terakhir list */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast(ListDin *l, ElType *val);
+void deleteLast_ListDin(ListDin *l, ElType *val);
 /* Proses : Menghapus elemen terakhir list */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */

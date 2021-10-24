@@ -39,7 +39,7 @@ void CreateMatrix(int nRow, int nCol, Matrix *m)
 
 // *** Selektor "DUNIA Matrix" ***
 
-boolean isIdxValid(int i, int j)
+boolean isIdxValid_Matrix(int i, int j)
 {
     return (i > -1 && i < ROW_CAP && j > -1 && j < ROW_CAP);
 }
@@ -59,7 +59,7 @@ Index getLastIdxCol(Matrix m)
 }
 // Mengirimkan Index kolom terbesar m
 
-boolean isIdxEff(Matrix m, Index i, Index j)
+boolean isIdxEff_Matrix(Matrix m, Index i, Index j)
 {
     return (i > -1 && i < ROWS(m) && j > -1 && j < COLS(m));
 }

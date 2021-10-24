@@ -19,7 +19,8 @@ void start() {
           Jika currentChar = MARK maka EOP akan menyala (true) */
 
 	/* Algoritma */
-	tape = stdin;
+	// tape = stdin;
+       tape = fopen("../Config/Config.txt", "r");
 	adv();
 }
 

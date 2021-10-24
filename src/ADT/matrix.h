@@ -34,7 +34,7 @@ void CreateMatrix(int nRow, int nCol, Matrix *m);
 #define ELMT(M, i, j) (M).contents[(i)][(j)]
 
 /* *** Selektor "DUNIA Matrix" *** */
-boolean isIdxValid(int i, int j);
+boolean isIdxValid_Matrix(int i, int j);
 /* Mengirimkan true jika i, j adalah Index yang valid untuk matriks apa pun */
 
 /* *** Selektor: Untuk sebuah matriks m yang terdefinisi: *** */
@@ -42,7 +42,7 @@ Index getLastIdxRow(Matrix m);
 /* Mengirimkan Index baris terbesar m */
 Index getLastIdxCol(Matrix m);
 /* Mengirimkan Index kolom terbesar m */
-boolean isIdxEff(Matrix m, Index i, Index j);
+boolean isIdxEff_Matrix(Matrix m, Index i, Index j);
 /* Mengirimkan true jika i, j adalah Index efektif bagi m */
 ElType getElmtDiagonal(Matrix m, Index i);
 /* Mengirimkan elemen m(i,i) */

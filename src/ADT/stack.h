@@ -29,9 +29,9 @@ void CreateStack(Stack *s);
 /* Proses : Melakukan alokasi, membuat sebuah s kosong */
 
 /* ************ Prototype ************ */
-boolean isEmpty(Stack s);
+boolean isEmpty_Stack(Stack s);
 /* Mengirim true jika s kosong: lihat definisi di atas */
-boolean isFull(Stack s);
+boolean isFull_Stack(Stack s);
 /* Mengirim true jika tabel penampung nilai s stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
