@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "wordmachine.h"
+#include "main.h"
 
 int main(int argc, char const *argv[])
 {

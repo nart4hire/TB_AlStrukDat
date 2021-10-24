@@ -6,13 +6,13 @@
 #include "queue.h"
 
 // #define IDX_UNDEF -1
-// #define CAPACITY 100
+// #define CAPACITY_QUEUE 100
 
 // Definisi elemen dan address */
 // typedef int ElType;
 // typedef struct
 // {
-//     ElType buffer[CAPACITY];
+//     ElType buffer[CAPACITY_QUEUE];
 //     int idxHead;
 //     int idxTail;
 // } Queue;
@@ -47,10 +47,10 @@ boolean isEmpty_Queue(Queue q)
 
 boolean isFull_Queue(Queue q)
 {
-    return (IDX_HEAD(q) == 0 && IDX_TAIL(q) == CAPACITY - 1);
+    return (IDX_HEAD(q) == 0 && IDX_TAIL(q) == CAPACITY_QUEUE - 1);
 }
 // Mengirim true jika tabel penampung elemen q sudah penuh */
-// yaitu jika index head bernilai 0 dan index tail bernilai CAPACITY-1 */
+// yaitu jika index head bernilai 0 dan index tail bernilai CAPACITY_QUEUE-1 */
 
 int length_Queue(Queue q)
 {
@@ -73,7 +73,7 @@ void enqueue(Queue *q, ElType val)
     }
     else
     {
-        if (IDX_TAIL(*q) == CAPACITY - 1)
+        if (IDX_TAIL(*q) == CAPACITY_QUEUE - 1)
         {
             for (int i = IDX_HEAD(*q); i <= IDX_TAIL(*q); i++)
             {

@@ -31,7 +31,7 @@ void CreateMatrix(int nRow, int nCol, Matrix *m);
 /* *** Selektor *** */
 #define ROWS(M) (M).rowEff
 #define COLS(M) (M).colEff
-#define ELMT(M, i, j) (M).contents[(i)][(j)]
+#define ELMT_MATRIX(M, i, j) (M).contents[(i)][(j)]
 
 /* *** Selektor "DUNIA Matrix" *** */
 boolean isIdxValid_Matrix(int i, int j);

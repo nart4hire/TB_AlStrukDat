@@ -39,8 +39,8 @@ typedef struct
 
 /* ********** SELEKTOR ********** */
 #define BUFFER(l) (l).buffer
-#define ELMT(l, i) (l).buffer[i]
-#define CAPACITY(l) (l).capacity
+#define ELMT_LISTDIN(l, i) (l).buffer[i]
+#define CAPACITY_LISTDIN(l) (l).capacity
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create list kosong  */
@@ -51,7 +51,7 @@ void CreateListDin(ListDin *l, int capacity);
 
 void dealocate(ListDin *l);
 /* I.S. l terdefinisi; */
-/* F.S. TI(l) dikembalikan ke system, CAPACITY(l)=0; nEff(l)=0 */
+/* F.S. TI(l) dikembalikan ke system, CAPACITY_LISTDIN(l)=0; nEff(l)=0 */
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
@@ -87,9 +87,9 @@ void readList_ListDin(ListDin *l);
 /* F.S. List l terdefinisi */
 /* Proses : membaca banyaknya elemen l dan mengisi nilainya */
 /* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
-/*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= CAPACITY(l) */
+/*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= CAPACITY_LISTDIN(l) */
 /*    Jika N tidak valid, tidak diberikan pesan kesalahan */
-/* 2. Jika 0 < N <= CAPACITY(l); Lakukan N kali: Baca elemen mulai dari indeks
+/* 2. Jika 0 < N <= CAPACITY_LISTDIN(l); Lakukan N kali: Baca elemen mulai dari indeks
       IdxMin satu per satu diakhiri enter */
 /*    Jika N = 0; hanya terbentuk l kosong */
 void displayList_ListDin(ListDin l);

@@ -35,7 +35,7 @@ void CreateMatrix(int nRow, int nCol, Matrix *m)
 
 // #define ROWS(M) (M).rowEff
 // #define COLS(M) (M).colEff
-// #define ELMT(M, i, j) (M).contents[(i)][(j)]
+// #define ELMT_MATRIX(M, i, j) (M).contents[(i)][(j)]
 
 // *** Selektor "DUNIA Matrix" ***
 
@@ -67,7 +67,7 @@ boolean isIdxEff_Matrix(Matrix m, Index i, Index j)
 
 ElType getElmtDiagonal(Matrix m, Index i)
 {
-    return (ELMT(m, i, i));
+    return (ELMT_MATRIX(m, i, i));
 }
 // Mengirimkan elemen m(i,i)
 
@@ -80,7 +80,7 @@ void copyMatrix(Matrix mIn, Matrix *mRes)
     {
         for (int j = 0; j < COLS(mIn); j++)
         {
-            ELMT(*mRes, i, j) = ELMT(mIn, i, j);
+            ELMT_MATRIX(*mRes, i, j) = ELMT_MATRIX(mIn, i, j);
         }
     }
 }
@@ -97,7 +97,7 @@ void readMatrix(Matrix *m, int nRow, int nCol)
         for (int j = 0; j < COLS(*m); j++)
         {
             scanf("%d", &x);
-            ELMT(*m, i, j) = x;
+            ELMT_MATRIX(*m, i, j) = x;
         }
     }
 }
@@ -116,7 +116,7 @@ void displayMatrix(Matrix m)
     {
         for (int j = 0; j < COLS(m); j++)
         {
-            printf("%d", ELMT(m, i, j));
+            printf("%d", ELMT_MATRIX(m, i, j));
             if (j < COLS(m) - 1)
             {
                 printf(" ");
@@ -147,7 +147,7 @@ Matrix addMatrix(Matrix m1, Matrix m2)
     {
         for (int j = 0; j < COLS(m1); j++)
         {
-            ELMT(mhas, i, j) = ELMT(m1, i, j) + ELMT(m2, i, j);
+            ELMT_MATRIX(mhas, i, j) = ELMT_MATRIX(m1, i, j) + ELMT_MATRIX(m2, i, j);
         }
     }
     return mhas;
@@ -163,7 +163,7 @@ Matrix subtractMatrix(Matrix m1, Matrix m2)
     {
         for (int j = 0; j < COLS(m1); j++)
         {
-            ELMT(mhas, i, j) = ELMT(m1, i, j) - ELMT(m2, i, j);
+            ELMT_MATRIX(mhas, i, j) = ELMT_MATRIX(m1, i, j) - ELMT_MATRIX(m2, i, j);
         }
     }
     return mhas;
@@ -179,10 +179,10 @@ Matrix multiplyMatrix(Matrix m1, Matrix m2)
     {
         for (int j = 0; j < COLS(m2); j++)
         {
-            ELMT(mhas, i, j) = 0;
+            ELMT_MATRIX(mhas, i, j) = 0;
             for (int k = 0; k < ROWS(m2); k++)
             {
-                ELMT(mhas, i, j) += ELMT(m1, i, k) * ELMT(m2, k, j);
+                ELMT_MATRIX(mhas, i, j) += ELMT_MATRIX(m1, i, k) * ELMT_MATRIX(m2, k, j);
             }
         }
     }
@@ -199,7 +199,7 @@ Matrix multiplyConst(Matrix m, ElType x)
     {
         for (int j = 0; j < COLS(m); j++)
         {
-            ELMT(mhas, i, j) = ELMT(m, i, j) * x;
+            ELMT_MATRIX(mhas, i, j) = ELMT_MATRIX(m, i, j) * x;
         }
     }
     return mhas;
@@ -212,7 +212,7 @@ void pMultiplyConst(Matrix *m, ElType k)
     {
         for (int j = 0; j < COLS(*m); j++)
         {
-            ELMT(*m, i, j) = ELMT(*m, i, j) * k;
+            ELMT_MATRIX(*m, i, j) = ELMT_MATRIX(*m, i, j) * k;
         }
     }
 }
@@ -229,7 +229,7 @@ boolean isEqual(Matrix m1, Matrix m2)
         {
             for (int j = 0; j < COLS(m1); j++)
             {
-                if (ELMT(m1, i, j) != ELMT(m2, i, j))
+                if (ELMT_MATRIX(m1, i, j) != ELMT_MATRIX(m2, i, j))
                 {
                     return false;
                 }
@@ -279,7 +279,7 @@ boolean isSymmetric(Matrix m)
         {
             for (int j = i + 1; j < COLS(m); j++)
             {
-                if (ELMT(m, i, j) != ELMT(m, j, i))
+                if (ELMT_MATRIX(m, i, j) != ELMT_MATRIX(m, j, i))
                 {
                     return false;
                 }
@@ -298,11 +298,11 @@ boolean isIdentity(Matrix m)
     {
         for (int i = 0; i < ROWS(m); i++)
         {
-            if (ELMT(m, i, i) == 1)
+            if (ELMT_MATRIX(m, i, i) == 1)
             {
                 for (int j = i + 1; j < COLS(m); j++)
                 {
-                    if (ELMT(m, i, j) != 0 || ELMT(m, j, i) != 0)
+                    if (ELMT_MATRIX(m, i, j) != 0 || ELMT_MATRIX(m, j, i) != 0)
                     {
                         return false;
                     }
@@ -323,7 +323,7 @@ boolean isSparse(Matrix m)
     {
         for (int j = 0; j < COLS(m); j++)
         {
-            if (ELMT(m, i, j) > 0)
+            if (ELMT_MATRIX(m, i, j) > 0)
             {
                 c++;
             }
@@ -343,7 +343,7 @@ Matrix inverse1(Matrix m)
     {
         for (int j = 0; j < COLS(m); j++)
         {
-            ELMT(mhas, i, j) = ELMT(m, i, j) * (-1);
+            ELMT_MATRIX(mhas, i, j) = ELMT_MATRIX(m, i, j) * (-1);
         }
     }
     return mhas;
@@ -356,7 +356,7 @@ void pInverse1(Matrix *m)
     {
         for (int j = 0; j < COLS(*m); j++)
         {
-            ELMT(*m, i, j) = ELMT(*m, i, j) * (-1);
+            ELMT_MATRIX(*m, i, j) = ELMT_MATRIX(*m, i, j) * (-1);
         }
     }
 }
@@ -371,9 +371,9 @@ float determinant(Matrix m)
     switch (ROWS(m))
     {
     case 1:
-        return (ELMT(m, 0, 0));
+        return (ELMT_MATRIX(m, 0, 0));
     case 2:
-        return (ELMT(m, 0, 0) * ELMT(m, 1, 1) - ELMT(m, 0, 1) * ELMT(m, 1, 0));
+        return (ELMT_MATRIX(m, 0, 0) * ELMT_MATRIX(m, 1, 1) - ELMT_MATRIX(m, 0, 1) * ELMT_MATRIX(m, 1, 0));
     default:
         CreateMatrix(ROWS(m) - 1, COLS(m) - 1, &mtemp);
         int row = 0;
@@ -385,13 +385,13 @@ float determinant(Matrix m)
                 {
                     for (int j = 1; j < COLS(m); j++)
                     {
-                        ELMT(mtemp, row, (j - 1)) = ELMT(m, i, j);
+                        ELMT_MATRIX(mtemp, row, (j - 1)) = ELMT_MATRIX(m, i, j);
                     }
                     row++;
                 }
             }
             row = 0;
-            tally += sign * ELMT(m, k, 0) * determinant(mtemp);
+            tally += sign * ELMT_MATRIX(m, k, 0) * determinant(mtemp);
             sign = -sign;
         }
         return tally;
@@ -409,9 +409,9 @@ void transpose(Matrix *m)
         {
             for (int j = i + 1; j < COLS(*m); j++)
             {
-                temp = ELMT(*m, i, j);
-                ELMT(*m, i, j) = ELMT(*m, j, i);
-                ELMT(*m, j, i) = temp;
+                temp = ELMT_MATRIX(*m, i, j);
+                ELMT_MATRIX(*m, i, j) = ELMT_MATRIX(*m, j, i);
+                ELMT_MATRIX(*m, j, i) = temp;
             }
         }
     }
@@ -427,7 +427,7 @@ float rowMean(Matrix m, Index i)
     float tally = 0;
     while (count < COLS(m))
     {
-        tally += ELMT(m, i, count);
+        tally += ELMT_MATRIX(m, i, count);
         count++;
     }
     return (tally / COLS(m));
@@ -441,7 +441,7 @@ float colMean(Matrix m, Index j)
     float tally = 0;
     while (count < ROWS(m))
     {
-        tally += ELMT(m, count, j);
+        tally += ELMT_MATRIX(m, count, j);
         count++;
     }
     return (tally / ROWS(m));
@@ -451,17 +451,17 @@ float colMean(Matrix m, Index j)
 
 void rowExtremes(Matrix m, Index i, ElType *max, ElType *min)
 {
-    *max = ELMT(m, i, 0);
-    *min = ELMT(m, i, 0);
+    *max = ELMT_MATRIX(m, i, 0);
+    *min = ELMT_MATRIX(m, i, 0);
     for (int j = 1; j < COLS(m); j++)
     {
-        if (*max < ELMT(m, i, j))
+        if (*max < ELMT_MATRIX(m, i, j))
         {
-            *max = ELMT(m, i, j);
+            *max = ELMT_MATRIX(m, i, j);
         }
-        if (*min > ELMT(m, i, j))
+        if (*min > ELMT_MATRIX(m, i, j))
         {
-            *min = ELMT(m, i, j);
+            *min = ELMT_MATRIX(m, i, j);
         }
     }
 }
@@ -471,17 +471,17 @@ void rowExtremes(Matrix m, Index i, ElType *max, ElType *min)
 
 void colExtremes(Matrix m, Index j, ElType *max, ElType *min)
 {
-    *max = ELMT(m, 0, j);
-    *min = ELMT(m, 0, j);
+    *max = ELMT_MATRIX(m, 0, j);
+    *min = ELMT_MATRIX(m, 0, j);
     for (int i = 1; i < ROWS(m); i++)
     {
-        if (*max < ELMT(m, i, j))
+        if (*max < ELMT_MATRIX(m, i, j))
         {
-            *max = ELMT(m, i, j);
+            *max = ELMT_MATRIX(m, i, j);
         }
-        if (*min > ELMT(m, i, j))
+        if (*min > ELMT_MATRIX(m, i, j))
         {
-            *min = ELMT(m, i, j);
+            *min = ELMT_MATRIX(m, i, j);
         }
     }
 }
@@ -494,7 +494,7 @@ int countValOnRow(Matrix m, Index i, ElType val)
     int count = 0;
     for (int j = 0; j < COLS(m); j++)
     {
-        if (ELMT(m, i, j) == val)
+        if (ELMT_MATRIX(m, i, j) == val)
         {
             count++;
         }
@@ -508,7 +508,7 @@ int countValOnCol(Matrix m, Index j, ElType val)
     int count = 0;
     for (int i = 0; i < ROWS(m); i++)
     {
-        if (ELMT(m, i, j) == val)
+        if (ELMT_MATRIX(m, i, j) == val)
         {
             count++;
         }

@@ -7,12 +7,12 @@
 #include "boolean.h"
 #include "charmachine.h"
 
-#define CAPACITY 50
+#define CAPACITY_WORDMACHINE 50
 #define BLANK ' '
 #define NEWLINE '\n'
 
 typedef struct {
-   char contents[CAPACITY]; /* container penyimpan kata, indeks yang dipakai [0..CAPACITY-1] */
+   char contents[CAPACITY_WORDMACHINE]; /* container penyimpan kata, indeks yang dipakai [0..CAPACITY_WORDMACHINE-1] */
    int length;
 } Word;
 
@@ -44,7 +44,7 @@ void copyWord();
    F.S. : currentWord berisi kata yang sudah diakuisisi; 
           currentChar = BLANK atau currentChar = MARK; 
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
-          Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong */
+          Jika panjang kata melebihi CAPACITY_WORDMACHINE, maka sisa kata terpotong */
 
 void displayCurrentWord(Word currentWord);
 /* Menampilkan currrentWord pada terminal

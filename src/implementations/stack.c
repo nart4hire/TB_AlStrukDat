@@ -7,12 +7,12 @@
 
 // CONSTANTS:
 // #define IDX_UNDEF -1
-// #define CAPACITY 100
+// #define CAPACITY_STACK 100
 
 // DEFINITION:
 // typedef int ElType;
 // typedef struct {
-//   ElType buffer[CAPACITY]; // tabel penyimpan elemen 
+//   ElType buffer[CAPACITY_STACK]; // tabel penyimpan elemen 
 //   int idxTop;              // alamat TOP: elemen puncak 
 // } Stack;
 
@@ -43,7 +43,7 @@ boolean isEmpty_Stack(Stack s)
 
 boolean isFull_Stack(Stack s)
 {
-    return (IDX_TOP(s) == CAPACITY - 1);
+    return (IDX_TOP(s) == CAPACITY_STACK - 1);
 }
 // Mengirim true jika tabel penampung nilai s stack penuh 
 
