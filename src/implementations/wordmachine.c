@@ -10,19 +10,24 @@
 // } Word;
 
 // Word Engine State
+boolean endLine;
 boolean endWord;
 Word currentWord;
 
 void ignoreBlank()
 {
-    while (currentChar == BLANK || currentChar == NEWLINE)
-    {
+    while (currentChar == BLANK)
         adv();
-    }
 }
 // Mengabaikan satu atau beberapa BLANK
 //    I.S. : currentChar sembarang
 //    F.S. : currentChar ≠ BLANK atau currentChar = MARK
+
+void ignoreNewline()
+{
+    while (currentChar == NEWLINE)
+        adv();
+}
 
 void startWord()
 {
@@ -35,11 +40,21 @@ void startWord()
 //           atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
 //           currentChar karakter pertama sesudah karakter terakhir kata
 
+void startFile()
+{
+    config();
+    ignoreBlank();
+    advWord();
+}
+
 void advWord()
 {
     copyWord();
     ignoreBlank();
     endWord = (currentChar == MARK);
+    endLine = (currentChar == NEWLINE);
+    ignoreNewline();
+    ignoreBlank();
 }
 // I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi
 //    F.S. : currentWord adalah kata terakhir yang sudah diakuisisi,

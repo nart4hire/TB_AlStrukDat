@@ -4,7 +4,8 @@ CDIR = implementations
 CC = gcc
 CFLAGS = -I $(HDIR) -I $(CDIR)
 
-ODIR=obj
+ODIR = obj
+BDIR = bin
 
 _DEPS = boolean.h charmachine.h list_linked.h listdinpos.h listpos.h \
         matrix.h node.h point.h queue.h stack.h wordmachine.h
