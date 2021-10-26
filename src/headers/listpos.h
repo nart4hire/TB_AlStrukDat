@@ -18,10 +18,10 @@
 /* Nilai elemen tak terdefinisi*/
 
 /* Definisi elemen dan koleksi objek */
-typedef int ElType; /* type elemen List */
+typedef int ElType_ListPos; /* type elemen List */
 typedef struct
 {
-    ElType contents[CAPACITY_LISTPOS]; /* memori tempat penyimpan elemen (container) */
+    ElType_ListPos contents[CAPACITY_LISTPOS]; /* memori tempat penyimpan elemen (container) */
 } ListPos;
 /* Indeks yang digunakan [0..CAPACITY_LISTPOS-1] */
 /* Jika l adalah ListPos, cara deklarasi dan akses: */
@@ -102,14 +102,14 @@ boolean isListEqual_ListPos(ListPos l1, ListPos l2);
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-int indexOf_ListPos(ListPos l, ElType val);
+int indexOf_ListPos(ListPos l, ElType_ListPos val);
 /* Search apakah ada elemen List l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan ELMT_LISTPOS(l,i) = val */
 /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
 /* Skema Searching yang digunakan bebas */
 
 /* ********** NILAI EKSTREM ********** */
-void extremes_ListPos(ListPos l, ElType *max, ElType *min);
+void extremes_ListPos(ListPos l, ElType_ListPos *max, ElType_ListPos *min);
 /* I.S. List l tidak kosong */
 /* F.S. Max berisi nilai terbesar dalam l;
         Min berisi nilai terkecil dalam l */
@@ -128,12 +128,12 @@ void sort_ListPos(ListPos *l, boolean asc);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast_ListPos(ListPos *l, ElType val);
+void insertLast_ListPos(ListPos *l, ElType_ListPos val);
 /* Proses: Menambahkan val sebagai elemen terakhir List */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast_ListPos(ListPos *l, ElType *val);
+void deleteLast_ListPos(ListPos *l, ElType_ListPos *val);
 /* Proses : Menghapus elemen terakhir List */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */

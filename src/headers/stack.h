@@ -10,9 +10,9 @@
 #define IDX_UNDEF -1
 #define CAPACITY_STACK 100
 
-typedef int ElType;
+typedef int ElType_Stack;
 typedef struct {
-  ElType buffer[CAPACITY_STACK]; /* tabel penyimpan elemen */
+  ElType_Stack buffer[CAPACITY_STACK]; /* tabel penyimpan elemen */
   int idxTop;              /* alamat TOP: elemen puncak */
 } Stack;
 
@@ -35,13 +35,13 @@ boolean isFull_Stack(Stack s);
 /* Mengirim true jika tabel penampung nilai s stack penuh */
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void push(Stack *s, ElType val);
+void push(Stack *s, ElType_Stack val);
 /* Menambahkan val sebagai elemen Stack s */
 /* I.S. s mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. val menjadi TOP yang baru,IDX_TOP bertambah 1 */
 
 /* ************ Menghapus sebuah elemen Stack ************ */
-void pop(Stack *s, ElType *val);
+void pop(Stack *s, ElType_Stack *val);
 /* Menghapus val dari Stack s */
 /* I.S. s tidak mungkin kosong */
 /* F.S. val adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 */

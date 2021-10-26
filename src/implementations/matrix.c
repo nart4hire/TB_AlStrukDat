@@ -8,10 +8,10 @@
 // #define COL_CAP 100
 
 // typedef int Index; // Index baris, kolom
-// typedef int ElType;
+// typedef int ElType_Matrix;
 // typedef struct
 // {
-//    ElType contents[ROW_CAP][COL_CAP];
+//    ElType_Matrix contents[ROW_CAP][COL_CAP];
 //    int rowEff; // banyaknya/ukuran baris yg terdefinisi
 //    int colEff; // banyaknya/ukuran kolom yg terdefinisi
 // } Matrix;
@@ -65,7 +65,7 @@ boolean isIdxEff_Matrix(Matrix m, Index i, Index j)
 }
 // Mengirimkan true jika i, j adalah Index efektif bagi m
 
-ElType getElmtDiagonal(Matrix m, Index i)
+ElType_Matrix getElmtDiagonal(Matrix m, Index i)
 {
     return (ELMT_MATRIX(m, i, i));
 }
@@ -191,7 +191,7 @@ Matrix multiplyMatrix(Matrix m1, Matrix m2)
 // Prekondisi : Ukuran kolom efektif m1 = ukuran baris efektif m2
 // Mengirim hasil perkalian matriks: salinan m1 * m2
 
-Matrix multiplyConst(Matrix m, ElType x)
+Matrix multiplyConst(Matrix m, ElType_Matrix x)
 {
     Matrix mhas;
     CreateMatrix(ROWS(m), COLS(m), &mhas);
@@ -206,7 +206,7 @@ Matrix multiplyConst(Matrix m, ElType x)
 }
 // Mengirim hasil perkalian setiap elemen m dengan x
 
-void pMultiplyConst(Matrix *m, ElType k)
+void pMultiplyConst(Matrix *m, ElType_Matrix k)
 {
     for (int i = 0; i < ROWS(*m); i++)
     {
@@ -449,7 +449,7 @@ float colMean(Matrix m, Index j)
 // Menghasilkan rata-rata dari elemen pada kolom ke-j
 // Prekondisi: j adalah indeks kolom efektif dari M
 
-void rowExtremes(Matrix m, Index i, ElType *max, ElType *min)
+void rowExtremes(Matrix m, Index i, ElType_Matrix *max, ElType_Matrix *min)
 {
     *max = ELMT_MATRIX(m, i, 0);
     *min = ELMT_MATRIX(m, i, 0);
@@ -469,7 +469,7 @@ void rowExtremes(Matrix m, Index i, ElType *max, ElType *min)
 // F.S. max berisi elemen maksimum pada baris i dari M
 //         min berisi elemen minimum pada baris i dari M
 
-void colExtremes(Matrix m, Index j, ElType *max, ElType *min)
+void colExtremes(Matrix m, Index j, ElType_Matrix *max, ElType_Matrix *min)
 {
     *max = ELMT_MATRIX(m, 0, j);
     *min = ELMT_MATRIX(m, 0, j);
@@ -489,7 +489,7 @@ void colExtremes(Matrix m, Index j, ElType *max, ElType *min)
 // F.S. max berisi elemen maksimum pada kolom j dari M
 //         min berisi elemen minimum pada kolom j dari M
 
-int countValOnRow(Matrix m, Index i, ElType val)
+int countValOnRow(Matrix m, Index i, ElType_Matrix val)
 {
     int count = 0;
     for (int j = 0; j < COLS(m); j++)
@@ -503,7 +503,7 @@ int countValOnRow(Matrix m, Index i, ElType val)
 }
 // Menghasilkan banyaknya kemunculan X pada baris i dari M
 
-int countValOnCol(Matrix m, Index j, ElType val)
+int countValOnCol(Matrix m, Index j, ElType_Matrix val)
 {
     int count = 0;
     for (int i = 0; i < ROWS(m); i++)

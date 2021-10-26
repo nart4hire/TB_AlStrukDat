@@ -74,7 +74,7 @@ boolean isFull_ListPos(ListPos l)
 void readList_ListPos(ListPos *l)
 {
     int n;
-    ElType x;
+    ElType_ListPos x;
     CreateListPos(l);
     do
     {
@@ -176,7 +176,7 @@ boolean isListEqual_ListPos(ListPos l1, ListPos l2)
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
 
-int indexOf_ListPos(ListPos l, ElType val)
+int indexOf_ListPos(ListPos l, ElType_ListPos val)
 {
     for (int i = 0; i < length_ListPos(l); i++)
     {
@@ -194,7 +194,7 @@ int indexOf_ListPos(ListPos l, ElType val)
 
 /* ********** NILAI EKSTREM ********** */
 
-void extremes_ListPos(ListPos l, ElType *max, ElType *min)
+void extremes_ListPos(ListPos l, ElType_ListPos *max, ElType_ListPos *min)
 {
     *max = ELMT_LISTPOS(l, 0);
     *min = ELMT_LISTPOS(l, 0);
@@ -272,7 +272,7 @@ void sort_ListPos(ListPos *l, boolean asc)
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
 
-void insertLast_ListPos(ListPos *l, ElType val)
+void insertLast_ListPos(ListPos *l, ElType_ListPos val)
 {
     ELMT_LISTPOS(*l, length_ListPos(*l)) = val;
 }
@@ -281,7 +281,7 @@ void insertLast_ListPos(ListPos *l, ElType val)
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
 
-void deleteLast_ListPos(ListPos *l, ElType *val)
+void deleteLast_ListPos(ListPos *l, ElType_ListPos *val)
 {
     *val = ELMT_LISTPOS(*l, (length_ListPos(*l) - 1));
     ELMT_LISTPOS(*l, (length_ListPos(*l) - 1)) = VAL_UNDEF;

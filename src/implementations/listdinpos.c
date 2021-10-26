@@ -19,10 +19,10 @@
 
 // Definisi elemen dan koleksi objek
 // typedef int IdxType; // type indeks
-// typedef int ElType;  // type elemen list
+// typedef int ElType_ListDin;  // type elemen list
 // typedef struct
 // {
-//   ElType *buffer; // memori tempat penyimpan elemen (container)
+//   ElType_ListDin *buffer; // memori tempat penyimpan elemen (container)
 //   int capacity;  // ukuran elemen
 // } ListDin;
 // Indeks yang digunakan [0..capacity-1]
@@ -50,7 +50,7 @@
 void CreateListDin(ListDin *l, int capacity)
 {
     CAPACITY_LISTDIN(*l) = capacity;
-    BUFFER(*l) = (ElType *)malloc(capacity * sizeof(ElType));
+    BUFFER(*l) = (ElType_ListDin *)malloc(capacity * sizeof(ElType_ListDin));
     for (int i = 0; i < capacity; i++)
     {
         ELMT_LISTDIN(*l, i) = VAL_UNDEF;
@@ -131,7 +131,7 @@ boolean isFull_ListDin(ListDin l)
 void readList_ListDin(ListDin *l)
 {
     int n;
-    ElType x;
+    ElType_ListDin x;
     do
     {
         scanf("%d", &n);
@@ -230,7 +230,7 @@ boolean isListEqual_ListDin(ListDin l1, ListDin l2)
 // ********** SEARCHING **********
 // ***  Perhatian : List boleh kosong!! ***
 
-IdxType indexOf_ListDin(ListDin l, ElType val)
+IdxType indexOf_ListDin(ListDin l, ElType_ListDin val)
 {
     for (int i = 0; i < length_ListDin(l); i++)
     {
@@ -249,7 +249,7 @@ IdxType indexOf_ListDin(ListDin l, ElType val)
 
 // ********** NILAI EKSTREM **********
 
-void extremes_ListDin(ListDin l, ElType *max, ElType *min)
+void extremes_ListDin(ListDin l, ElType_ListDin *max, ElType_ListDin *min)
 {
     *max = ELMT_LISTDIN(l, 0);
     *min = ELMT_LISTDIN(l, 0);
@@ -283,9 +283,9 @@ void copyList(ListDin lIn, ListDin *lOut)
 // F.S. lOut berisi salinan dari lIn (identik, nEff dan Capacity sama)
 // Proses : Menyalin isi lIn ke lOut
 
-ElType sumList(ListDin l)
+ElType_ListDin sumList(ListDin l)
 {
-    ElType x = 0;
+    ElType_ListDin x = 0;
     for (int i = 0; i < length_ListDin(l); i++)
     {
         x = x + ELMT_LISTDIN(l, i);
@@ -295,7 +295,7 @@ ElType sumList(ListDin l)
 // Menghasilkan hasil penjumlahan semua elemen l
 // Jika l kosong menghasilkan 0
 
-int countVal(ListDin l, ElType val)
+int countVal(ListDin l, ElType_ListDin val)
 {
     int x = 0;
     for (int i = 0; i < length_ListDin(l); i++)
@@ -366,7 +366,7 @@ void sort_ListDin(ListDin *l, boolean asc)
 // ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR **********
 // *** Menambahkan elemen terakhir ***
 
-void insertLast_ListDin(ListDin *l, ElType val)
+void insertLast_ListDin(ListDin *l, ElType_ListDin val)
 {
     ELMT_LISTDIN(*l, length_ListDin(*l)) = val;
 }
@@ -375,7 +375,7 @@ void insertLast_ListDin(ListDin *l, ElType val)
 // F.S. val adalah elemen terakhir l yang baru
 // ********** MENGHAPUS ELEMEN **********
 
-void deleteLast_ListDin(ListDin *l, ElType *val)
+void deleteLast_ListDin(ListDin *l, ElType_ListDin *val)
 {
     *val = ELMT_LISTDIN(*l, getLastIdx(*l));
     ELMT_LISTDIN(*l, getLastIdx(*l)) = VAL_UNDEF;
@@ -391,7 +391,7 @@ void deleteLast_ListDin(ListDin *l, ElType *val)
 void growList(ListDin *l, int num)
 {
     CAPACITY_LISTDIN(*l) = CAPACITY_LISTDIN(*l) + num;
-    BUFFER(*l) = (ElType *)realloc(BUFFER(*l), CAPACITY_LISTDIN(*l) * sizeof(ElType));
+    BUFFER(*l) = (ElType_ListDin *)realloc(BUFFER(*l), CAPACITY_LISTDIN(*l) * sizeof(ElType_ListDin));
 }
 // Proses : Menambahkan kapasitas sebanyak num
 // I.S. List sudah terdefinisi
@@ -407,7 +407,7 @@ void shrinkList(ListDin *l, int num)
             ELMT_LISTDIN(*l, i) = VAL_UNDEF;
         }
     }
-    BUFFER(*l) = (ElType *)realloc(BUFFER(*l), CAPACITY_LISTDIN(*l) * sizeof(ElType));
+    BUFFER(*l) = (ElType_ListDin *)realloc(BUFFER(*l), CAPACITY_LISTDIN(*l) * sizeof(ElType_ListDin));
 }
 // Proses : Mengurangi kapasitas sebanyak num
 // I.S. List sudah terdefinisi, ukuran Capacity > num, dan nEff < Capacity - num.
@@ -416,7 +416,7 @@ void shrinkList(ListDin *l, int num)
 void compactList(ListDin *l)
 {
     CAPACITY_LISTDIN(*l) = length_ListDin(*l);
-    BUFFER(*l) = (ElType *)realloc(BUFFER(*l), CAPACITY_LISTDIN(*l) * sizeof(ElType));
+    BUFFER(*l) = (ElType_ListDin *)realloc(BUFFER(*l), CAPACITY_LISTDIN(*l) * sizeof(ElType_ListDin));
 }
 // Proses : Mengurangi kapasitas sehingga nEff = Capacity
 // I.S. List tidak kosong

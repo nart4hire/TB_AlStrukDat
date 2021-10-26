@@ -17,10 +17,10 @@
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType; /* type indeks */
-typedef int ElType;  /* type elemen list */
+typedef int ElType_ListDin;  /* type elemen list */
 typedef struct
 {
-  ElType *buffer; /* memori tempat penyimpan elemen (container) */
+  ElType_ListDin *buffer; /* memori tempat penyimpan elemen (container) */
   int capacity;  /* ukuran elemen */
 } ListDin;
 /* Indeks yang digunakan [0..capacity-1] */
@@ -116,7 +116,7 @@ boolean isListEqual_ListDin(ListDin l1, ListDin l2);
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : List boleh kosong!! *** */
-IdxType indexOf(ListDin l, ElType val);
+IdxType indexOf(ListDin l, ElType_ListDin val);
 /* Search apakah ada elemen list l yang bernilai val */
 /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = val */
 /* Jika tidak ada, mengirimkan IDX_UNDEF */
@@ -124,7 +124,7 @@ IdxType indexOf(ListDin l, ElType val);
 /* Skema Searching yang digunakan bebas */
 
 /* ********** NILAI EKSTREM ********** */
-void extremes_ListDin(ListDin l, ElType *max, ElType *min);
+void extremes_ListDin(ListDin l, ElType_ListDin *max, ElType_ListDin *min);
 /* I.S. List l tidak kosong */
 /* F.S. max berisi nilai maksimum l;
         min berisi nilai minimum l */
@@ -134,10 +134,10 @@ void copyList(ListDin lIn, ListDin *lOut);
 /* I.S. lIn terdefinisi tidak kosong, lOut sembarang */
 /* F.S. lOut berisi salinan dari lIn (identik, nEff dan Capacity sama) */
 /* Proses : Menyalin isi lIn ke lOut */
-ElType sumList(ListDin l);
+ElType_ListDin sumList(ListDin l);
 /* Menghasilkan hasil penjumlahan semua elemen l */
 /* Jika l kosong menghasilkan 0 */
-int countVal(ListDin l, ElType val);
+int countVal(ListDin l, ElType_ListDin val);
 /* Menghasilkan berapa banyak kemunculan val di l */
 /* Jika l kosong menghasilkan 0 */
 boolean isAllEven_ListDin(ListDin l);
@@ -153,12 +153,12 @@ void sort_ListDin(ListDin *l, boolean asc);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast_ListDin(ListDin *l, ElType val);
+void insertLast_ListDin(ListDin *l, ElType_ListDin val);
 /* Proses: Menambahkan X sebagai elemen terakhir list */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast_ListDin(ListDin *l, ElType *val);
+void deleteLast_ListDin(ListDin *l, ElType_ListDin *val);
 /* Proses : Menghapus elemen terakhir list */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */

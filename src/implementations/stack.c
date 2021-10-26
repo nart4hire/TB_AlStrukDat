@@ -10,9 +10,9 @@
 // #define CAPACITY_STACK 100
 
 // DEFINITION:
-// typedef int ElType;
+// typedef int ElType_Stack;
 // typedef struct {
-//   ElType buffer[CAPACITY_STACK]; // tabel penyimpan elemen 
+//   ElType_Stack buffer[CAPACITY_STACK]; // tabel penyimpan elemen 
 //   int idxTop;              // alamat TOP: elemen puncak 
 // } Stack;
 
@@ -49,7 +49,7 @@ boolean isFull_Stack(Stack s)
 
 // ************ Menambahkan sebuah elemen ke Stack ************ 
 
-void push(Stack *s, ElType val)
+void push(Stack *s, ElType_Stack val)
 {
     ++IDX_TOP(*s);
     TOP(*s) = val;
@@ -60,7 +60,7 @@ void push(Stack *s, ElType val)
 
 // ************ Menghapus sebuah elemen Stack ************ 
 
-void pop(Stack *s, ElType *val)
+void pop(Stack *s, ElType_Stack *val)
 {
     *val = TOP(*s);
     --IDX_TOP(*s);

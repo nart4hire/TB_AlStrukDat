@@ -9,10 +9,10 @@
 // #define CAPACITY_QUEUE 100
 
 // Definisi elemen dan address */
-// typedef int ElType;
+// typedef int ElType_Queue;
 // typedef struct
 // {
-//     ElType buffer[CAPACITY_QUEUE];
+//     ElType_Queue buffer[CAPACITY_QUEUE];
 //     int idxHead;
 //     int idxTail;
 // } Queue;
@@ -64,7 +64,7 @@ int length_Queue(Queue q)
 
 // *** Primitif Add/Delete *** */
 
-void enqueue(Queue *q, ElType val)
+void enqueue(Queue *q, ElType_Queue val)
 {
     if (isEmpty_Queue(*q))
     {
@@ -92,7 +92,7 @@ void enqueue(Queue *q, ElType val)
 // Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen q
 // menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
 
-void dequeue(Queue *q, ElType *val)
+void dequeue(Queue *q, ElType_Queue *val)
 {
     *val = HEAD(*q);
     if (IDX_HEAD(*q) == IDX_TAIL(*q))
