@@ -2,6 +2,7 @@
 // Definisi Word Engine
 
 #include <stdio.h>
+#include <string.h>
 #include "wordmachine.h"
 
 // typedef struct {
@@ -84,8 +85,7 @@ void copyWord()
 
 void displayCurrentWord(Word currentWord)
 {
-    for (int i = 0; i < currentWord.length; i++)
-        printf("%c", currentWord.contents[i]);
+    printf("%s", currentWord.contents);
 }
 /* Menampilkan currrentWord pada terminal
    I.S. : currentWord berisi kata yang sudah diakuisisi;
