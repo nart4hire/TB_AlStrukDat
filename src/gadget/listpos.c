@@ -291,3 +291,18 @@ void deleteLast_ListPos(ListPos *l, ElType_ListPos *val)
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
+
+void deleteAt_ListPos(ListPos *l, int idx, ElType_ListPos *val) {
+/* Proses : Menghapus elemen pada indeks idx List */
+/* I.S. List tidak kosong dan idx berada pada rentang [0..length(l)-1] */
+/* F.S. val adalah nilai elemen pada idx l sebelum penghapusan, */
+/*      Banyaknya elemen List berkurang satu */
+/*      List l mungkin menjadi kosong */
+// KAMUS LOKAL
+    int i;
+// ALGORITMA
+    *val = ELMT_LISTPOS(*l,idx);
+    for (i = idx; i < length_ListPos(*l); i++) {
+        ELMT_LISTPOS(*l,i) = ELMT_LISTPOS(*l,i+1);  
+    }
+}

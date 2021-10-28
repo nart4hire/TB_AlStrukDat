@@ -28,7 +28,8 @@
 // penggunaan gadget ini.
 
 #include <stdio.h>
-#include "inventoryGadget.c"
+#include "inventoryGadget.h"
+#include "gadget.h"
 
 
 void displayGadget() {
@@ -36,30 +37,33 @@ void displayGadget() {
 // KAMUS LOKAL
 // ALGORITMA
     printf("Gadget yang tersedia: \n");
-    printf("1. Kain pembungkus waktu (800 yen)\n");
+    printf("1. Kain pembungkus waktu (800 Yen)\n");
     printf("2. Senter Pembesar (1200 Yen)\n");
-    printf("3. Pintu Kemana Saja (1500 Yenn");
+    printf("3. Pintu Kemana Saja (1500 Yen)\n");
     printf("4. Mesin Waktu (3000 Yen)\n");
     printf("5. Senter Pengecil (800 yen)\n");
     printf("Gadget mana yang ingin kau beli? (ketik 0 jika ingin kembali)\n\n");
 }
 
-void buy(int* uang, int command, ListPos* l) {
+void buy(int* uang, ListPos* l) {
 // I.S. Uang dan l terdefinisi sebelumnya
 // F.S. Jika gadget yang dibeli harganya <= uang dan gadget tersebut belum ada di list l
 // maka uang = uang - hargaBarang dan gadget ditambahkan ke list l 
 // Jika gadget yang dibeli harganya > uang maka I.S. = F.S.
 // KAMUS LOKAL
+    int command;
 // ALGORITMA
+    printf("Uang Anda sekarang: %d\n", *uang);
+    displayGadget();
+    printf("ENTER COMMAND: ");
+    scanf("%d",&command);
     if (isFull_ListPos(*l)) {
         printf("Inventori gadget penuh!\n\n");
-    } else if (ELMT_LISTPOS(*l,command) == 1) {
-        printf("Gadget sudah ada di inventory gadget!\n\n");
     } else {
         switch (command) {
         case 1:
             if (*uang >= 800) {
-                ELMT_LISTPOS(*l,command) = 1;
+                insertLast_ListPos(l, 1);
                 printf("Kain pembungkus waktu berhasil dibeli!\n");
                 *uang -= 800;
                 printf("Uang Anda sekarang: %d yen\n\n", *uang);
@@ -69,7 +73,7 @@ void buy(int* uang, int command, ListPos* l) {
             break;
         case 2:
             if (*uang >= 1200) {
-                ELMT_LISTPOS(*l,command) = 1;
+                insertLast_ListPos(l, 2);
                 printf("Senter Pembesar berhasil dibeli!\n");
                 *uang -= 1200;
                 printf("Uang Anda sekarang: %d yen\n\n", *uang);
@@ -79,7 +83,7 @@ void buy(int* uang, int command, ListPos* l) {
             break;
         case 3:
             if (*uang >= 1500) {
-                ELMT_LISTPOS(*l,command) = 1;
+                insertLast_ListPos(l,3);
                 printf("Pintu Kemana Saja berhasil dibeli!\n");
                 *uang -= 1500;
                 printf("Uang Anda sekarang: %d yen\n\n", *uang);
@@ -89,7 +93,7 @@ void buy(int* uang, int command, ListPos* l) {
             break;
         case 4:
             if (*uang >= 3000) {
-                ELMT_LISTPOS(*l,command) = 1;
+                insertLast_ListPos(l,4);
                 printf("Mesin Waktu berhasil dibeli!\n");
                 *uang -= 3000;
                 printf("Uang Anda sekarang: %d yen\n\n", *uang);
@@ -99,7 +103,7 @@ void buy(int* uang, int command, ListPos* l) {
             break;
         case 5:
             if (*uang >= 800) {
-                ELMT_LISTPOS(*l,command) = 1;
+                insertLast_ListPos(l,5);
                 printf("Senter Pengecil berhasil dibeli!\n");
                 *uang -= 800;
                 printf("Uang Anda sekarang: %d yen\n\n", *uang);
@@ -108,8 +112,9 @@ void buy(int* uang, int command, ListPos* l) {
             }
             break;
         default:
-            printf("Command salah!");
+            printf("Command salah!\n");
             break;
         }
     }
 }
+

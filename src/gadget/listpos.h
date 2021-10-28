@@ -140,4 +140,11 @@ void deleteLast_ListPos(ListPos *l, ElType_ListPos *val);
 /*      Banyaknya elemen List berkurang satu */
 /*      List l mungkin menjadi kosong */
 
+void deleteAt_ListPos(ListPos *l, int idx, ElType_ListPos *val);
+/* Proses : Menghapus elemen pada indeks idx List */
+/* I.S. List tidak kosong */
+/* F.S. val adalah nilai elemen pada idx l sebelum penghapusan, */
+/*      Banyaknya elemen List berkurang satu */
+/*      List l mungkin menjadi kosong */
+
 #endif
