@@ -112,7 +112,7 @@ void insertLast_ListOrder(ListLinked *l, Time t_serve, char pickUp, char dropOff
     Address p, last;
     /*Algoritma*/
     p = newNode(t_serve, pickUp, dropOff, item, perTime);
-    if (isEmpty(*l)){
+    if (isEmpty_ListOrder(*l)){
         if (p != NULL){
             NEXT(p) = *l;
             *l = p;
