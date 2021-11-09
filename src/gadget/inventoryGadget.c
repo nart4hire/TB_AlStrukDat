@@ -45,13 +45,13 @@ void displayInventoryGadget(ListPos l) {
     printf("\n");
 }
 
-void kainPembungkusWaktu(int timePerishableItemAwal,int* timePerishableItem) {
+void kainPembungkusWaktu(int timePerishableItem,int* sisaWaktu) {
 // I.S. timePerishableItem adalah sisa waktu perishable item teratas pada tas
 // timePerishableItemAwal adalah waktu awal perishable item 
 // F.S. timePerishableItem kembali ke durasi semula (timePerishableItem = timePerishableItemAwal)
 // KAMUS LOKAL
 // ALGORITMA
-    *timePerishableItem = timePerishableItemAwal;
+    *sisaWaktu = timePerishableItem;
 }
 
 void senterPembesar(int* kapasitasTas) {
@@ -84,47 +84,56 @@ void mesinWaktu(int* time) {
     }
 }
 
-void senterPengecil(char* jenisItem, int* increaseTime) {
+void senterPengecil(char jenisItem[], int* increaseTime) {
 // I.S. jenisItem adalah jenis Item teratas di Tas. 
 // dan increaseTime adalah waktu yang ditambahkan ke waktu yang sedang berjalan
 // F.S. Jika jenis item teratas Tas adalah heavy maka effeknya akan dihilangkan
 // yaitu increaseTime dikurangi 1
-    if (strcmp(jenisItem,"heavy") == 1) {
+    if (strcmp(jenisItem,"heavy") == 0) {
         *increaseTime = *increaseTime - 1;
     }
 }
 
-void inventory(int command, ListPos* l) {
+void inventory(int command, ListPos* l, int* gadget) {
 // I.S. l adalah list inventory gadget dan sebelumnya sudah terdefinisi
 // F.S. jika item ada di inventory gadget maka gadget akan di remove dari l
-// jika tidak ditampilkan pesan "Tidak ada Gadget yang dapat digunakan!"
+// dan gadget berisi nomer jenis gadget (misal 1 adalah nomor untuk gadget jenis kain pembungkus waktu)
+// jika tidak ditampilkan pesan "Tidak ada Gadget yang dapat digunakan!" dan gadget berisi VAL_UNDEF
 // KAMUS LOKAL
 // ALGORITMA
     int val;
     if (command >= 1 && command <= 5) {
         if (isEmpty_ListPos(*l)) {
             printf("Tidak ada Gadget yang dapat digunakan\n\n");
+            *gadget = VAL_UNDEF;
         } else if (ELMT_LISTPOS(*l, command - 1) == VAL_UNDEF) {
             printf("Gadget kosong!\n\n");
+            *gadget = VAL_UNDEF;
         } else {
             if (ELMT_LISTPOS(*l,command - 1) == 1) {
                 printf("Kain Pembungkus Waktu berhasil digunakan!\n\n");
                 deleteAt_ListPos(l,command-1,&val);
+                *gadget = 1;
             } else if (ELMT_LISTPOS(*l,command - 1) == 2) {
                 printf("Senter Pembesar berhasil digunakan!\n\n");
                 deleteAt_ListPos(l,command-1,&val);
+                *gadget = 2;
             } else if (ELMT_LISTPOS(*l,command - 1) == 3) {
                 printf("Pintu Kemana Saja berhasil digunakan!\n\n");
                 deleteAt_ListPos(l,command-1,&val);
+                *gadget = 3;
             } else if (ELMT_LISTPOS(*l,command - 1) == 4) {
                 printf("Mesin Waktu berhasil digunakan!\n\n");
                 deleteAt_ListPos(l,command-1,&val);
+                *gadget = 4;
             } else if (ELMT_LISTPOS(*l,command - 1) == 5) {
                 printf("Senter Pengecil berhasil digunakan!\n\n");
                 deleteAt_ListPos(l,command-1,&val);
+                *gadget = 5;
             }
         } 
     } else {
         printf("Command salah!\n\n");
+        *gadget = VAL_UNDEF;
     }
 }
