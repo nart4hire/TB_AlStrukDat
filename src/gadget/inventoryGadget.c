@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include "inventoryGadget.h"
-#include <string.h>
 
 // void createInventoryGadget(ListPos* l) {
 // // I.S. list l sembarang
@@ -89,7 +88,21 @@ void senterPengecil(char jenisItem[], int* increaseTime) {
 // dan increaseTime adalah waktu yang ditambahkan ke waktu yang sedang berjalan
 // F.S. Jika jenis item teratas Tas adalah heavy maka effeknya akan dihilangkan
 // yaitu increaseTime dikurangi 1
-    if (strcmp(jenisItem,"heavy") == 0) {
+// KAMUS LOKAL
+	int i = 0;
+    boolean flag;
+    char str[] = "heavy";
+// ALGORITMA
+  	while(jenisItem[i] == str[i])
+  	{
+  		if(jenisItem[i] == '\0' && str[i] == '\0')
+	  		break;
+		i++;
+	}
+
+	flag = (jenisItem[i] - str[i]) == 0;
+
+    if (flag) {
         *increaseTime = *increaseTime - 1;
     }
 }
