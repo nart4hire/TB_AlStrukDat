@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 char currentChar;
-boolean eot;
+boolean eot, eol;
 
 static FILE *tape;
 static int retval;
@@ -25,21 +25,6 @@ void start()
        adv();
 }
 
-boolean config(char *file, int length)
-{
-       char folder[60] = "./Config/";
-       for (int i = 9; i < length + 9; i++)
-       {
-              folder[i] = file[i-9];
-       }
-       folder[length + 9] = '\0';
-       tape = fopen(folder, "r");
-       if (tape == NULL)
-              return 0;
-       adv();
-       return 1;
-}
-
 void adv()
 {
        /* Pita dimajukan satu karakter. 
@@ -50,12 +35,22 @@ void adv()
 
        /* Algoritma */
        retval = fscanf(tape, "%c", &currentChar);
-       eot = (retval == EOF);
+       eot = (currentChar == MARK);
        if (eot)
               fclose(tape);
 }
 
-void end()
+void config()
 {
-       fclose(tape);
+       tape = fopen("./Config/Config.txt", "r");
+       advf();
+}
+
+
+void advf()
+{
+       retval = fscanf(tape, "%c", &currentChar);
+       eot = (currentChar == MARK);
+       if (eot)
+              fclose(tape);
 }

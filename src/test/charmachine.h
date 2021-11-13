@@ -9,7 +9,7 @@
 #define MARK '.'
 /* Char Engine State */
 extern char currentChar;
-extern boolean eot;
+extern boolean eot, eol;
 
 void start();
 /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
@@ -19,8 +19,6 @@ void start();
           Jika currentChar != MARK maka EOP akan padam (false)
           Jika currentChar = MARK maka EOP akan menyala (true) */
 
-boolean config(char *file, int length);
-
 void adv();
 /* Pita dimajukan satu karakter. 
    I.S. : Karakter pada jendela = currentChar, currentChar != MARK
@@ -28,6 +26,8 @@ void adv();
           currentChar mungkin = MARK
           Jika  currentChar = MARK maka EOP akan menyala (true) */
 
-void close();
+void config();
+
+void advf();
 
 #endif

@@ -6,6 +6,7 @@
 
 #include "boolean.h"
 #include "charmachine.h"
+// #include "commands.h"
 
 #define CAPACITY_WORDMACHINE 50
 #define BLANK ' '
@@ -19,6 +20,7 @@ typedef struct {
 /* Word Engine State */
 extern boolean endLine;
 extern boolean endWord;
+extern boolean inGame;
 extern Word currentWord;
 
 void ignoreBlank();
@@ -34,16 +36,12 @@ void startWord();
           atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
           currentChar karakter pertama sesudah karakter terakhir kata */
 
-boolean startFile(char *file, int length);
-
 void advWord();
 /* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi 
    F.S. : currentWord adalah kata terakhir yang sudah diakuisisi, 
           currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika currentChar = MARK, endWord = true.		  
    Proses : Akuisisi kata menggunakan procedure copyWord */
-
-void advFile();
 
 void copyWord();
 /* Mengakuisisi kata, menyimpan dalam currentWord
@@ -53,13 +51,15 @@ void copyWord();
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi CAPACITY_WORDMACHINE, maka sisa kata terpotong */
 
-void copyWordFile();
+// Tambahan
+void parseCommand();
 
-void endFile();
+void startFile();
 
-void displayCurrentWord(Word currentWord);
-/* Menampilkan currrentWord pada terminal
-   I.S. : currentWord berisi kata yang sudah diakuisisi;
-   F.S. : currentWord tertampil pada layar. */
+void advFile();
+
+void copyLine();
+
+void displayCurrentWord();
 
 #endif

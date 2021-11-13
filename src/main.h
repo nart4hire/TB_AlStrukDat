@@ -10,5 +10,6 @@
 #include "stack.h"
 
 #include "config.c"
+#include "command.c"
 
 #endif
