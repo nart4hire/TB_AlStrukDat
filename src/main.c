@@ -4,6 +4,6 @@
 int main(int argc, char const *argv[])
 {
     char configs[512][CAPACITY_WORDMACHINE];
-    // Menu(configs);
-    Game();
+    Menu(configs);
+    Game(configs);
 }

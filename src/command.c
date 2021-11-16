@@ -1,14 +1,99 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "wordmachine.h"
+#include "matrix.h"
+#include "listdinpos.h"
+#include "main.h"
+
+char mobita = '8';
+
+void move(Matrix adj, ListDin points)
+{
+    boolean found = false;
+    IdxType x = indexOf_ListDin(points, mobita);
+    ListDin temp;
+    CreateListDin(&temp, 100);
+    for (int i = 0; i < COLS(adj); i++)
+    {
+        if (ELMT_MATRIX(adj, x, i) == ADJACENT)
+            insertLast_ListDin(&temp, ELMT_LISTDIN(points, i), NAME(points, i));
+    }
+    while (!found)
+    {
+        printf("\nCities Mobita can reach:\n\n");
+        displayList_ListDin(temp);
+        printf("\nEnter the number of the city you want Mobita to go to! (Enter \"0\" to return)\n\n");
+        printf("ENTER COMMAND: ");
+        advWord();
+        sscanf(currentWord.contents, "%d", &x);
+        if (x == 0)
+        {
+            found = true;
+            printf("\n\"Mobita shakes his head and decides to stay at his current city. Mobita remembers");
+            printf("\nDoraemonangis telling him he should think before he acts.\"\n\n");
+        }
+        else if (isIdxEff_ListDin(temp, x - 1))
+        {
+            found = true;
+            mobita = NAME(temp, x - 1);
+            printf("\n\"Mobita Hapily moves towards city %c at coordinates ", NAME(temp, x - 1));
+            TulisPOINT(ELMT_LISTDIN(temp, x - 1));
+            printf(". You can hear him humming\nas he thinks about all the money he is going to make.\"\n\n");
+        }
+        else
+        {
+            printf("\n\"Entered a wrong city number, Nobita gained <Confusion> status.\n");
+            printf("Nobita scrathed his head and did <nothing>.\"\n");
+        }
+    }
+}
+
+void getColor(char **color, Matrix adj, ListDin points,char loc)
+{
+    IdxType x = indexOf_ListDin(points, mobita), y = indexOf_ListDin(points, loc);
+    if (x == y)
+        *color = mob_color;
+    else if (ELMT_MATRIX(adj, x, y) == ADJACENT)
+        *color = dest_color;
+    else
+        *color = none_color;
+}
+
+void displayMap(Matrix map, Matrix adj, ListDin points)
+{
+    char *color;
+
+    printf("%s", bg_color);
+    for (int i = 0; i < COLS(map) + 1; i++)
+        printf("* ");
+    printf("*");
+    printf("%s\n", normal);
+
+    for (int i = 0; i < ROWS(map); i++)
+    {
+        printf("%s* ", bg_color);
+        for (int j = 0; j < COLS(map); j++)
+        {
+            getColor(&color, adj, points, ELMT_MATRIX(map, i, j));
+            printf("%s%c%s ", color, ELMT_MATRIX(map, i, j), clear);
+        }
+        printf("*%s\n", normal);
+    }
+    
+    printf("%s", bg_color);
+    for (int i = 0; i < COLS(map) + 1; i++)
+        printf("* ");
+    printf("*");
+    printf("%s\n", normal);
+}
 
 int parseCommand() // simple hash penjumlahan char
 {
     // Commands:
     // PREGAME:
-    // NEW GAME: 548
-    // EXIT: 314
-    // LOAD GAME: 602
+    // NEW GAME -> 548
+    // EXIT -> 314
+    // LOAD GAME -> 602
     // INGAME:
     // MOVE -> 311
     // PICK_UP -> 555
@@ -95,10 +180,20 @@ int Menu(char cfg[][CAPACITY_WORDMACHINE])
     return 1;
 }
 
-int Game()
+int Game(char cfg[][CAPACITY_WORDMACHINE])
 {
-    int command;
+
+    int command, x;
     boolean running = 1;
+    Matrix map, adj;
+    ListDin locs;
+    // Reading Configs
+    locs = parsePoints(cfg);
+    map = parseMap(cfg, locs);
+    adj = parsePath(cfg);
+    // map = parseMap(cfg, locs);
+
+    // Game
     printf("ENTER COMMAND: ");
     startWord();
     command = parseCommand();
@@ -108,7 +203,7 @@ int Game()
         {
         case 311:
             /* MOVE */
-            printf("Tried to <MOVE>, but command hasn't been implemented yet\n");
+            move(adj, locs);
             break;
         case 555:
             /* PICK_UP */
@@ -124,7 +219,15 @@ int Game()
             break;
         case 222:
             /* MAP */
-            printf("Tried to <MAP>, but command hasn't been implemented yet\n");
+            printf("\n\"Mobita has forgotten what his city looks like, but remembers he has the magical map\n");
+            printf("that Doraemonangis gave him that shows where each city is and its details.\"\n\n");
+            printf("Map:\n\n");
+            displayMap(map, adj, locs);
+            printf("\n\nLegend:\n");
+            printf("%sYellow%s : Mobita is here\n", mob_color, clear);
+            printf("%sRed%s    : Mobita can pick up items at this city\n", pickup_color, clear);
+            printf("%sBlue%s   : Mobita can drop off items at this city\n", dropoff_color, clear);
+            printf("%sGreen%s  : Mobita can move to this city\n\n", dest_color, clear);
             break;
         case 405:
             /* TO_DO */
