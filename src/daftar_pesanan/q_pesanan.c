@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "q_todo.h"
+#include "q_pesanan.h"
 
 // #define IDX_UNDEF -1
 // #define CAPACITY_QUEUE 100
@@ -64,17 +64,21 @@ int length_Queue(Queue q)
 
 // *** Primitif Add/Delete *** */
 
-void enqueue(Queue *q, char pick, char drop, char item, Time per_time)
+void enqueue(Queue *q, ElType_Queue val)
 {
+    int prev_idx, current_idx;
+    ElType_Queue temp;
     if (isEmpty_Queue(*q))
     {
         IDX_HEAD(*q) = 0;
         IDX_TAIL(*q) = 0;
+        TAIL_VAL(*q) = val;
     }
     else
     {
         if (IDX_TAIL(*q) == CAPACITY_QUEUE - 1)
         {
+            //Kondisi penuh semu
             for (int i = IDX_HEAD(*q); i <= IDX_TAIL(*q); i++)
             {
                 (*q).buffer[i - IDX_HEAD(*q)] = (*q).buffer[i];
@@ -83,28 +87,33 @@ void enqueue(Queue *q, char pick, char drop, char item, Time per_time)
             IDX_HEAD(*q) = 0;
         }
         IDX_TAIL(*q)++;
+        TAIL_VAL(*q) = val;
+        //masukkan val sesuai priority
+        prev_idx = IDX_TAIL(*q)-1;
+        current_idx = IDX_TAIL(*q);
+        while (((*q).buffer[prev_idx].tServe > (*q).buffer[current_idx].tServe) && current_idx > IDX_HEAD(*q)){
+            temp = (*q).buffer[prev_idx];
+            (*q).buffer[prev_idx] = (*q).buffer[current_idx];
+            (*q).buffer[current_idx] = temp;
+            prev_idx--;
+            current_idx--;
+        }
     }
-    TAIL_PICK(*q) = pick;
-    TAIL_DROP(*q) = drop;
-    TAIL_ITEM(*q) = item;
-    TAIL_PTIME(*q) = per_time;
 }
+
 // Proses: Menambahkan val pada q dengan aturan FIFO */
 // I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 // F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur".
 // Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen q
 // menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
 
-void dequeue(Queue *q, char *pick, char *drop, char *item, Time *per_time)
+void dequeue(Queue *q, ElType_Queue *val)
 {
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., HEAD dan IDX_HEAD "mundur"; 
         q mungkin kosong */
-    *pick = HEAD_PICK(*q);
-    *drop = HEAD_DROP(*q);
-    *item = HEAD_ITEM(*q);
-    *per_time = HEAD_PTIME(*q);
+    *val = HEAD_VAL(*q);
     if (IDX_HEAD(*q) == IDX_TAIL(*q))
     {
         IDX_HEAD(*q) = IDX_UNDEF;
@@ -139,6 +148,9 @@ void displayQueue(Queue q)
             }
             else if (q.buffer[i].item == 'H'){
                 printf("(Heavy Item)");
+            }
+            else if (q.buffer[i].item == 'V'){
+                printf("(VIP Item)");
             }
             else{
                 printf("(Perishable Item, sisa waktu %d)", q.buffer[i].pTime);

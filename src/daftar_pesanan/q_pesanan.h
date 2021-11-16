@@ -12,6 +12,7 @@
 
 /* Definisi elemen dan address */
 typedef struct {
+        Time tServe;
         char pickUp;
         char dropOff;
         char item;
@@ -28,10 +29,14 @@ typedef struct {
 /* Jika q adalah Queue, maka akses elemen : */
 #define IDX_HEAD(q) (q).idxHead
 #define IDX_TAIL(q) (q).idxTail
+#define HEAD_VAL(q) (q).buffer[(q).idxHead]
+#define HEAD_TSERVE(q) (q).buffer[(q).idxHead].tServe
 #define HEAD_PICK(q) (q).buffer[(q).idxHead].pickUp
 #define HEAD_DROP(q) (q).buffer[(q).idxHead].dropOff
 #define HEAD_ITEM(q) (q).buffer[(q).idxHead].item
 #define HEAD_PTIME(q) (q).buffer[(q).idxHead].pTime
+#define TAIL_VAL(q) (q).buffer[(q).idxTail]
+#define TAIL_TSERVE(q) (q).buffer[(q).idxTail].tServe
 #define TAIL_PICK(q) (q).buffer[(q).idxTail].pickUp
 #define TAIL_DROP(q) (q).buffer[(q).idxTail].dropOff
 #define TAIL_ITEM(q) (q).buffer[(q).idxTail].item
@@ -57,14 +62,14 @@ int length_Queue(Queue q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika q kosong. */
 
 /* *** Primitif Add/Delete *** */
-void enqueue(Queue *q, char pick, char drop, char item, Time per_time);
-/* Proses: Menambahkan info pada q dengan aturan FIFO */
+void enqueue(Queue *q, ElType_Queue val);
+/* Proses: Menambahkan info pada q dengan aturan FIFO sesuai dengan waktu masuk*/
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
 /* F.S. info baru menjadi TAIL yang baru, IDX_TAIL "mundur".
         Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen q
         menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
 
-void dequeue(Queue *q, char *pick, char *drop, char *item, Time *per_time);
+void dequeue(Queue *q, ElType_Queue *val);
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., HEAD dan IDX_HEAD "mundur"; 
