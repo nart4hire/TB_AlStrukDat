@@ -23,6 +23,8 @@
 #include "list_todo.h"
 #include "q_pesanan.h"
 
+#include "gadget.h"
+
 #include "config.c"
 #include "map.c"
 #include "command.c"

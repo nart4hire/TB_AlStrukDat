@@ -237,8 +237,6 @@ void deleteAt_ListInPro(ListLinked *l, Time *t_serve, char *pickUp, char *dropOf
     }
 }
 
-
-
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 int length_ListInPro(ListLinked l){
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */

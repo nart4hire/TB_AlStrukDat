@@ -7,24 +7,33 @@
 #include "main.h"
 
 char mobita = '8';
+int cash = 0;
 
 void wipeScreen()
 {
     printf("%s", wipe);
 }
 
-void advanceOrders(Queue *orders, ListLinked *todo)
+void displayStats(ListDin locations, Queue orders, ListLinked todo)
+{
+    if (mobita != HEADQUARTERS)
+        printf("Nobita's position: %c at coordinates ", mobita);
+    else
+        printf("Nobita's position: Headquarters at coordinates ");
+    TulisPOINT(ELMT_LISTDIN(locations, indexOf_ListDin(locations, mobita)));
+    printf("\nTime now: %d\n", time_game);
+    printf("Balance: %d yen\n", cash);
+    printf("Orders left: %d\n\n", length_Queue(orders) + length_ListOrder(todo));
+}
+
+void advanceTurn(Queue *orders, ListLinked *todo)
 {
     ElType_Queue ord;
-    while (HEAD_TSERVE(*orders) <= time_game)
+    advTime();
+    while (!isEmpty_Queue(*orders) && HEAD_TSERVE(*orders) <= time_game)
     {
         dequeue(orders, &ord);
-        insertFirst_ListOrder(todo, ord.tServe, ord.pickUp, ord.dropOff, ord.item, ord.pTime);
-    }
-    if (!isEmpty_Queue(*orders))
-    {
-        displayQueue(*orders);
-        displayList_ListOrder(*todo);
+        insertLast_ListOrder(todo, ord.tServe, ord.pickUp, ord.dropOff, ord.item, ord.pTime);
     }
 }
 
@@ -225,25 +234,31 @@ int Menu(char cfg[][CAPACITY_WORDMACHINE])
 
 int Game(char cfg[][CAPACITY_WORDMACHINE])
 {
-    int command, x;
-    boolean running = 1;
+    int command, input, x;
+    boolean running = 1, done;
     Matrix map, adj;
     ListDin locs;
     Queue ords;
     ListLinked todo;
+    ListPos inv;
 
     // Reading Configs
     locs = parsePoints(cfg);
     map = parseMap(cfg, locs);
     adj = parsePath(cfg);
     ords = parseOrders(cfg);
+    CreateListOrder(&todo);
+    CreateListPos(&inv);
     startTime();
-    advTime();
-    advanceOrders(&ords, &todo);
 
     // Game
-    // wipeScreen();
-    // displayStats();
+    wipeScreen();
+    printf("\n\n\"The global pandemic of Covid-19 has taken a turn for the worse. Mobita's family business will be going\n");
+    printf("bankrupt soon. Luckily, Mobita is a very filial son and has decided to try and make ends meet by\n");
+    printf("working as a delivery man. He is no ordinary delivery man though, as his friend Doraemonangis\n");
+    printf("has decided to help him by giving him cool gadgets and items to help him do his job! Help\n");
+    printf("Mobita on his journey of making his parents pround and a little extra pocket money.\"\n\n");
+    displayStats(locs, ords, todo);
     printf("ENTER COMMAND: ");
     startWord();
     command = parseCommand();
@@ -255,6 +270,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
         case 311:
             /* MOVE */
             move(adj, locs);
+            advanceTurn(&ords, &todo);
             break;
         case 555:
             /* PICK_UP */
@@ -282,7 +298,11 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             break;
         case 405:
             /* TO_DO */
-            printf("Tried to <TO_DO>, but command hasn't been implemented yet\n");
+            printf("\n\"Mobita feels anxious like he might've missed an order. He is afraid that he might forget\n");
+            printf("what orders he should take. Luckily, he can just take a look at his To Do List.\"\n\n");
+            printf("To Do List:\n\n");
+            displayList_ListOrder(todo);
+            printf("\n");
             break;
         case 875:
             /* IN_PROGRESS */
@@ -290,7 +310,34 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             break;
         case 240:
             /* BUY */
-            printf("Tried to <BUY>, but command hasn't been implemented yet\n");
+            if (mobita == HEADQUARTERS)
+            {
+                printf("\n\"Mobita mulai merasa kesulitan menjadi seorang kurir barang. Karena berada di Headquarters, ia\n");
+                printf("pun bergegas masuk untuk membeli gadget dari Doraemonangis.\"\n\n");
+                
+                done = false;
+                do
+                {
+                    printf("Uang Anda sekarang: %d\n", cash);
+                    displayGadget();
+                    printf("ENTER GADGET NUMBER: ");
+                    advWord();
+                    input = parseCommand() - 48;
+                    if (input > 5 || input < 0)
+                    {
+                        printf("\n\"Mobita kebingungan mencari gadget yang sesuai karena semua gadget terlihat sangat bagus.\n");
+                        printf("Mobita mengalami kegalauan yang mendalam dan merenungi nasib.\"\n\n");
+                        printf("Masukan pemain tidak sesuai. Tolong beri masukan yang sesuai.\n\n");
+                    }
+                    else
+                        done = buy(input, &cash, &inv);
+                } while (!done);
+            }
+            else
+            {
+                printf("\n\"Mobita mulai merasa kesulitan menjadi seorang kurir barang. Namun karena ia tidak berada di\n");
+                printf("Headquarters, ia pun hanya bisa meratapi nasib dengan sedih.\"\n\n");
+            }
             break;
         case 718:
             /* INVENTORY */
@@ -321,6 +368,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             printf("or enter any valid command to continue the game.\n\n");
             break;
         }
+        displayStats(locs, ords, todo);
         printf("ENTER COMMAND: ");
         advWord();
         command = parseCommand();

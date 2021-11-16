@@ -136,7 +136,7 @@ void displayQueue(Queue q)
     int cnt = 1;
     if (isEmpty_Queue(q))
     {
-        printf("Belum ada pesanan masuk saat ini.");
+        printf("Belum ada pesanan masuk saat ini.\n");
     }
     else
     {

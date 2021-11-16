@@ -261,7 +261,8 @@ void displayList_ListOrder(ListLinked l)
     Address p = l;
     if (isEmpty_ListOrder(l))
     {
-        printf("Belum ada pesanan masuk saat ini.");
+        printf("\n\"No orders have come in, Mobita looks at his to do list with disappointment. Maybe he\n");
+        printf("should try moving around the city to kill some time he thinks to himself.\"\n");
     }
     else
     {
@@ -273,6 +274,9 @@ void displayList_ListOrder(ListLinked l)
             }
             else if (ITEM(p) == 'H'){
                 printf("(Heavy Item)");
+            }
+            else if (ITEM(p) == 'V'){
+                printf("(VIP Item)");
             }
             else{
                 printf("(Perishable Item, sisa waktu %d)", PER_TIME(p));
