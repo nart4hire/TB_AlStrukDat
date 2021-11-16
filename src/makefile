@@ -7,12 +7,12 @@ CFLAGS = -I $(HDIR) -I $(CDIR)
 ODIR = obj
 BDIR = bin
 
-_DEPS = boolean.h charmachine.h list_linked.h listdinpos.h listpos.h \
-        matrix.h node.h point.h queue.h stack.h wordmachine.h
+_DEPS = boolean.h charmachine.h listdinpos.h matrix.h point.h wordmachine.h \
+        list_order.h node_order.h time.h
 DEPS = $(patsubst %,$(HDIR)/%,$(_DEPS))
 
-_OBJ = charmachine.o list_linked.o listdinpos.o listpos.o \
-       matrix.o node.o point.o queue.o stack.o wordmachine.o
+_OBJ = charmachine.o listdinpos.o matrix.o point.o wordmachine.o \
+		list_order.o node_order.o time.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: $(CDIR)/%.c $(DEPS)

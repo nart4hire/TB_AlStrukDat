@@ -16,12 +16,11 @@
 #define wipe                "\x1b[2J\x1b[H"
 
 #include "point.h"
-#include "listpos.h"
 #include "listdinpos.h"
 #include "matrix.h"
 #include "wordmachine.h"
-#include "queue.h"
-#include "stack.h"
+
+#include "list_order.h"
 
 #include "config.c"
 #include "map.c"

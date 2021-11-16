@@ -23,7 +23,7 @@ void move(Matrix adj, ListDin points)
         printf("\nCities Mobita can reach:\n\n");
         displayList_ListDin(temp);
         printf("\nEnter the number of the city you want Mobita to go to! (Enter \"0\" to return)\n\n");
-        printf("ENTER COMMAND: ");
+        printf("ENTER CITY NUMBER: ");
         advWord();
         sscanf(currentWord.contents, "%d", &x);
         if (x == 0)
@@ -46,6 +46,7 @@ void move(Matrix adj, ListDin points)
             printf("Nobita scrathed his head and did <nothing>.\"\n");
         }
     }
+    dealocate(&temp);
 }
 
 void getColor(char **color, Matrix adj, ListDin points,char loc)
@@ -187,6 +188,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
     boolean running = 1;
     Matrix map, adj;
     ListDin locs;
+    ListLinked orders;
     // Reading Configs
     locs = parsePoints(cfg);
     map = parseMap(cfg, locs);
