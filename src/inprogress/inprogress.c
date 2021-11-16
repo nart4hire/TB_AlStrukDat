@@ -95,7 +95,7 @@ void insertFirst_ListInPro(ListLinked *l, Time t_serve, char pickUp, char dropOf
     /*Kamus*/
     Address p;
     /*Algoritma*/
-    p = newNode(t_serve, pickUp, dropOff, item, perTime);
+    p = newNode(t_serve, dropOff, item, perTime);
     if (p != NULL){
         NEXT(p) = *l;
         *l = p;
@@ -111,7 +111,7 @@ void insertLast_ListInPro(ListLinked *l, Time t_serve, char pickUp, char dropOff
     /*Kamus*/
     Address p, last;
     /*Algoritma*/
-    p = newNode(t_serve, pickUp, dropOff, item, perTime);
+    p = newNode(t_serve, dropOff, item, perTime);
     if (isEmpty_ListInPro(*l)){
         if (p != NULL){
             NEXT(p) = *l;
@@ -143,7 +143,7 @@ void insertAt_ListInPro(ListLinked *l, Time t_serve, char pickUp, char dropOff, 
         insertFirst_ListInPro(l, t_serve, pickUp, dropOff, item, perTime);
     }
     else{
-        p = newNode(t_serve, pickUp, dropOff, item, perTime);
+        p = newNode(t_serve, dropOff, item, perTime);
         pos = 0;
         loc = *l;
         if (p != NULL){
