@@ -167,3 +167,13 @@ void displayQueue(Queue q)
 // F.S. Jika q tidak kosong: [e1,e2,...,en] */
 // Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 // Jika Queue kosong : menulis [] */
+
+ElType_Queue createOrder(Time tServe, char pickUp, char dropOff, char item, Time perTime){
+    ElType_Queue new;
+    new.tServe = tServe;
+    new.pickUp = pickUp;
+    new.dropOff = dropOff;
+    new.item = item;
+    new.pTime = perTime;
+    return new;
+}
