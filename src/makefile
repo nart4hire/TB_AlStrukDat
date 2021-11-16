@@ -8,11 +8,11 @@ ODIR = obj
 BDIR = bin
 
 _DEPS = boolean.h charmachine.h listdinpos.h matrix.h point.h wordmachine.h \
-        list_order.h node_order.h time.h
+        list_todo.h node_todo.h q_pesanan.h time.h
 DEPS = $(patsubst %,$(HDIR)/%,$(_DEPS))
 
 _OBJ = charmachine.o listdinpos.o matrix.o point.o wordmachine.o \
-		list_order.o node_order.o time.o
+       list_todo.o node_todo.o q_pesanan.o time.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: $(CDIR)/%.c $(DEPS)

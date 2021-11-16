@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "list_order.h"
+#include "list_todo.h"
 
 /****************** PEMBUATAN LIST KOSONG ******************/
 void CreateListOrder(ListLinked *l){
@@ -253,4 +253,33 @@ int length_ListOrder(ListLinked l){
         p = NEXT(p);
     }
     return cnt;
+}
+
+void displayList_ListOrder(ListLinked l)
+{
+    int cnt = 1;
+    Address p = l;
+    if (isEmpty_ListOrder(l))
+    {
+        printf("Belum ada pesanan masuk saat ini.");
+    }
+    else
+    {
+        while (p != NULL)
+        {
+            printf("%d. %c -> %c ", cnt, PICK(p), DROP(p));
+            if (ITEM(p) == 'N'){
+                printf("(Normal Item)");
+            }
+            else if (ITEM(p) == 'H'){
+                printf("(Heavy Item)");
+            }
+            else{
+                printf("(Perishable Item, sisa waktu %d)", PER_TIME(p));
+            }
+            printf("\n");
+            cnt++;
+            p = NEXT(p);
+        }
+    }
 }

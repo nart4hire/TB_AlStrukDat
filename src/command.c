@@ -3,16 +3,38 @@
 #include "wordmachine.h"
 #include "matrix.h"
 #include "listdinpos.h"
+#include "q_pesanan.h"
 #include "main.h"
 
 char mobita = '8';
+
+void wipeScreen()
+{
+    printf("%s", wipe);
+}
+
+void advanceOrders(Queue *orders, ListLinked *todo)
+{
+    ElType_Queue ord;
+    while (HEAD_TSERVE(*orders) <= time_game)
+    {
+        dequeue(orders, &ord);
+        insertFirst_ListOrder(todo, ord.tServe, ord.pickUp, ord.dropOff, ord.item, ord.pTime);
+    }
+    if (!isEmpty_Queue(*orders))
+    {
+        displayQueue(*orders);
+        displayList_ListOrder(*todo);
+    }
+}
 
 void move(Matrix adj, ListDin points)
 {
     boolean found = false;
     IdxType x = indexOf_ListDin(points, mobita);
+    int input = IDX_UNDEF;
     ListDin temp;
-    CreateListDin(&temp, 100);
+    CreateListDin(&temp, 26);
     for (int i = 0; i < COLS(adj); i++)
     {
         if (ELMT_MATRIX(adj, x, i) == ADJACENT)
@@ -25,19 +47,19 @@ void move(Matrix adj, ListDin points)
         printf("\nEnter the number of the city you want Mobita to go to! (Enter \"0\" to return)\n\n");
         printf("ENTER CITY NUMBER: ");
         advWord();
-        sscanf(currentWord.contents, "%d", &x);
-        if (x == 0)
+        sscanf(currentWord.contents, "%d", &input);
+        if (input == 0)
         {
             found = true;
             printf("\n\"Mobita shakes his head and decides to stay at his current city. Mobita remembers");
             printf("\nDoraemonangis telling him he should think before he acts.\"\n\n");
         }
-        else if (isIdxEff_ListDin(temp, x - 1))
+        else if (isIdxEff_ListDin(temp, input - 1))
         {
             found = true;
-            mobita = NAME(temp, x - 1);
-            printf("\n\"Mobita Hapily moves towards city %c at coordinates ", NAME(temp, x - 1));
-            TulisPOINT(ELMT_LISTDIN(temp, x - 1));
+            mobita = NAME(temp, input - 1);
+            printf("\n\"Mobita Hapily moves towards city %c at coordinates ", NAME(temp, input - 1));
+            TulisPOINT(ELMT_LISTDIN(temp, input - 1));
             printf(". You can hear him humming\nas he thinks about all the money he is going to make.\"\n\n");
         }
         else
@@ -90,23 +112,6 @@ void displayMap(Matrix map, Matrix adj, ListDin points)
 
 int parseCommand() // simple hash penjumlahan char
 {
-    // Commands:
-    // PREGAME:
-    // NEW GAME -> 548
-    // EXIT -> 314
-    // LOAD GAME -> 602
-    // INGAME:
-    // MOVE -> 311
-    // PICK_UP -> 555
-    // DROP_OFF -> 623
-    // RETURN -> 480
-    // MAP -> 222
-    // TO_DO -> 405
-    // IN_PROGRESS -> 875
-    // BUY -> 240
-    // INVENTORY -> 718
-    // HELP -> 297
-    // SAVE_GAME -> 680
     int tally = 0;
 
     for (int i = 0; i < currentWord.length; i++)
@@ -114,12 +119,49 @@ int parseCommand() // simple hash penjumlahan char
 
     return tally;
 }
+// Commands:
+// PREGAME:
+// NEW GAME -> 548
+// EXIT -> 314
+// LOAD GAME -> 602
+// INGAME:
+// MOVE -> 311
+// PICK_UP -> 555
+// DROP_OFF -> 623
+// RETURN -> 480
+// MAP -> 222
+// TO_DO -> 405
+// IN_PROGRESS -> 875
+// BUY -> 240
+// INVENTORY -> 718
+// HELP -> 297
+// SAVE_GAME -> 680
+
+Queue parseOrders(char cfg[][CAPACITY_WORDMACHINE])
+{
+    int x, y;
+    Time tserve, perish;
+    char pick, drop, item;
+    Queue orders;
+    CreateQueue(&orders);
+
+    sscanf(cfg[2], "%d", &x);
+    x = 2 * x + 4;
+    sscanf(cfg[x++], "%d", &y);
+    for (int i = 0; i < y; i++)
+    {
+        sscanf(cfg[i + x], "%d %c %c %c %d", &tserve, &pick, &drop, &item, &perish);
+        enqueue(&orders, createOrder(tserve, pick, drop, item, perish));
+    }
+    return orders;
+}
 
 int Menu(char cfg[][CAPACITY_WORDMACHINE])
 {
     int command, menu = 0;
     boolean found = false;
 
+    wipeScreen();
     printf("Hello, Welcome to Nobita's Delivery Service...\n");
     printf("Enter (NEW GAME) to start playing, or (LOAD GAME) to play\n");
     printf("a previously saved game. Enter (EXIT) to stop playing.\n\n");
@@ -183,23 +225,31 @@ int Menu(char cfg[][CAPACITY_WORDMACHINE])
 
 int Game(char cfg[][CAPACITY_WORDMACHINE])
 {
-
     int command, x;
     boolean running = 1;
     Matrix map, adj;
     ListDin locs;
+    Queue ords;
+    ListLinked todo;
+
     // Reading Configs
     locs = parsePoints(cfg);
     map = parseMap(cfg, locs);
     adj = parsePath(cfg);
-    // map = parseMap(cfg, locs);
+    ords = parseOrders(cfg);
+    startTime();
+    advTime();
+    advanceOrders(&ords, &todo);
 
     // Game
+    // wipeScreen();
+    // displayStats();
     printf("ENTER COMMAND: ");
     startWord();
     command = parseCommand();
     while (running)
     {
+        wipeScreen();
         switch (command)
         {
         case 311:

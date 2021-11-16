@@ -27,3 +27,7 @@ void timeMachine(){
         time_game -= 50;
     }
 }
+
+void displayTime(){
+    printf("%d", time_game);
+}

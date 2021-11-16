@@ -13,14 +13,15 @@
 
 #define normal              "\x1B[0m"
 #define clear               "\x1B[39m"
-#define wipe                "\x1b[2J\x1b[H"
+#define wipe                "\x1b[H\x1b[2J\x1b[H"
 
 #include "point.h"
 #include "listdinpos.h"
 #include "matrix.h"
 #include "wordmachine.h"
 
-#include "list_order.h"
+#include "list_todo.h"
+#include "q_pesanan.h"
 
 #include "config.c"
 #include "map.c"

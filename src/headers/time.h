@@ -21,4 +21,6 @@ void timeMachine();
    I.S. : Waktu telah dimulai, dan mungkin <50
    F.S. : Waktu berkurang 50, atau menjadi 0 jika <50*/
 
+void displayTime();
+
 #endif

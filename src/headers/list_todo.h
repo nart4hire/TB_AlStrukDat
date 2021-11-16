@@ -7,7 +7,7 @@
 #define LIST_H
 
 #include "boolean.h"
-#include "node_order.h"
+#include "node_todo.h"
 
 typedef Address ListLinked;
 
@@ -96,5 +96,7 @@ void deleteAt_ListOrder(ListLinked *l, Time *t_serve, char *pickUp, char *dropOf
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 int length_ListOrder(ListLinked l);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
+
+void displayList_ListOrder(ListLinked l);
 
 #endif
