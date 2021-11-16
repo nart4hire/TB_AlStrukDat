@@ -57,7 +57,10 @@ void increaseCapacity(int amount);
 /* Mengembalikan false di kasus sebaliknya */
 /* stack_capacity bernilai maksimal 100 */
 
+
 void displayStack(Stack s);
-void setCapacity(int amount);
+
+
+// void setCapacity(int amount);
 
 #endif

@@ -24,6 +24,8 @@
 
 // *** Konstruktor/Kreator *** 
 
+int stack_capacity = 3;
+
 void CreateStack(Stack *s)
 {
     IDX_TOP(*s) = IDX_UNDEF;
@@ -64,6 +66,23 @@ void pop(Stack *s, Pesanan *val)
 {
     *val = TOP(*s);
     --IDX_TOP(*s);
+}
+
+void increaseCapacity(int amount){
+    if(stack_capacity != CAPACITY){
+        if(stack_capacity + amount >= CAPACITY){
+            stack_capacity = CAPACITY;
+        }else{
+            stack_capacity += amount;
+        }
+    }
+}
+
+void displayStack(Stack s){
+    for(int i = 0; i <= IDX_TOP(s);i++){
+        printf("%d. ", i+1);
+        displayItem(tipeItem(s.buffer[i]));
+    }
 }
 // Menghapus val dari Stack s 
 // I.S. s tidak mungkin kosong 
