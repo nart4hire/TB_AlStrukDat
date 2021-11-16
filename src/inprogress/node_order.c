@@ -4,13 +4,13 @@
 #include "node_order.h"
 #include <stdlib.h>
 
-Address newNode(Time time, char pickUp, char dropOff, char item, Time perTime)
+Address newNode(Time time, char dropOff, char item, Time perTime)
 {
     Address p = (Address)malloc(sizeof(Node));
     if (p != NULL)
     {
         T_SERVE(p) = time;
-        PICK(p) = pickUp;
+        // PICK(p) = pickUp;
         DROP(p) = dropOff;
         ITEM(p) = item;
         PER_TIME(p) = perTime;
