@@ -36,38 +36,32 @@ int lengthPrioQueue(PrioQueue pq){
 }
 
 /*** Primitif Add/Delete ***/
-void enqueue(PrioQueue *pq, Pesanan val){
-    /* Proses: Menambahkan val pada pq dengan aturan FIFO */
-    /* I.S. pq mungkin kosong, tabel penampung elemen pq TIDAK penuh */
-    /* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur".
-            Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen pq
-            menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
-    int i;
-    Pesanan temp;
-
-    if (isEmpty(*pq)) {
-        IDX_HEAD(*pq) = 0;
-        IDX_TAIL(*pq) = 0;
-    } else {
-        if (IDX_TAIL(*pq) == CAPACITY - 1) {
-            for (i = IDX_HEAD(*pq); i <= IDX_TAIL(*pq); i++) {
-                pq->buffer[i - IDX_HEAD(*pq)] = pq->buffer[i];
-            }
-            IDX_TAIL(*pq) -= IDX_HEAD(*pq);
-            IDX_HEAD(*pq) = 0;
-        }
-        IDX_TAIL(*pq)++;
-    }
+void enqueue(PrioQueue *pq, Pesanan val)
+{
+  if(isEmpty(*pq)){
+    IDX_HEAD(*pq) = 0;
+    IDX_TAIL(*pq) = 0;
     TAIL(*pq) = val;
-
-    i = IDX_TAIL(*pq);
-
-    while ((i > 0) && (pq->buffer[i - 1].score < pq->buffer[i].score) || ((pq->buffer[i - 1].score == pq->buffer[i].score) && (pq->buffer[i - 1].tArrival > pq->buffer[i].tArrival))) {
-        temp = pq->buffer[i - 1];
-        pq->buffer[i - 1] = pq->buffer[i];
-        pq->buffer[i] = temp;
-        i--;
+  }else{
+    if(IDX_HEAD(*pq) != 0 && IDX_TAIL(*pq) == CAPACITY - 1){
+      geserKiri(pq);
     }
+    boolean found = false;
+    for(int i = IDX_HEAD(*pq); i <= IDX_TAIL(*pq); i++){
+      if(val.t < (*pq).buffer[i].t){
+        found = true;
+        for(int j = IDX_TAIL(*pq); j >= i; j--){
+          (*pq).buffer[j+1] = (*pq).buffer[j];
+        }
+        (*pq).buffer[i] = val;
+        break;
+      }
+    }
+    IDX_TAIL(*pq)++;
+    if(!found){
+      TAIL(*pq) = val;
+    }
+  }
 }
 
 
