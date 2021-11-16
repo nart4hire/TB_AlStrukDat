@@ -3,7 +3,7 @@
 // TOP adalah alamat elemen puncak 
 
 #include <stdio.h>
-#include "stack.h"
+#include "tas.h"
 
 // CONSTANTS:
 // #define IDX_UNDEF -1
@@ -43,13 +43,13 @@ boolean isEmpty_Stack(Stack s)
 
 boolean isFull_Stack(Stack s)
 {
-    return (IDX_TOP(s) == CAPACITY_STACK - 1);
+    return (IDX_TOP(s) == CAPACITY - 1);
 }
 // Mengirim true jika tabel penampung nilai s stack penuh 
 
 // ************ Menambahkan sebuah elemen ke Stack ************ 
 
-void push(Stack *s, ElType_Stack val)
+void push(Stack *s, Pesanan val)
 {
     ++IDX_TOP(*s);
     TOP(*s) = val;
@@ -60,7 +60,7 @@ void push(Stack *s, ElType_Stack val)
 
 // ************ Menghapus sebuah elemen Stack ************ 
 
-void pop(Stack *s, ElType_Stack *val)
+void pop(Stack *s, Pesanan *val)
 {
     *val = TOP(*s);
     --IDX_TOP(*s);
