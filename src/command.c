@@ -188,7 +188,6 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
     boolean running = 1;
     Matrix map, adj;
     ListDin locs;
-    ListLinked orders;
     // Reading Configs
     locs = parsePoints(cfg);
     map = parseMap(cfg, locs);
