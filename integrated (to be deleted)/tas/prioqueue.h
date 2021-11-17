@@ -6,13 +6,20 @@
 #define PRIOQUEUE_H
 
 #include "boolean.h"
-#include "item.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 /* Konstanta */
 #define IDX_UNDEF -1
 #define CAPACITY 100
+
+typedef struct {
+    char type;
+    char* type_desc;
+    int value;
+    int expiry;
+    int expiry_now;
+} Item;
 
 /* Deklarasi ElType */
 typedef struct {

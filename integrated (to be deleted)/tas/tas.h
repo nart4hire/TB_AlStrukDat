@@ -6,8 +6,11 @@
 #define STACK_H
 
 #include "boolean.h"
-#include "const.h"
 #include "prioqueue.h"
+
+#define STACK_CAPACITY 3
+#define CAPACITY 100
+#define IDX_UNDEF -1
 
 typedef Pesanan StackElType;
 typedef struct {

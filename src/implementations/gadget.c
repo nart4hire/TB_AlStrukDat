@@ -53,7 +53,9 @@ boolean buy(int command, int* uang, ListPos* l) {
 // KAMUS LOKAL
 // -
 // ALGORITMA
-    if (isFull_ListPos(*l)) {
+    if (isFull_ListPos(*l) && command != 0) {
+        printf("\n\"Mobita, dalam shopping spree yang ia lakukan lupa bahwa ransel yang ia bawa memiliki kapasitas terbatas.\n");
+        printf("Dengan berat hati ia pun meninggalkan toko milik Doraemonangis itu.\"\n\n");
         printf("Inventori gadget penuh!\n\n");
     } else {
         switch (command) {

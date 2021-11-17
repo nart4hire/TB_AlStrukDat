@@ -7,7 +7,7 @@
 #include "main.h"
 
 char mobita = '8';
-int cash = 0;
+int cash = 10000;
 
 void wipeScreen()
 {
