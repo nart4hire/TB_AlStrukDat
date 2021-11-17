@@ -1,14 +1,13 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "boolean.h"
-#include "time.h"
- 
+#include "ability.h"
+
 typedef struct{
         Time tServe;
         char pickUp;
         char dropOff;
-        char *type_item;
+        char type_item;
         Time pTime;
 } item;
 
@@ -18,33 +17,27 @@ typedef struct{
 #define TYPE(p) (p).type_item
 #define PTIME(p) (p).pTime
 
+extern int cash;
+
+void initCash(int money);
+
 item createItem(Time tServe, char pickUp, char dropOff, char type_item, Time pTime);
 
-void displayItem(item i);
+item copyItem(item src);
 
-boolean isNormal(item i);
+boolean isEqItem(item src, item dst);
+
+boolean isNormal(item it);
 /* Mengembalikan True apabila type item == normal*/
 
-boolean isHeavy(item i);
+boolean isHeavy(item it);
 /* Mengembalikan True apabila type item == heavy*/
 
-boolean isPerishable(item i);
+boolean isPerishable(item it);
 /* Mengembalikan true apabila type  item == perishable */
 
-boolean isVIP(item i);
+boolean isVIP(item it);
 /* Mengembalikan True apabila type item == VIP*/
-
-void HeavyEffect(int jumlah_heavy);
-/*I.S : Diketahui berapa jumlah heavy pada tas*/
-/*F.S : Untuk setiap heavy item yang ada dalam progress, maka waktu untuk melewati 1 unit lokasi bertambah sebanyak 1 unit waktu*/
-
-int StartPerishable(item *perish_item);
-/*I.S : Tidak ada (mem-pick up item perishable)*/
-/*F.S : Telah menerima input waktu dan mengubah waktu hangus dari sebuah item, lalu memulai perhitungan waktu hangus item*/
-
-void InProgressPerish(item *perish_item);
-/*I.S : tidak ada (terdapat perishable item pada inprogresslist*/
-/*F.S : menghitung mundur waktu dan perishable akan hangus jika waktu perjalanan melebihi batas waktu item*/
 
 void SuccessNormal();
 /*I.S : tidak ada ( diaktifkan ketika Berhasil mengantarkan item bertipe normal )*/
@@ -59,5 +52,8 @@ void SuccessPerishable();
 /*F.S : Bertambah uang sebesar 400 yen dan mengaktifkan item increase capacity*/
 
 void SuccessVIP();
+
+void displayItem(item it);
+// for testing driver
 
 #endif

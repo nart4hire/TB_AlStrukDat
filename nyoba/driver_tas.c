@@ -2,7 +2,6 @@
 #include "tas.h"
 #include "tas.c"
 
-
 int main(){
     Stack s;
     item i, j;

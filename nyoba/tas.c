@@ -11,7 +11,7 @@ int stack_capacity = 3;
 /* *** Konstruktor/Kreator *** */
 void CreateStack(Stack *s){
   IDX_TOP(*s) = IDX_UNDEF;
-  HEAVY(*s) = 0;
+  // HEAVY(TOP(*s)) = 0;
 }
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S kosong dengan kondisi sbb: */
@@ -32,9 +32,9 @@ boolean isStackFull(Stack s){
 void push(Stack *s, StackElType val){
   IDX_TOP(*s) += 1;
   TOP(*s) = val;
-  if(TYPE(val) == "Heavy"){
-    HEAVY(*s) += 1;
-  }
+  // if(TYPE(val) == 'H'){
+  //   // HEAVY(*s) += 1;
+  // }
 }
 /* Menambahkan val sebagai elemen Stack s */
 /* I.S. s mungkin kosong, tabel penampung elemen stack TIDAK penuh */
@@ -44,9 +44,9 @@ void push(Stack *s, StackElType val){
 void pop(Stack *s, StackElType *val){
   *val = TOP(*s);
   IDX_TOP(*s) -= 1;
-  if(TYPE(*val) == "Heavy"){
-    HEAVY(*s) -= 1;
-  }
+  // if(TYPE(*val) == "Heavy"){
+  //   // HEAVY(*s) -= 1;
+  // }
 }
 /* Menghapus val dari Stack s */
 /* I.S. s tidak mungkin kosong */

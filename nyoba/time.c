@@ -4,16 +4,15 @@
 Time time_game;
 
 void startTime(){
-/* I.S. : Waktu sembarang.
-   F.S. : Waktu diset menjadi 0*/
     time_game = 0;
 }
 
-void advTime(){
+void advTime(boolean speed, int heavy){
 /* Menambah waktu sebesar 1 satuan. 
-   I.S. : Waktu telah dimulai, dan bukan merupakan akhir dari permainan
-   F.S. : Waktu bertambah 1*/
-    time_game += 1;    
+    I.S. : Waktu telah dimulai, dan bukan merupakan akhir dari permainan
+    F.S. : Waktu bertambah 1*/
+    if (!speed)
+        time_game += 1 + heavy;    
 }
 
 void timeMachine(){
@@ -26,4 +25,8 @@ void timeMachine(){
     else{
         time_game -= 50;
     }
+}
+
+void displayTime(){
+    printf("%d", time_game);
 }

@@ -1,5 +1,5 @@
-#ifndef TIME_H
-#define TIME_H
+#ifndef GAME_TIME_H
+#define GAME_TIME_H
 
 #include "boolean.h"
 
@@ -11,7 +11,7 @@ void startTime();
 /* I.S. : Waktu sembarang.
    F.S. : Waktu diset menjadi 0*/
 
-void advTime();
+void advTime(boolean speed, int heavy);
 /* Menambah waktu sebesar 1 satuan. 
    I.S. : Waktu telah dimulai, dan bukan merupakan akhir dari permainan
    F.S. : Waktu bertambah 1*/
@@ -21,5 +21,6 @@ void timeMachine();
    I.S. : Waktu telah dimulai, dan mungkin <50
    F.S. : Waktu berkurang 50, atau menjadi 0 jika <50*/
 
+void displayTime();
 
 #endif
