@@ -2,14 +2,14 @@
 
 int cash; //variable global
 
-item createItem(Time tServe, char pickUp, char dropOff, char type_item, Time ptime)
+item createItem(Time tServe, char pickUp, char dropOff, char type_item, Time pTime)
 {
     item i;
     TSERVE(i) = tServe;
     PICKUP(i) = pickUp;
     DROPOFF(i) = dropOff;
     TYPE(i) = type_item;
-    PTIME(i) = ptime;
+    PTIME(i) = pTime;
     return i;
 }
 
