@@ -81,7 +81,7 @@ void increaseCapacity(int amount){
 void displayStack(Stack s){
     for(int i = 0; i <= IDX_TOP(s);i++){
         printf("%d. ", i+1);
-        displayItem(tipeItem(s.buffer[i]));
+        // displayItem(tipeItem(s.buffer[i]));
     }
 }
 // Menghapus val dari Stack s 

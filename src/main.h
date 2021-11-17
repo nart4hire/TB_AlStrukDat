@@ -23,7 +23,12 @@
 #include "list_todo.h"
 #include "q_pesanan.h"
 
+#include "inprogress.h"
+#include "tas.h"
+
 #include "gadget.h"
+
+#include "ability.h"
 
 #include "config.c"
 #include "map.c"

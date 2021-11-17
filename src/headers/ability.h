@@ -11,13 +11,10 @@ typedef struct {
     boolean rettosender;
 } ability;
 
-#define SPEED(p) (p).speedboost
-#define INCCAP(p) (p).inccapacity
-#define RETSENDER(p) (p).rettosender
-#define SPEEDTIMER(p) (p).timerspeedboost
-
-
-
+#define SPEED(a) (a).speedboost
+#define INCCAP(a) (a).inccapacity
+#define RETSENDER(a) (a).rettosender
+#define SPEEDTIMER(a) (a).timerspeedboost
 
 void ActSpeedBoost();
 /*I.S : Tidak ada (setelah berhasil mendropoff normal item)*/

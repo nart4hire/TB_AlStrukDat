@@ -80,18 +80,27 @@ void move(Matrix adj, ListDin points)
     dealocate(&temp);
 }
 
-void getColor(char **color, Matrix adj, ListDin points,char loc)
+void pickup()
+{
+    
+}
+
+void getColor(char **color, Matrix adj, ListDin points, ListLinked todo, ListLinked inpro, char loc)
 {
     IdxType x = indexOf_ListDin(points, mobita), y = indexOf_ListDin(points, loc);
     if (x == y)
         *color = mob_color;
+    else if (indexOfDrop_ListOrder(inpro, loc) != IDX_UNDEF)
+        *color = dropoff_color;
+    else if (indexOfPick_ListOrder(todo, loc) != IDX_UNDEF)
+        *color = pickup_color;
     else if (ELMT_MATRIX(adj, x, y) == ADJACENT)
         *color = dest_color;
     else
         *color = none_color;
 }
 
-void displayMap(Matrix map, Matrix adj, ListDin points)
+void displayMap(Matrix map, Matrix adj, ListDin points, ListLinked todo, ListLinked inpro)
 {
     char *color;
 
@@ -106,7 +115,7 @@ void displayMap(Matrix map, Matrix adj, ListDin points)
         printf("%s* ", bg_color);
         for (int j = 0; j < COLS(map); j++)
         {
-            getColor(&color, adj, points, ELMT_MATRIX(map, i, j));
+            getColor(&color, adj, points, todo, inpro, ELMT_MATRIX(map, i, j));
             printf("%s%c%s ", color, ELMT_MATRIX(map, i, j), clear);
         }
         printf("*%s\n", normal);
@@ -239,7 +248,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
     Matrix map, adj;
     ListDin locs;
     Queue ords;
-    ListLinked todo;
+    ListLinked todo, inpro;
     ListPos inv;
 
     // Reading Configs
@@ -248,12 +257,13 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
     adj = parsePath(cfg);
     ords = parseOrders(cfg);
     CreateListOrder(&todo);
+    CreateListOrder(&inpro);
     CreateListPos(&inv);
     startTime();
 
     // Game
     wipeScreen();
-    printf("\n\n\"The global pandemic of Covid-19 has taken a turn for the worse. Mobita's family business will be going\n");
+    printf("\"The global pandemic of Covid-19 has taken a turn for the worse. Mobita's family business will be going\n");
     printf("bankrupt soon. Luckily, Mobita is a very filial son and has decided to try and make ends meet by\n");
     printf("working as a delivery man. He is no ordinary delivery man though, as his friend Doraemonangis\n");
     printf("has decided to help him by giving him cool gadgets and items to help him do his job! Help\n");
@@ -274,7 +284,14 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             break;
         case 555:
             /* PICK_UP */
-            printf("Tried to <PICK_UP>, but command hasn't been implemented yet\n");
+            if (indexOfPick_ListOrder(todo, mobita) != IDX_UNDEF)
+                pickup();
+            else
+            {
+                printf("\n\"Mobita mencari-cari tempat untuk mengambil pesanan, namun ia tidak menemukannya. Setelah ia\n");
+                printf("melihat daftar pesanannya, ia terkejut karena ternyata ia salah kota.\"\n\n");
+                printf("Pesanan tidak ditemukan! Coba bergerak ke kota lain yang bertanda merah pada peta.\n\n");
+            }
             break;
         case 623:
             /* DROP_OFF */
@@ -289,7 +306,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             printf("\n\"Mobita has forgotten what his city looks like, but remembers he has the magical map\n");
             printf("that Doraemonangis gave him that shows where each city is and its details.\"\n\n");
             printf("Map:\n\n");
-            displayMap(map, adj, locs);
+            displayMap(map, adj, locs, todo, inpro);
             printf("\n\nLegend:\n");
             printf("%sYellow%s : Mobita is here\n", mob_color, clear);
             printf("%sRed%s    : Mobita can pick up items at this city\n", pickup_color, clear);

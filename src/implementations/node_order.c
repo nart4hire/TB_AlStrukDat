@@ -4,9 +4,9 @@
 #include "node_order.h"
 #include <stdlib.h>
 
-Address newNode(Time time, char dropOff, char item, Time perTime)
+Address_order newNode_order(Time time, char dropOff, char item, Time perTime)
 {
-    Address p = (Address)malloc(sizeof(Node));
+    Address_order p = (Address_order)malloc(sizeof(Node_order));
     if (p != NULL)
     {
         T_SERVE(p) = time;

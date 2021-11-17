@@ -67,24 +67,45 @@ Time getPerTime_ListOrder(ListLinked l, int idx){
     return PER_TIME(current_node);
 }
 
-int indexOf_ListOrder(ListLinked l, Time t_serve){
+int indexOfPick_ListOrder(ListLinked l, char pick){
 /* I.S. l, t_serve terdefinisi */
 /* F.S. Mencari apakah ada elemen list l yang bernilai t_serve */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai t_serve */
 /* Mengembalikan IDX_UNDEF jika tidak ditemukan */
     Address current_node = FIRST(l);
     int idx = 0;
-    while ((T_SERVE(current_node) != t_serve) && (NEXT(current_node) != NULL))
+    if (!isEmpty_ListOrder(l))
     {
-        current_node = NEXT(current_node);
-        ++idx;
+        while ((PICK(current_node) != pick) && (NEXT(current_node) != NULL))
+        {
+            current_node = NEXT(current_node);
+            ++idx;
+        }
+        if (PICK(current_node) == pick)
+            return idx;
     }
-    if (T_SERVE(current_node) == t_serve)
-        return idx;
-    else
-        return IDX_UNDEF;
+    return IDX_UNDEF;
 }
 
+int indexOfDrop_ListOrder(ListLinked l, char drop){
+/* I.S. l, t_serve terdefinisi */
+/* F.S. Mencari apakah ada elemen list l yang bernilai t_serve */
+/* Jika ada, mengembalikan indeks elemen pertama l yang bernilai t_serve */
+/* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+    Address current_node = FIRST(l);
+    int idx = 0;
+    if (!isEmpty_ListOrder(l))
+    {
+        while ((DROP(current_node) != drop) && (NEXT(current_node) != NULL))
+        {
+            current_node = NEXT(current_node);
+            ++idx;
+        }
+        if (DROP(current_node) == drop)
+            return idx;
+    }
+    return IDX_UNDEF;
+}
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
 void insertFirst_ListOrder(ListLinked *l, Time t_serve, char pickUp, char dropOff, char item, Time perTime){

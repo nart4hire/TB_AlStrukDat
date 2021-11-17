@@ -50,10 +50,16 @@ Time getPerTime_ListOrder(ListLinked l, int idx);
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length_ListLinked(l) */
 /* F.S. Mengembalikan perishable time pesanan list l pada indeks idx dengan tipe item P*/
 
-int indexOf_ListOrder(ListLinked l, Time t_serve);
-/* I.S. l, t_serve terdefinisi */
-/* F.S. Mencari apakah ada elemen list l yang bernilai t_serve */
-/* Jika ada, mengembalikan indeks elemen pertama l yang bernilai t_serve */
+int indexOfPick_ListOrder(ListLinked l, char pick);
+/* I.S. l, pick terdefinisi */
+/* F.S. Mencari apakah ada elemen list l yang bernilai pick */
+/* Jika ada, mengembalikan indeks elemen pertama l yang bernilai pick */
+/* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+
+int indexOfDrop_ListOrder(ListLinked l, char drop);
+/* I.S. l, pick terdefinisi */
+/* F.S. Mencari apakah ada elemen list l yang bernilai pick */
+/* Jika ada, mengembalikan indeks elemen pertama l yang bernilai pick */
 /* Mengembalikan IDX_UNDEF jika tidak ditemukan */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/

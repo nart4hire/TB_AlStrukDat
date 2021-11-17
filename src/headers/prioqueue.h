@@ -38,8 +38,8 @@ typedef struct {
 
 /* ********* AKSES (Selektor) ********* */
 /* Jika pq adalah PrioQueue, maka akses elemen : */
-#define IDX_HEAD(pq) (pq).idxHead
-#define IDX_TAIL(pq) (pq).idxTail
+#define IDX_HEAD_PQ(pq) (pq).idxHead
+#define IDX_TAIL_PQ(pq) (pq).idxTail
 #define     HEAD(pq) (pq).buffer[(pq).idxHead]
 #define     TAIL(pq) (pq).buffer[(pq).idxTail]
 #define WAKTUPESANAN(l) (l).t
@@ -65,18 +65,18 @@ int lengthPrioQueue(PrioQueue pq);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika pq kosong. */
 
 /*** Primitif Add/Delete ***/
-void enqueue(PrioQueue *pq, Pesanan val);
+void enqueue_Prioqueue(PrioQueue *pq, Pesanan val);
 /* Proses: Menambahkan val pada pq dengan aturan FIFO */
 /* I.S. pq mungkin kosong, tabel penampung elemen pq TIDAK penuh */
-/* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur".
+/* F.S. val menjadi TAIL yang baru, IDX_TAIL_PQ "mundur".
         Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen pq
         menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
 
-void dequeue(PrioQueue * pq, Pesanan *val);
+void dequeue_PrioQueue(PrioQueue * pq, Pesanan *val);
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. pq tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd
-I.S., HEAD dan IDX_HEAD "mundur"; 
+I.S., HEAD dan IDX_HEAD_PQ "mundur"; 
         pq mungkin kosong */
 
 //NOTE ngechek pesanan ini sama apa engga
