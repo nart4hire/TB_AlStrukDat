@@ -1,3 +1,5 @@
+#include "main.h"
+
 void wipeScreen()
 {
     printf("%s", wipe);
@@ -6,9 +8,9 @@ void wipeScreen()
 void displayStats(ListDin locations, Queue orders, ListLinked todo)
 {
     if (mobita != HEADQUARTERS)
-        printf("Nobita's position: %c at coordinates ", mobita);
+        printf("Mobita's position: %c at coordinates ", mobita);
     else
-        printf("Nobita's position: Headquarters at coordinates ");
+        printf("Mobita's position: Headquarters at coordinates ");
     TulisPOINT(ELMT_LISTDIN(locations, indexOf_ListDin(locations, mobita)));
     printf("\nTime now: %d\n", time_game);
     printf("Balance: %d yen\n", cash);
@@ -17,12 +19,12 @@ void displayStats(ListDin locations, Queue orders, ListLinked todo)
 
 void advanceTurn(Queue *orders, ListLinked *todo)
 {
-    ElType_Queue ord;
-    advTime();
-    while (!isEmpty_Queue(*orders) && HEAD_TSERVE(*orders) <= time_game)
+    item ord;
+    advTime(SPEED(abilities), numHeavy());
+    while (!isEmpty_Queue(*orders) && TSERVE(HEAD(*orders)) <= time_game)
     {
         dequeue(orders, &ord);
-        insertLast_ListOrder(todo, ord.tServe, ord.pickUp, ord.dropOff, ord.item, ord.pTime);
+        insertLast_ListOrder(todo, ord);
     }
 }
 
@@ -62,8 +64,8 @@ void move(Matrix adj, ListDin points)
         }
         else
         {
-            printf("\n\"Entered a wrong city number, Nobita gained <Confusion> status.\n");
-            printf("Nobita scrathed his head and did <nothing>.\"\n");
+            printf("\n\"Entered a wrong city number, Mobita gained <Confusion> status.\n");
+            printf("Mobita scrathed his head and did <nothing>.\"\n");
         }
     }
     dealocate(&temp);
@@ -158,7 +160,7 @@ Queue parseOrders(char cfg[][CAPACITY_WORDMACHINE])
     for (int i = 0; i < y; i++)
     {
         sscanf(cfg[i + x], "%d %c %c %c %d", &tserve, &pick, &drop, &item, &perish);
-        enqueue(&orders, createOrder(tserve, pick, drop, item, perish));
+        enqueue(&orders, createItem(tserve, pick, drop, item, perish));
     }
     return orders;
 }
@@ -169,7 +171,7 @@ int Menu(char cfg[][CAPACITY_WORDMACHINE])
     boolean found = false;
 
     wipeScreen();
-    printf("Hello, Welcome to Nobita's Delivery Service...\n");
+    printf("Hello, Welcome to Mobita's Delivery Service...\n");
     printf("Enter (NEW GAME) to start playing, or (LOAD GAME) to play\n");
     printf("a previously saved game. Enter (EXIT) to stop playing.\n\n");
     printf("Commands (->Enter the word between the brackets<-):\n");
@@ -186,13 +188,13 @@ int Menu(char cfg[][CAPACITY_WORDMACHINE])
         case 548:
             printf("ENTER CONFIG FILE: ");
             advWord();
-            found = parseConfig(cfg, currentWord.contents, currentWord.length, 0);
+            found = parseConfig(cfg, 0);
             while (!found)
             {
                 printf("\nYou entered the wrong config file!\n\n");
                 printf("ENTER CONFIG FILE: ");
                 startWord();
-                found = parseConfig(cfg, currentWord.contents, currentWord.length, 0);
+                found = parseConfig(cfg, 0);
             }
             menu = 1;
             break;
@@ -204,13 +206,13 @@ int Menu(char cfg[][CAPACITY_WORDMACHINE])
         case 602:
             printf("ENTER CONFIG FILE: ");
             advWord();
-            found = parseConfig(cfg, currentWord.contents, currentWord.length, 1);
+            found = parseConfig(cfg, 1);
             while (!found)
             {
                 printf("\nYou entered the wrong config file!\n\n");
                 printf("ENTER CONFIG FILE: ");
                 startWord();
-                found = parseConfig(cfg, currentWord.contents, currentWord.length, 1);
+                found = parseConfig(cfg, 1);
             }
             menu = 1;
             break;
@@ -355,11 +357,11 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             break;
         case 297:
             /* HELP */
-            printf("\nCommands you can tell Nobita to do:\n");
-            printf("1. <MOVE>        : Tells Nobita to move to an adjacent city.\n");
-            printf("2. <PICK_UP>     : Tells Nobita to pick up an order at the current city.\n");
-            printf("3. <DROP_OFF>    : Tells Nobita to drop off the top order at the current city.\n");
-            printf("4. <RETURN>      : Tells Nobita to return a perishable item to the pick up point.\n");
+            printf("\nCommands you can tell Mobita to do:\n");
+            printf("1. <MOVE>        : Tells Mobita to move to an adjacent city.\n");
+            printf("2. <PICK_UP>     : Tells Mobita to pick up an order at the current city.\n");
+            printf("3. <DROP_OFF>    : Tells Mobita to drop off the top order at the current city.\n");
+            printf("4. <RETURN>      : Tells Mobita to return a perishable item to the pick up point.\n");
             printf("5. <MAP>         : Opens the map to see the game state.\n");
             printf("6. <TO_DO>       : Opens the \"To Do\" list.\n");
             printf("7. <IN_PROGRESS> : Opens the \"In Progress\" list.\n");
@@ -368,9 +370,9 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             printf("10. <SAVE_GAME>  : Saves game state and returns to menu.\n\n");
             break;
         default:
-            printf("\n\"Entered a wrong command, Nobita gained <Confusion> status.\n");
-            printf("Nobita scrathed his head and did <nothing>.\"\n\n");
-            printf("Enter the command (HELP) to see what actions Nobita can take,\n");
+            printf("\n\"Entered a wrong command, Mobita gained <Confusion> status.\n");
+            printf("Mobita scrathed his head and did <nothing>.\"\n\n");
+            printf("Enter the command (HELP) to see what actions Mobita can take,\n");
             printf("or enter any valid command to continue the game.\n\n");
             break;
         }
