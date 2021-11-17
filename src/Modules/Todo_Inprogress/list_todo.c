@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "list_todo.h"
+#include "item.h"
 
 /****************** PEMBUATAN LIST KOSONG ******************/
 void CreateListOrder(ListLinked *l){
@@ -28,7 +29,7 @@ Time getTServe_ListOrder(ListLinked l, int idx){
     Address current_node = FIRST(l);
     for (int i = 0; i < idx; i++)
         current_node = NEXT(current_node);
-    return T_SERVE(current_node);
+    return TSERVE(current_node->contents);
 }
 
 char getPickUp_ListOrder(ListLinked l, int idx){
@@ -37,7 +38,7 @@ char getPickUp_ListOrder(ListLinked l, int idx){
     Address current_node = FIRST(l);
     for (int i = 0; i < idx; i++)
         current_node = NEXT(current_node);
-    return PICK(current_node);
+    return PICKUP(current_node->contents);
 }
 
 char getDrop_ListOrder(ListLinked l, int idx){
@@ -46,7 +47,7 @@ char getDrop_ListOrder(ListLinked l, int idx){
     Address current_node = FIRST(l);
     for (int i = 0; i < idx; i++)
         current_node = NEXT(current_node);
-    return DROP(current_node);
+    return DROPOFF(current_node->contents);
 }
 
 char getItem_ListOrder(ListLinked l, int idx){
@@ -55,7 +56,7 @@ char getItem_ListOrder(ListLinked l, int idx){
     Address current_node = FIRST(l);
     for (int i = 0; i < idx; i++)
         current_node = NEXT(current_node);
-    return ITEM(current_node);
+    return TYPE(current_node->contents);
 }
 
 Time getPerTime_ListOrder(ListLinked l, int idx){
@@ -64,7 +65,7 @@ Time getPerTime_ListOrder(ListLinked l, int idx){
     Address current_node = FIRST(l);
     for (int i = 0; i < idx; i++)
         current_node = NEXT(current_node);
-    return PER_TIME(current_node);
+    return PTIME(current_node->contents);
 }
 
 int indexOfPick_ListOrder(ListLinked l, char pick){
@@ -76,12 +77,12 @@ int indexOfPick_ListOrder(ListLinked l, char pick){
     int idx = 0;
     if (!isEmpty_ListOrder(l))
     {
-        while ((PICK(current_node) != pick) && (NEXT(current_node) != NULL))
+        while ((PICKUP(current_node->contents) != pick) && (NEXT(current_node) != NULL))
         {
             current_node = NEXT(current_node);
             ++idx;
         }
-        if (PICK(current_node) == pick)
+        if (PICKUP(current_node->contents) == pick)
             return idx;
     }
     return IDX_UNDEF;
@@ -96,12 +97,12 @@ int indexOfDrop_ListOrder(ListLinked l, char drop){
     int idx = 0;
     if (!isEmpty_ListOrder(l))
     {
-        while ((DROP(current_node) != drop) && (NEXT(current_node) != NULL))
+        while ((DROPOFF(current_node->contents) != drop) && (NEXT(current_node) != NULL))
         {
             current_node = NEXT(current_node);
             ++idx;
         }
-        if (DROP(current_node) == drop)
+        if (DROPOFF(current_node->contents) == drop)
             return idx;
     }
     return IDX_UNDEF;
@@ -288,18 +289,18 @@ void displayList_ListOrder(ListLinked l)
     {
         while (p != NULL)
         {
-            printf("%d. %c -> %c ", cnt, PICK(p), DROP(p));
-            if (ITEM(p) == 'N'){
+            printf("%d. %c -> %c ", cnt, p->contents.pickUp, p->contents.dropOff);
+            if (TYPE(p->contents) == 'N'){
                 printf("(Normal Item)");
             }
-            else if (ITEM(p) == 'H'){
+            else if (TYPE(p->contents) == 'H'){
                 printf("(Heavy Item)");
             }
-            else if (ITEM(p) == 'V'){
+            else if (TYPE(p->contents) == 'V'){
                 printf("(VIP Item)");
             }
             else{
-                printf("(Perishable Item, sisa waktu %d)", PER_TIME(p));
+                printf("(Perishable Item, sisa waktu %d)", PTIME(p->contents));
             }
             printf("\n");
             cnt++;

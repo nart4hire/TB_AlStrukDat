@@ -154,7 +154,7 @@ void displayQueue(Queue q)
                 printf("(VIP Item)");
             }
             else{
-                printf("(Perishable Item, sisa waktu %d)", TYPE(q.buffer[i]));
+                printf("(Perishable Item, sisa waktu %d)", PTIME(q.buffer[i]));
             }
             printf("\n");
             cnt++;
