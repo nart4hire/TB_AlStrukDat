@@ -1,33 +1,26 @@
-#include <stdio.h>
-#include "time.h"
+#ifndef GAME_TIME_H
+#define GAME_TIME_H
 
-Time time_game;
+#include "boolean.h"
 
-void startTime(){
+/* Char Engine State */
+typedef int Time;
+extern Time time_game;
+
+void startTime();
 /* I.S. : Waktu sembarang.
    F.S. : Waktu diset menjadi 0*/
-    time_game = 0;
-}
 
-void advTime(){
+void advTime(boolean speed, int heavy);
 /* Menambah waktu sebesar 1 satuan. 
    I.S. : Waktu telah dimulai, dan bukan merupakan akhir dari permainan
    F.S. : Waktu bertambah 1*/
-    time_game += 1;    
-}
 
-void timeMachine(){
+void timeMachine();
 /* Mengurangi waktu sebesar 50 satuan sesuai fungsi item. 
    I.S. : Waktu telah dimulai, dan mungkin <50
    F.S. : Waktu berkurang 50, atau menjadi 0 jika <50*/
-    if (time_game < 50){
-        time_game = 0;
-    }
-    else{
-        time_game -= 50;
-    }
-}
 
-void displayTime(){
-    printf("%d", time_game);
-}
+void displayTime();
+
+#endif

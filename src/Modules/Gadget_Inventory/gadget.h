@@ -2,6 +2,7 @@
 #define GADGET_H
 
 #include "listpos.h"
+#include "inventoryGadget.h"
 
 void displayGadget();
 // Menampilkan daftar gadget yang tersedia

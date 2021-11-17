@@ -28,7 +28,6 @@
 // penggunaan gadget ini.
 
 #include <stdio.h>
-#include "inventoryGadget.h"
 #include "gadget.h"
 
 

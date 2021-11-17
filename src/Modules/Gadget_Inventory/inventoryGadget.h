@@ -2,6 +2,7 @@
 #define INVENTORYGADGET_H
 
 #include "listpos.h"
+#include "item.h"
 
 void displayInventoryGadget(ListPos l);
 // I.S. l merupakan list inventory gadget dan sudah terdefinisi sebelumnya

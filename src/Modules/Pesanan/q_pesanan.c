@@ -72,7 +72,7 @@ void enqueue(Queue *q, ElType_Queue val)
     {
         IDX_HEAD(*q) = 0;
         IDX_TAIL(*q) = 0;
-        TAIL_VAL(*q) = val;
+        TAIL(*q) = copyItem(val);
     }
     else
     {
@@ -87,10 +87,11 @@ void enqueue(Queue *q, ElType_Queue val)
             IDX_HEAD(*q) = 0;
         }
         IDX_TAIL(*q)++;
-        TAIL_VAL(*q) = val;
+        TAIL(*q) = copyItem(val);
         //masukkan val sesuai priority
-        prev_idx = IDX_TAIL(*q)-1;
+        prev_idx = IDX_TAIL(*q) - 1;
         current_idx = IDX_TAIL(*q);
+
         while (((*q).buffer[prev_idx].tServe > (*q).buffer[current_idx].tServe) && current_idx > IDX_HEAD(*q)){
             temp = (*q).buffer[prev_idx];
             (*q).buffer[prev_idx] = (*q).buffer[current_idx];
@@ -113,7 +114,7 @@ void dequeue(Queue *q, ElType_Queue *val)
 /* I.S. q tidak mungkin kosong */
 /* F.S. val = nilai elemen HEAD pd I.S., HEAD dan IDX_HEAD "mundur"; 
         q mungkin kosong */
-    *val = HEAD_VAL(*q);
+    *val = copyItem(HEAD(*q));
     if (IDX_HEAD(*q) == IDX_TAIL(*q))
     {
         IDX_HEAD(*q) = IDX_UNDEF;
@@ -143,17 +144,17 @@ void displayQueue(Queue q)
         for (int i = IDX_HEAD(q); i <= IDX_TAIL(q); i++)
         {
             printf("%d. %c -> %c ", cnt, q.buffer[i].pickUp, q.buffer[i].dropOff);
-            if (q.buffer[i].item == 'N'){
+            if (TYPE(q.buffer[i]) == 'N'){
                 printf("(Normal Item)");
             }
-            else if (q.buffer[i].item == 'H'){
+            else if (TYPE(q.buffer[i]) == 'H'){
                 printf("(Heavy Item)");
             }
-            else if (q.buffer[i].item == 'V'){
+            else if (TYPE(q.buffer[i]) == 'V'){
                 printf("(VIP Item)");
             }
             else{
-                printf("(Perishable Item, sisa waktu %d)", q.buffer[i].pTime);
+                printf("(Perishable Item, sisa waktu %d)", TYPE(q.buffer[i]));
             }
             printf("\n");
             cnt++;
@@ -167,13 +168,3 @@ void displayQueue(Queue q)
 // F.S. Jika q tidak kosong: [e1,e2,...,en] */
 // Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 // Jika Queue kosong : menulis [] */
-
-ElType_Queue createOrder(Time tServe, char pickUp, char dropOff, char item, Time perTime){
-    ElType_Queue new;
-    new.tServe = tServe;
-    new.pickUp = pickUp;
-    new.dropOff = dropOff;
-    new.item = item;
-    new.pTime = perTime;
-    return new;
-}

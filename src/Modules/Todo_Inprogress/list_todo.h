@@ -64,36 +64,36 @@ int indexOfDrop_ListOrder(ListLinked l, char drop);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void insertFirst_ListOrder(ListLinked *l, Time t_serve, char pickUp, char dropOff, char item, Time perTime);
+void insertFirst_ListOrder(ListLinked *l, item it);
 /* I.S. l mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen pertama dengan nilai t_serve, pickUp, dropOff, item, dan perTime jika alokasi berhasil. */
 /* Jika alokasi gagal: I.S.= F.S. */
 
-void insertLast_ListOrder(ListLinked *l, Time t_serve, char pickUp, char dropOff, char item, Time perTime);
+void insertLast_ListOrder(ListLinked *l, item it);
 /* I.S. l mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menambahkan elemen list di akhir dengan nilai t_serve, pickUp, dropOff, item, dan perTime jika alokasi berhasil */
 /* Jika alokasi gagal: I.S.= F.S. */
 
-void insertAt_ListOrder(ListLinked *l, Time t_serve, char pickUp, char dropOff, char item, Time perTime, int idx);
+void insertAt_ListOrder(ListLinked *l, item it, int idx);
 /* I.S. l tidak mungkin kosong, idx indeks yang valid dalam l, yaitu 0..length_ListLinked(l) */
 /* F.S. Melakukan alokasi sebuah elemen dan */
 /* menyisipkan elemen dalam list pada indeks ke-idx (bukan menimpa elemen di i) */
 /* dengan nilai t_serve, pickUp, dropOff, item, dan perTime jika alokasi berhasil jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
 /*** PENGHAPUSAN ELEMEN ***/
-void deleteFirst_ListOrder(ListLinked *l, Time *t_serve, char *pickUp, char *dropOff, char *item, Time *perTime);
+void deleteFirst_ListOrder(ListLinked *l, item *it);
 /* I.S. ListLinked l tidak kosong  */
 /* F.S. Elemen pertama list dihapus: nilai info disimpan pada pada masing masing variabel */
 /*      dan alamat elemen pertama di-dealokasi */
 
-void deleteLast_ListOrder(ListLinked *l, Time *t_serve, char *pickUp, char *dropOff, char *item, Time *perTime);
+void deleteLast_ListOrder(ListLinked *l, item *it);
 /* I.S. list tidak kosong */
 /* F.S. Elemen terakhir list dihapus: nilai info disimpan pada masing masing variabel */
 /*      dan alamat elemen terakhir di-dealokasi */
 
-void deleteAt_ListOrder(ListLinked *l, Time *t_serve, char *pickUp, char *dropOff, char *item, Time *perTime, int idx);
+void deleteAt_ListOrder(ListLinked *l, item *it, int idx);
 /* I.S. list tidak kosong, idx indeks yang valid dalam l, yaitu 0..length_ListLinked(l) */
 /* F.S. nilai info disimpan pada masing masing variabel sesuai indeks ke-idx. */
 /*      Elemen l pada indeks ke-idx dihapus dari l */

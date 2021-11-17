@@ -44,7 +44,7 @@ void displayInventoryGadget(ListPos l) {
     printf("\n");
 }
 
-void kainPembungkusWaktu(int timePerishableItem,int* sisaWaktu) {
+void kainPembungkusWaktu(int timePerishableItem, int* sisaWaktu) {
 // I.S. timePerishableItem adalah sisa waktu perishable item teratas pada tas
 // timePerishableItemAwal adalah waktu awal perishable item 
 // F.S. timePerishableItem kembali ke durasi semula (timePerishableItem = timePerishableItemAwal)
