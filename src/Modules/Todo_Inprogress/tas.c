@@ -74,22 +74,26 @@ void push(Stack *s, item val)
 
 void pop(Stack *s, item *val)
 {
-    *val = copyItem(TOP(*s));
-    --IDX_TOP(*s);
+    if (!isEmpty_Stack(*s))
+    {
+        *val = copyItem(TOP(*s));
+        --IDX_TOP(*s);
+    }
 }
 
-void increaseCapacity(int amount){
-    if(stack_capacity != CAPACITY_STACK){
-        if(stack_capacity + amount >= CAPACITY_STACK){
+void increaseCapacity(int amount)
+{
+    if (stack_capacity != CAPACITY_STACK) {
+        if (stack_capacity + amount >= CAPACITY_STACK) {
             stack_capacity = CAPACITY_STACK;
-        }else{
+        } else {
             stack_capacity += amount;
         }
     }
 }
 
 void displayStack(Stack s){
-    for(int i = 0; i <= IDX_TOP(s);i++)
+    for (int i = 0; i <= IDX_TOP(s);i++)
     {
         printf("%d. ", i+1);
         switch (TYPE(ELMT(s, IDX_TOP(s) - i)))
@@ -109,11 +113,31 @@ void displayStack(Stack s){
         default:
             break;
         }
+        printf(" (Tujuan: %c)", TYPE(ELMT(s, IDX_TOP(s) - i)));
         if (isPerishable(ELMT(s, IDX_TOP(s) - i)))
-            printf("(Time remaining %d)", PTIME(ELMT(s, IDX_TOP(s) - i)));
-        
+            printf(" (Time remaining %d)", PTIME(ELMT(s, IDX_TOP(s) - i)));
+        printf("\n");
     }
 }
 // Menghapus val dari Stack s 
 // I.S. s tidak mungkin kosong 
 // F.S. val adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 
+
+void advPerishable(Stack *s)
+{
+    Stack temp;
+    item it;
+    for (int i = 0; i < IDX_TOP(*s); i++)
+    {
+        pop(s, &it);
+        if (!SPEED(abilities))
+            PTIME(it) -= numHeavy() + 1;
+        if (PTIME(it) > 0)
+            push(&temp, it);
+    }
+    while (!isEmpty_Stack(temp))
+    {
+        pop(&temp, &it);
+        push(s, it);
+    }
+}

@@ -47,5 +47,7 @@ boolean UseSpeed();
 
 int numHeavy();
 
+void ActReduct();
+
 #endif
 

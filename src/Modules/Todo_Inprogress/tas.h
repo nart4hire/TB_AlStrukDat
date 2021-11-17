@@ -25,6 +25,8 @@ extern int stack_capacity;
 #define ELMT(s, i) (s).buffer[i]
 
 /* *** Konstruktor/Kreator *** */
+void initTas(int cap);
+
 void CreateStack(Stack *s);
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S kosong dengan kondisi sbb: */
@@ -59,5 +61,7 @@ void increaseCapacity(int amount);
 
 void displayStack(Stack s);
 // void setCapacity(int amount);
+
+void advPerishable(Stack *s);
 
 #endif

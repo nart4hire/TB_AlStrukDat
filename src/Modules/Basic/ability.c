@@ -63,5 +63,9 @@ boolean UseSpeed() {
 }
 
 int numHeavy(){
-    return numHeavy;
+    return (HEAVY(abilities) - REDUCT(abilities));
+}
+
+void ActReduct(){
+    REDUCT(abilities) = true;
 }
