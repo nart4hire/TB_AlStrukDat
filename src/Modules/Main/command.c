@@ -1,20 +1,15 @@
 #include "main.h"
 
-void wipeScreen()
-{
-    printf("%s", wipe);
-}
-
 void displayStats(ListDin locations, Queue orders, ListLinked todo)
 {
     if (mobita != HEADQUARTERS)
-        printf("Mobita's position: %c at coordinates ", mobita);
+        printf("Mobita sedang berada di %c pada koordinat ", mobita);
     else
-        printf("Mobita's position: Headquarters at coordinates ");
+        printf("Mobita sedang berada di Headquarters pada koordinat ");
     TulisPOINT(ELMT_LISTDIN(locations, indexOf_ListDin(locations, mobita)));
-    printf("\nTime now: %d\n", time_game);
-    printf("Balance: %d yen\n", cash);
-    printf("Orders left: %d\n\n", length_Queue(orders) + length_ListOrder(todo));
+    printf(".\nWaktu: %d\n", time_game);
+    printf("Saldo: %d Yen\n", cash);
+    printf("Masih ada %d pesanan yang tersisa.\n\n", length_Queue(orders) + length_ListOrder(todo));
 }
 
 void advanceTurn(Queue *orders, ListLinked *todo)
@@ -40,32 +35,41 @@ void move(Matrix adj, ListDin points)
         if (ELMT_MATRIX(adj, x, i) == ADJACENT)
             insertLast_ListDin(&temp, ELMT_LISTDIN(points, i), NAME(points, i));
     }
+    loreStart();
+    printf("\"Mobita mengendarai sepeda ajaib yang diberikan Doraemonangis menuju kota lain.\"\n");
+    loreEnd();
     while (!found)
     {
-        printf("\nCities Mobita can reach:\n\n");
+        printf("\nKota dalam jangkauan Mobita:\n\n");
         displayList_ListDin(temp);
-        printf("\nEnter the number of the city you want Mobita to go to! (Enter \"0\" to return)\n\n");
+        printf("\nMasukkan angka kota yang ingin dituju! (Masukkan \"0\" untuk kembali)\n\n");
         printf("ENTER CITY NUMBER: ");
         advWord();
         sscanf(currentWord.contents, "%d", &input);
         if (input == 0)
         {
             found = true;
-            printf("\n\"Mobita shakes his head and decides to stay at his current city. Mobita remembers");
-            printf("\nDoraemonangis telling him he should think before he acts.\"\n\n");
+            loreStart();
+            printf("\n\"Mobita menggelengkan kepala dan memutuskan untuk tidak berpindah kota terlebih dahulu. Ia");
+            printf("\ningat Doraemonangis pernah bernasihat untuk berpikir dengan matang sebelum bertindak.\"\n\n");
+            loreEnd();
         }
         else if (isIdxEff_ListDin(temp, input - 1))
         {
             found = true;
             mobita = NAME(temp, input - 1);
-            printf("\n\"Mobita Hapily moves towards city %c at coordinates ", NAME(temp, input - 1));
+            loreStart();
+            printf("\n\"Mobita dengan girang bergerak ke kota %c di koordinat ", NAME(temp, input - 1));
             TulisPOINT(ELMT_LISTDIN(temp, input - 1));
-            printf(". You can hear him humming\nas he thinks about all the money he is going to make.\"\n\n");
+            printf(". Sambil bersenandung\nia mulai memikirkan tentang banyaknya uang yang akan ia buat.\"\n\n");
+            loreEnd();
         }
         else
         {
-            printf("\n\"Entered a wrong city number, Mobita gained <Confusion> status.\n");
-            printf("Mobita scrathed his head and did <nothing>.\"\n");
+            loreStart();
+            printf("\n\"Angka kota tujuan salah! Mobita terkena status <Kebingungan>.\n");
+            printf("Mobita menggarukkan kepala dan tidak melakukan apa-apa.\"\n");
+            loreEnd();
         }
     }
     dealocate(&temp);
@@ -146,35 +150,18 @@ int parseCommand() // simple hash penjumlahan char
 // HELP -> 297
 // SAVE_GAME -> 680
 
-Queue parseOrders(char cfg[][CAPACITY_WORDMACHINE])
-{
-    int x, y;
-    Time tserve, perish;
-    char pick, drop, item;
-    Queue orders;
-    CreateQueue(&orders);
-
-    sscanf(cfg[2], "%d", &x);
-    x = 2 * x + 4;
-    sscanf(cfg[x++], "%d", &y);
-    for (int i = 0; i < y; i++)
-    {
-        sscanf(cfg[i + x], "%d %c %c %c %d", &tserve, &pick, &drop, &item, &perish);
-        enqueue(&orders, createItem(tserve, pick, drop, item, perish));
-    }
-    return orders;
-}
-
 int Menu(char cfg[][CAPACITY_WORDMACHINE])
 {
     int command, menu = 0;
-    boolean found = false;
+    boolean found = false, load = false;
 
     wipeScreen();
-    printf("Hello, Welcome to Mobita's Delivery Service...\n");
-    printf("Enter (NEW GAME) to start playing, or (LOAD GAME) to play\n");
-    printf("a previously saved game. Enter (EXIT) to stop playing.\n\n");
-    printf("Commands (->Enter the word between the brackets<-):\n");
+    loreStart();
+    printf("\"Selamat datang di Kurir Barang Mobita...\n");
+    printf("Masukkan (NEW GAME) untuk mulai bermain atau (LOAD GAME) untuk\n");
+    printf("melanjutkan permainan. Masukkan (EXIT) untuk berhenti bermain.\"\n\n");
+    loreEnd();
+    printf("Masukan (->Masukkan yang di dalam kurung<-):\n");
     printf("1. (NEW GAME)\n");
     printf("2. (EXIT)\n");
     printf("3. (LOAD GAME)\n\n");
@@ -188,15 +175,17 @@ int Menu(char cfg[][CAPACITY_WORDMACHINE])
         case 548:
             printf("ENTER CONFIG FILE: ");
             advWord();
-            found = parseConfig(cfg, 0);
+            found = parseConfig(cfg, load);
             while (!found)
             {
-                printf("\nYou entered the wrong config file!\n\n");
+                printf("\nNama config tidak ditemukan. Coba periksa ulang masukan anda.\n\n");
                 printf("ENTER CONFIG FILE: ");
                 startWord();
-                found = parseConfig(cfg, 0);
+                found = parseConfig(cfg, load);
             }
             menu = 1;
+            wipeScreen();
+            printf("Berhasil memulai permainan!\n\n");
             break;
         
         case 314:
@@ -204,35 +193,38 @@ int Menu(char cfg[][CAPACITY_WORDMACHINE])
             break;
         
         case 602:
+            load = 1;
             printf("ENTER CONFIG FILE: ");
             advWord();
-            found = parseConfig(cfg, 1);
+            found = parseConfig(cfg, load);
             while (!found)
             {
-                printf("\nYou entered the wrong config file!\n\n");
+                printf("\nNama config tidak ditemukan. Coba periksa ulang masukan anda.\n\n");
                 printf("ENTER CONFIG FILE: ");
                 startWord();
-                found = parseConfig(cfg, 1);
+                found = parseConfig(cfg, load);
             }
             menu = 1;
+            wipeScreen();
+            printf("Berhasil memuat kemajuan, silahkan melanjutkan permainan!\n\n");
             break;
 
         default:
-            printf("\nYou entered the wrong command!\n\n");
-            printf("Commands (->Enter the word between the brackets<-):\n");
+            printf("\nAnda memberikan masukan yang salah. Coba periksa ulang masukan anda.\n\n");
+            printf("Masukan (->Masukkan yang di dalam kurung<-):\n");
             printf("1. (NEW GAME)\n");
             printf("2. (EXIT)\n");
-            printf("3. (LOAD GAME)\n");
+            printf("3. (LOAD GAME)\n\n");
             printf("ENTER COMMAND: ");
             advWord();
             command = parseCommand();
             break;
         }
     }
-    return 1;
+    return load;
 }
 
-int Game(char cfg[][CAPACITY_WORDMACHINE])
+int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
 {
     int command, input, x;
     boolean running = 1, done;
@@ -251,14 +243,24 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
     CreateListOrder(&inpro);
     CreateListPos(&inv);
     startTime();
+    initTas(3);
+    initCash(0);
+    initAbilities();
 
     // Game
-    wipeScreen();
-    printf("\"The global pandemic of Covid-19 has taken a turn for the worse. Mobita's family business will be going\n");
-    printf("bankrupt soon. Luckily, Mobita is a very filial son and has decided to try and make ends meet by\n");
-    printf("working as a delivery man. He is no ordinary delivery man though, as his friend Doraemonangis\n");
-    printf("has decided to help him by giving him cool gadgets and items to help him do his job! Help\n");
-    printf("Mobita on his journey of making his parents pround and a little extra pocket money.\"\n\n");
+    if (!load)
+    {
+        loreStart();
+        printf("\"Dengan diberlakukannya PPKM selama setahun terakhir, usaha kecil milik orang tua Mobita sedikit lagi\n");
+        printf("akan terpaksa gulung tikar. Namun untungnya, Mobita adalah anak yang berbakti dan bersedia membantu\n");
+        printf("orang tuanya. Dalam upayanya untuk menggalang dana, Ia akhirnya mendaftar jadi kurir barang untuk\n");
+        printf("toko online yang populer. Tidak hanya itu, temannya Doraemonangis pun ikut membantu dengan cara\n");
+        printf("menyediakan gadget nan ajaib. Bisakah Mobita menjadi kurir terbaik se-Indonesia?\"\n\n");
+        printf("\"Mobita memulai perjalanannya dari Headquarters yang sudah disediakan oleh Doraemonangis. Pada saat fajar\n");
+        printf("menyingsing ia pun sudah bangun dan bersiap-siap. Mobita memulai perjalanannya.\"\n\n");
+        loreEnd();
+        printf("Jika pertama kali bermain, masukkan <HELP> untuk melihat aksi yang bisa Mobita lakukan.\n\n");
+    }
     displayStats(locs, ords, todo);
     printf("ENTER COMMAND: ");
     startWord();
@@ -279,9 +281,11 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
                 pickup();
             else
             {
+                loreStart();
                 printf("\n\"Mobita mencari-cari tempat untuk mengambil pesanan, namun ia tidak menemukannya. Setelah ia\n");
                 printf("melihat daftar pesanannya, ia terkejut karena ternyata ia salah kota.\"\n\n");
                 printf("Pesanan tidak ditemukan! Coba bergerak ke kota lain yang bertanda merah pada peta.\n\n");
+                loreEnd();
             }
             break;
         case 623:
@@ -294,20 +298,24 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             break;
         case 222:
             /* MAP */
-            printf("\n\"Mobita has forgotten what his city looks like, but remembers he has the magical map\n");
-            printf("that Doraemonangis gave him that shows where each city is and its details.\"\n\n");
-            printf("Map:\n\n");
+            loreStart();
+            printf("\n\"Mobita tiba-tiba lupa jalan, tapi untungnya Doraemonangis memberikan GPS ajaib yang\n");
+            printf("dapat menunjukkan setiap kota yang bisa dikunjungi dan detilnya.\"\n\n");
+            loreEnd();
+            printf("Peta:\n\n");
             displayMap(map, adj, locs, todo, inpro);
-            printf("\n\nLegend:\n");
-            printf("%sYellow%s : Mobita is here\n", mob_color, clear);
-            printf("%sRed%s    : Mobita can pick up items at this city\n", pickup_color, clear);
-            printf("%sBlue%s   : Mobita can drop off items at this city\n", dropoff_color, clear);
-            printf("%sGreen%s  : Mobita can move to this city\n\n", dest_color, clear);
+            printf("\n\nLegenda:\n");
+            printf("%sKuning%s : Mobita berada di sini\n", mob_color, clear);
+            printf("%sMerah%s  : Mobita dapat mengambil pesanan di sini\n", pickup_color, clear);
+            printf("%sBiru%s   : Pesanan diantarkan ke kota ini\n", dropoff_color, clear);
+            printf("%sHijau%s  : Mobita bisa bergerak ke kota ini\n\n", dest_color, clear);
             break;
         case 405:
             /* TO_DO */
-            printf("\n\"Mobita feels anxious like he might've missed an order. He is afraid that he might forget\n");
-            printf("what orders he should take. Luckily, he can just take a look at his To Do List.\"\n\n");
+            loreStart();
+            printf("\n\"Mobita merasa seperti ia melupakan sesuatu dan menjadi khawatir karena takut melupakan pesanan.\n");
+            printf("Untungnya ia mempunyai catatan kiriman ajaib yang mencatat semua kiriman yang masuk.\"\n\n");
+            loreEnd();
             printf("To Do List:\n\n");
             displayList_ListOrder(todo);
             printf("\n");
@@ -320,21 +328,25 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             /* BUY */
             if (mobita == HEADQUARTERS)
             {
-                printf("\n\"Mobita mulai merasa kesulitan menjadi seorang kurir barang. Karena berada di Headquarters, ia\n");
+                loreStart();
+                printf("\"Mobita mulai merasa kesulitan menjadi seorang kurir barang. Karena berada di Headquarters, ia\n");
                 printf("pun bergegas masuk untuk membeli gadget dari Doraemonangis.\"\n\n");
-                
+                loreEnd();
+
                 done = false;
                 do
                 {
-                    printf("Uang Anda sekarang: %d\n", cash);
+                    printf("Uang Anda sekarang: %d Yen\n", cash);
                     displayGadget();
                     printf("ENTER GADGET NUMBER: ");
                     advWord();
                     input = parseCommand() - 48;
                     if (input > 5 || input < 0)
                     {
+                        loreStart();
                         printf("\n\"Mobita kebingungan mencari gadget yang sesuai karena semua gadget terlihat sangat bagus.\n");
                         printf("Mobita mengalami kegalauan yang mendalam dan merenungi nasib.\"\n\n");
+                        loreEnd();
                         printf("Masukan pemain tidak sesuai. Tolong beri masukan yang sesuai.\n\n");
                     }
                     else
@@ -343,8 +355,10 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             }
             else
             {
-                printf("\n\"Mobita mulai merasa kesulitan menjadi seorang kurir barang. Namun karena ia tidak berada di\n");
+                loreStart();
+                printf("\"Mobita mulai merasa kesulitan menjadi seorang kurir barang. Namun karena ia tidak berada di\n");
                 printf("Headquarters, ia pun hanya bisa meratapi nasib dengan sedih.\"\n\n");
+                loreEnd();
             }
             break;
         case 718:
@@ -357,23 +371,26 @@ int Game(char cfg[][CAPACITY_WORDMACHINE])
             break;
         case 297:
             /* HELP */
-            printf("\nCommands you can tell Mobita to do:\n");
-            printf("1. <MOVE>        : Tells Mobita to move to an adjacent city.\n");
-            printf("2. <PICK_UP>     : Tells Mobita to pick up an order at the current city.\n");
-            printf("3. <DROP_OFF>    : Tells Mobita to drop off the top order at the current city.\n");
-            printf("4. <RETURN>      : Tells Mobita to return a perishable item to the pick up point.\n");
-            printf("5. <MAP>         : Opens the map to see the game state.\n");
-            printf("6. <TO_DO>       : Opens the \"To Do\" list.\n");
-            printf("7. <IN_PROGRESS> : Opens the \"In Progress\" list.\n");
-            printf("8. <BUY>         : Opens the list of gadgets you can buy if you are at your headquarters.\n");
-            printf("9. <INVENTORY>   : Opens your inventory to see your current gadgets.\n");
-            printf("10. <SAVE_GAME>  : Saves game state and returns to menu.\n\n");
+            printf("\nKegiatan yang Mobita dapat lakukan:\n");
+            printf("1. <MOVE>        : Mobita bergerak ke kota yang berdekatan.\n");
+            printf("2. <PICK_UP>     : Mobita mengambil pesanan yang datang pada lokasinya.\n");
+            printf("3. <DROP_OFF>    : Mobita mengirimkan pesanan yang ia sudah antar pada lokasinya.\n");
+            printf("4. <RETURN>      : Mobita membuka gapura ajaib dan mengembalikan pesanan teratas dalam tas.\n");
+            printf("                   Anda mempunyai sisa %d kali penggunaan <RETURN>.", RETURN(abilities));
+            printf("5. <MAP>         : Membuka GPS ajaib ala Doraemonangis.\n");
+            printf("6. <TO_DO>       : Membuka catatan kiriman ajaib ala Doraemonangis.\n");
+            printf("7. <IN_PROGRESS> : Melihat isi tas dan kiriman yang sedang dilaksanakan.\n");
+            printf("8. <BUY>         : Mobita dapat membeli gadget jika ia berada di Headquarters.\n");
+            printf("9. <INVENTORY>   : Mobita merogoh saku dan melihat gadget apa saja yang ia punya.\n");
+            printf("10. <SAVE_GAME>  : Menyimpan kemajuan permainan dan kembali ke menu utama.\n\n");
             break;
         default:
-            printf("\n\"Entered a wrong command, Mobita gained <Confusion> status.\n");
-            printf("Mobita scrathed his head and did <nothing>.\"\n\n");
-            printf("Enter the command (HELP) to see what actions Mobita can take,\n");
-            printf("or enter any valid command to continue the game.\n\n");
+            loreStart();
+            printf("\"Perintah yang anda masukkan salah! Mobita terkena status <Kebingungan>.\n");
+            printf("Mobita menggarukkan kepala dan tidak melakukan apa-apa.\"\n\n");
+            loreEnd();
+            printf("Masukkan (HELP) untuk melihat aksi yang Mobita bisa lakukan, atau\n");
+            printf("masukkan perintah yang valid untuk melanjutkan permainan.\n\n");
             break;
         }
         displayStats(locs, ords, todo);

@@ -123,3 +123,22 @@ Matrix parsePath(char cfg[][50])
     }
     return map;
 }
+
+Queue parseOrders(char cfg[][CAPACITY_WORDMACHINE])
+{
+    int x, y;
+    Time tserve, perish;
+    char pick, drop, item;
+    Queue orders;
+    CreateQueue(&orders);
+
+    sscanf(cfg[2], "%d", &x);
+    x = 2 * x + 4;
+    sscanf(cfg[x++], "%d", &y);
+    for (int i = 0; i < y; i++)
+    {
+        sscanf(cfg[i + x], "%d %c %c %c %d", &tserve, &pick, &drop, &item, &perish);
+        enqueue(&orders, createItem(tserve, pick, drop, item, perish));
+    }
+    return orders;
+}

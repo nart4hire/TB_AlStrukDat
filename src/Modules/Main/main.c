@@ -3,7 +3,8 @@
 
 int main(int argc, char const *argv[])
 {
+    boolean load;
     char configs[512][CAPACITY_WORDMACHINE];
-    Menu(configs);
-    Game(configs);
+    load = Menu(configs);
+    Game(configs, load);
 }

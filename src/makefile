@@ -22,7 +22,7 @@ TODO = $(patsubst %,$(MODDIR)/%,$(TODODIR))
 
 CFLAGS = -I $(BASIC) -I $(CONFIG) -I $(GADGET) -I $(MAIN) -I $(MAPLOC) -I $(PESAN) -I $(TODO)
 
-_OBJ = item.o ability.o time.o \
+_OBJ = item.o ability.o time.o color.o\
        listdinpos.o matrix.o point.o \
        charmachine.o wordmachine.o config.o\
        gadget.o inventoryGadget.o listpos.o \

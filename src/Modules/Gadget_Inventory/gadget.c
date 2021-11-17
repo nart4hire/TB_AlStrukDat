@@ -30,7 +30,6 @@
 #include <stdio.h>
 #include "gadget.h"
 
-
 void displayGadget() {
 // Menampilkan daftar gadget yang tersedia
 // KAMUS LOKAL
@@ -40,7 +39,7 @@ void displayGadget() {
     printf("2. Senter Pembesar (1200 Yen)\n");
     printf("3. Pintu Kemana Saja (1500 Yen)\n");
     printf("4. Mesin Waktu (3000 Yen)\n");
-    printf("5. Senter Pengecil (800 yen)\n\n");
+    printf("5. Senter Pengecil (800 Yen)\n\n");
     printf("Gadget mana yang ingin Mobita beli? (ketik 0 jika ingin kembali)\n\n");
 }
 
@@ -53,26 +52,37 @@ boolean buy(int command, int* uang, ListPos* l) {
 // -
 // ALGORITMA
     if (isFull_ListPos(*l) && command != 0) {
-        printf("\n\"Mobita, dalam shopping spree yang ia lakukan lupa bahwa ransel yang ia bawa memiliki kapasitas terbatas.\n");
+        loreStart();
+        printf("\n\"Mobita, dalam shopping spree yang ia lakukan lupa bahwa ransel yang ia miliki mempunyai kapasitas terbatas.\n");
         printf("Dengan berat hati ia pun meninggalkan toko milik Doraemonangis itu.\"\n\n");
+        loreEnd();
         printf("Inventori gadget penuh!\n\n");
     } else {
         switch (command) {
         case 0:
+            loreStart();
             printf("\n\"Mobita teringat bahwa ia melakukan pekerjaan ini untuk membantu orang tuanya. Dengan berat hati, ia\n");
             printf("meninggalkan toko milik Doraemonangis itu.\"\n\n");
+            loreEnd();
             return true;
             break;
         case 1:
             if (*uang >= 800) {
                 insertLast_ListPos(l, 1);
+                loreStart();
+                printf("\n\"Mobita tertarik dengan gadget 'Kain Pembungkus Waktu' dan ia pun tidak segan-segan merogoh saku\n");
+                printf("dalam-dalam untuk membeli gadget tersebut. Doraemonangis hanya bisa menangis saat melihat\n");
+                printf("gadget yang sudah ia simpan bertahun-tahun dipakai untuk jasa kurir.\"\n\n");
+                loreEnd();
                 printf("Kain pembungkus waktu berhasil dibeli!\n");
                 *uang -= 800;
-                printf("\nUang Anda sekarang: %d yen\n\n", *uang);
+                printf("\nUang Anda sekarang: %d Yen\n\n", *uang);
                 return true;
             } else {
+                loreStart();
                 printf("\n\"Doraemonangis menggelengkan kepala dengan sedih, ia juga terkena dampak PPKM secara moneter dan terpaksa\n");
                 printf("menjual gadgetnya untuk mendapatkan uang. Sudah tidak bisa gratis lagi seperti dahulu kala.\"\n");
+                loreEnd();
                 printf("\nUang Mobita tidak cukup untuk membeli gadget ini.\n\n");
                 return false;
             }
@@ -80,13 +90,20 @@ boolean buy(int command, int* uang, ListPos* l) {
         case 2:
             if (*uang >= 1200) {
                 insertLast_ListPos(l, 2);
+                loreStart();
+                printf("\n\"Mobita tertarik dengan gadget 'Senter Pembesar' dan ia pun tidak segan-segan merogoh saku\n");
+                printf("dalam-dalam untuk membeli gadget tersebut. Doraemonangis hanya bisa menangis saat melihat\n");
+                printf("gadget yang sudah ia simpan bertahun-tahun dipakai untuk jasa kurir.\"\n\n");
+                loreEnd();
                 printf("Senter Pembesar berhasil dibeli!\n");
                 *uang -= 1200;
-                printf("\nUang Anda sekarang: %d yen\n\n", *uang);
+                printf("\nUang Anda sekarang: %d Yen\n\n", *uang);
                 return true;
             } else {
+                loreStart();
                 printf("\n\"Doraemonangis menggelengkan kepala dengan sedih, ia juga terkena dampak PPKM secara moneter dan terpaksa\n");
                 printf("menjual gadgetnya untuk mendapatkan uang. Sudah tidak bisa gratis lagi seperti dahulu kala.\"\n");
+                loreEnd();
                 printf("\nUang Mobita tidak cukup untuk membeli gadget ini.\n\n");
                 return false;
             }
@@ -94,13 +111,20 @@ boolean buy(int command, int* uang, ListPos* l) {
         case 3:
             if (*uang >= 1500) {
                 insertLast_ListPos(l,3);
+                loreStart();
+                printf("\n\"Mobita tertarik dengan gadget 'Pintu Kemana Saja' dan ia pun tidak segan-segan merogoh saku\n");
+                printf("dalam-dalam untuk membeli gadget tersebut. Doraemonangis hanya bisa menangis saat melihat\n");
+                printf("gadget yang sudah ia simpan bertahun-tahun dipakai untuk jasa kurir.\"\n\n");
+                loreEnd();
                 printf("Pintu Kemana Saja berhasil dibeli!\n");
                 *uang -= 1500;
-                printf("\nUang Anda sekarang: %d yen\n\n", *uang);
+                printf("\nUang Anda sekarang: %d Yen\n\n", *uang);
                 return true;
             } else {
+                loreStart();
                 printf("\n\"Doraemonangis menggelengkan kepala dengan sedih, ia juga terkena dampak PPKM secara moneter dan terpaksa\n");
                 printf("menjual gadgetnya untuk mendapatkan uang. Sudah tidak bisa gratis lagi seperti dahulu kala.\"\n");
+                loreEnd();
                 printf("\nUang Mobita tidak cukup untuk membeli gadget ini.\n\n");
                 return false;
             }
@@ -108,13 +132,20 @@ boolean buy(int command, int* uang, ListPos* l) {
         case 4:
             if (*uang >= 3000) {
                 insertLast_ListPos(l,4);
+                loreStart();
+                printf("\n\"Mobita tertarik dengan gadget 'Mesin Waktu' dan ia pun tidak segan-segan merogoh saku\n");
+                printf("dalam-dalam untuk membeli gadget tersebut. Doraemonangis hanya bisa menangis saat melihat\n");
+                printf("gadget yang sudah ia simpan bertahun-tahun dipakai untuk jasa kurir.\"\n\n");
+                loreEnd();
                 printf("Mesin Waktu berhasil dibeli!\n");
                 *uang -= 3000;
-                printf("\nUang Anda sekarang: %d yen\n\n", *uang);
+                printf("\nUang Anda sekarang: %d Yen\n\n", *uang);
                 return true;
             } else {
+                loreStart();
                 printf("\n\"Doraemonangis menggelengkan kepala dengan sedih, ia juga terkena dampak PPKM secara moneter dan terpaksa\n");
                 printf("menjual gadgetnya untuk mendapatkan uang. Sudah tidak bisa gratis lagi seperti dahulu kala.\"\n");
+                loreEnd();
                 printf("\nUang Mobita tidak cukup untuk membeli gadget ini.\n\n");
                 return false;
             }
@@ -122,13 +153,20 @@ boolean buy(int command, int* uang, ListPos* l) {
         case 5:
             if (*uang >= 800) {
                 insertLast_ListPos(l,5);
+                loreStart();
+                printf("\n\"Mobita tertarik dengan gadget 'Senter Pengecil' dan ia pun tidak segan-segan merogoh saku\n");
+                printf("dalam-dalam untuk membeli gadget tersebut. Doraemonangis hanya bisa menangis saat melihat\n");
+                printf("gadget yang sudah ia simpan bertahun-tahun dipakai untuk jasa kurir.\"\n\n");
+                loreEnd();
                 printf("Senter Pengecil berhasil dibeli!\n");
                 *uang -= 800;
-                printf("\nUang Anda sekarang: %d yen\n\n", *uang);
+                printf("\nUang Anda sekarang: %d Yen\n\n", *uang);
                 return true;
             } else {
+                loreStart();
                 printf("\n\"Doraemonangis menggelengkan kepala dengan sedih, ia juga terkena dampak PPKM secara moneter dan terpaksa\n");
                 printf("menjual gadgetnya untuk mendapatkan uang. Sudah tidak bisa gratis lagi seperti dahulu kala.\"\n");
+                loreEnd();
                 printf("\nUang Mobita tidak cukup untuk membeli gadget ini.\n\n");
                 return false;
             }

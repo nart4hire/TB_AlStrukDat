@@ -5,6 +5,7 @@
 #include "wordmachine.h"
 #include "matrix.h"
 #include "listdinpos.h"
+#include "q_pesanan.h"
 
 #define HEADQUARTERS '8'
 #define ADJACENT '1'
@@ -16,5 +17,7 @@ ListDin parsePoints(char cfg[][CAPACITY_WORDMACHINE]);
 Matrix parseMap(char cfg[][CAPACITY_WORDMACHINE], ListDin locs);
 
 Matrix parsePath(char cfg[][CAPACITY_WORDMACHINE]);
+
+Queue parseOrders(char cfg[][CAPACITY_WORDMACHINE]);
 
 #endif
