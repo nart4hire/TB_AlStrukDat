@@ -47,7 +47,7 @@ boolean UseReturn(){
 }
 
 boolean UseSpeed() {
-    if (HEAVY(abilities) - REDUCT(abilities) > 0 || SPEEDTIMER(abilities) <= 0){
+    if (HEAVY(abilities) - REDUCT(abilities) > 0 || TIMER(abilities) <= 0){
         removeSpeedBoost(abilities);
     }
 
