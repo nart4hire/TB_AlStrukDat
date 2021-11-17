@@ -19,6 +19,8 @@ typedef struct
 #define COLS(M) (M).colEff
 #define ELMT_MATRIX(M, i, j) (M).contents[(i)][(j)]
 
+extern char mobita;
+
 void CreateMatrix(int nRow, int nCol, Matrix *m);
 
 boolean isIdxValid_Matrix(int i, int j);

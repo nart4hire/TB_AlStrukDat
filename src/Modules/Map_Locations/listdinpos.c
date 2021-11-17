@@ -69,7 +69,7 @@ void displayList_ListDin(ListDin l)
         }
     }
     else
-        printf("There are no adjacent cities, Nobita is stranded!\n");
+        printf("\n\"There are no adjacent cities, Mobita is stranded!\"\n\n"); // Easter Egg kalo game ngebug
 }
 
 IdxType indexOf_ListDin(ListDin l, char name)

@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include "tas.h"
-#include "item.c"
 
 int stack_capacity = 3;
 

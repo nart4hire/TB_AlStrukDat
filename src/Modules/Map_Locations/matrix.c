@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "matrix.h"
 
+char mobita = '8';
+
 void CreateMatrix(int nRow, int nCol, Matrix *m)
 {
     ROWS(*m) = nRow;

@@ -23,6 +23,4 @@
 
 #include "ability.h"
 
-#include "command.c"
-
 #endif

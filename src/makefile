@@ -8,17 +8,18 @@ ODIR = obj
 BDIR = bin
 
 _DEPS = boolean.h charmachine.h listdinpos.h matrix.h point.h wordmachine.h \
-        list_todo.h node_todo.h q_pesanan.h time.h \
+        list_todo.h node_todo.h q_pesanan.h \
         gadget.h inventoryGadget.h listpos.h \
         inprogress.h node_order.h prioqueue.h tas.h \
-        ability.h
+        item.h ability.h time.h
 DEPS = $(patsubst %,$(HDIR)/%,$(_DEPS))
 
-_OBJ = charmachine.o listdinpos.o matrix.o point.o wordmachine.o \
-       list_todo.o node_todo.o q_pesanan.o time.o \
+_OBJ = item.o ability.o time.o \
+       listdinpos.o matrix.o point.o \
+       charmachine.o wordmachine.o config.o\
+       list_todo.o node_todo.o q_pesanan.o \
        gadget.o inventoryGadget.o listpos.o \
        inprogress.o node_order.o prioqueue.o tas.o \
-       ability.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: $(CDIR)/%.c $(DEPS)
@@ -28,7 +29,7 @@ $(ODIR)/main.o: main.c main.h $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 main: $(ODIR)/main.o $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+	$(CC) -o $(BDIR)/$@ $^ $(CFLAGS)
 
 .PHONY: clean
 

@@ -9,7 +9,7 @@
 #define HEADQUARTERS '8'
 #define ADJACENT '1'
 
-int parseConfig(char cfg[][CAPACITY_WORDMACHINE], char *file, int length, boolean load);
+int parseConfig(char cfg[][CAPACITY_WORDMACHINE], boolean load);
 
 ListDin parsePoints(char cfg[][CAPACITY_WORDMACHINE]);
 

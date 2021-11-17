@@ -1,14 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "wordmachine.h"
-#include "matrix.h"
-#include "listdinpos.h"
-#include "q_pesanan.h"
-#include "main.h"
-
-char mobita = '8';
-int cash = 10000;
-
 void wipeScreen()
 {
     printf("%s", wipe);

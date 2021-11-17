@@ -3,10 +3,10 @@
 
 #include "config.h"
 
-int parseConfig(char cfg[][CAPACITY_WORDMACHINE], char *file, int length, boolean load)
+int parseConfig(char cfg[][CAPACITY_WORDMACHINE], boolean load)
 {
     boolean able = 0;
-    able = startFile(file, length);
+    able = startFile(currentWord.contents, currentWord.length);
     if (able)
     {
         int i = 0, j, count;

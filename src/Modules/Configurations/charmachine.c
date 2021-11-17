@@ -27,12 +27,12 @@ void start()
 
 boolean config(char *file, int length)
 {
-       char folder[60] = "./Config/";
-       for (int i = 9; i < length + 9; i++)
+       char folder[60] = "../Config/";
+       for (int i = 10; i < length + 10; i++)
        {
-              folder[i] = file[i-9];
+              folder[i] = file[i-10];
        }
-       folder[length + 9] = '\0';
+       folder[length + 10] = '\0';
        tape = fopen(folder, "r");
        if (tape == NULL)
               return 0;

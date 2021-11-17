@@ -4,7 +4,6 @@
 #ifndef WORD_ENGINE_H
 #define WORD_ENGINE_H
 
-#include "boolean.h"
 #include "charmachine.h"
 
 #define CAPACITY_WORDMACHINE 50
