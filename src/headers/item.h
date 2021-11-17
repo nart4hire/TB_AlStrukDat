@@ -9,16 +9,16 @@ typedef struct{
         char pickUp;
         char dropOff;
         char type_item;
-        Time ptime;
+        Time pTime;
 } item;
 
 #define TSERVE(p) (p).tServe
 #define PICKUP(p) (p). pickUp
 #define DROPOFF(p) (p).dropOff
 #define TYPE(p) (p).type_item
-#define PTIME(p) (p).ptime
+#define PTIME(p) (p).pTime
 
-item createItem(Time tServe, char pickUp, char dropOff, char type_item, Time ptime);
+item createItem(Time tServe, char pickUp, char dropOff, char type_item, Time pTime);
 
 boolean isNormal(item i);
 /* Mengembalikan True apabila type item == normal*/
@@ -57,9 +57,5 @@ void SuccessPerishable();
 /*F.S : Bertambah uang sebesar 400 yen dan mengaktifkan item increase capacity*/
 
 void SuccessVIP();
-
-
-
-
 
 #endif
