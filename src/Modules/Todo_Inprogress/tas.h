@@ -5,18 +5,15 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "boolean.h"
-#include "prioqueue.h"
+#include "item.h"
 
-#define STACK_CAPACITY 3
-#define CAPACITY 100
+#define CAPACITY_STACK 100
 #define IDX_UNDEF -1
 
-typedef Pesanan StackElType;
+typedef item StackElType;
 typedef struct {
-  StackElType buffer[CAPACITY]; /* tabel penyimpan elemen */
+  StackElType buffer[CAPACITY_STACK]; /* tabel penyimpan elemen */
   int idxTop; /* alamat TOP: elemen puncak */
-  int heavyItem; //Banyaknya Heavy Item             
 } Stack;
 
 extern int stack_capacity;
@@ -25,7 +22,7 @@ extern int stack_capacity;
 /* Jika s adalah Stack, maka akses elemen : */
 #define IDX_TOP(s) (s).idxTop
 #define     TOP(s) (s).buffer[(s).idxTop]
-#define HEAVY(s) (s).heavyItem
+#define ELMT(s, i) (s).buffer[i]
 
 /* *** Konstruktor/Kreator *** */
 void CreateStack(Stack *s);
@@ -60,10 +57,7 @@ void increaseCapacity(int amount);
 /* Mengembalikan false di kasus sebaliknya */
 /* stack_capacity bernilai maksimal 100 */
 
-
 void displayStack(Stack s);
-
-
 // void setCapacity(int amount);
 
 #endif

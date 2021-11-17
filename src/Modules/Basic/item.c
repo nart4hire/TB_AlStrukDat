@@ -2,6 +2,10 @@
 
 int cash; //variable global
 
+void initCash(int money){
+    cash = money;
+}
+
 item createItem(Time tServe, char pickUp, char dropOff, char type_item, Time pTime)
 {
     item i;
@@ -13,23 +17,31 @@ item createItem(Time tServe, char pickUp, char dropOff, char type_item, Time pTi
     return i;
 }
 
-boolean isNormal(item i){
-    return (i.type_item == 'Normal');
-}
-boolean isHeavy(item i){
-    return (i.type_item == 'Heavy');
-}
-boolean isPerishable(item i){
-    return (i.type_item == 'Perishable');
-}
-boolean isVIP(item i){
-    return (i.type_item == 'VIP');
+item copyItem(item src)
+{
+    item i;
+    TSERVE(i) = TSERVE(src);
+    PICKUP(i) = PICKUP(src);
+    DROPOFF(i) = DROPOFF(src);
+    TYPE(i) = TYPE(src);
+    PTIME(i) = PTIME(src);
+    return i;
 }
 
-void HeavyEffect(int jumlah_heavy){
-    for (int i =0; i<jumlah_heavy; i++){
-        advTime(); //menambah waktu lagi masing2 1 unit waktu per item, prosedur HeavyEffect digunakan selama membawa Heavy Item
-    }
+boolean isNormal(item i){
+    return (TYPE(i) == 'N');
+}
+
+boolean isHeavy(item i){
+    return (TYPE(i) == 'H');
+}
+
+boolean isPerishable(item i){
+    return (TYPE(i) == 'P');
+}
+
+boolean isVIP(item i){
+    return (TYPE(i) == 'V');
 }
 
 int StartPerishable(item *perish_item){

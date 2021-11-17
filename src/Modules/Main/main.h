@@ -1,9 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#define HEADQUARTERS '8'
-#define ADJACENT '1'
-
 #define none_color          "\x1B[30m"
 #define pickup_color        "\x1B[31m"
 #define dest_color          "\x1B[32m"
@@ -15,10 +12,7 @@
 #define clear               "\x1B[39m"
 #define wipe                "\x1b[H\x1b[2J\x1b[H"
 
-#include "point.h"
-#include "listdinpos.h"
-#include "matrix.h"
-#include "wordmachine.h"
+#include "config.h"
 
 #include "list_todo.h"
 #include "q_pesanan.h"
@@ -30,8 +24,6 @@
 
 #include "ability.h"
 
-#include "config.c"
-#include "map.c"
 #include "command.c"
 
 #endif
