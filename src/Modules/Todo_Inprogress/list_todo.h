@@ -43,7 +43,9 @@ char getDrop_ListOrder(ListLinked l, int idx);
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length_ListLinked(l) */
 /* F.S. Mengembalikan posisi drop pesanan list l pada indeks idx */
 
-char getItem_ListOrder(ListLinked l, int idx);
+char getType_ListOrder(ListLinked l, int idx);
+
+item getItem_ListOrder(ListLinked l, int idx);
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length_ListLinked(l) */
 /* F.S. Mengembalikan item pesanan list l pada indeks idx */
 
@@ -62,6 +64,8 @@ int indexOfDrop_ListOrder(ListLinked l, char drop);
 /* F.S. Mencari apakah ada elemen list l yang bernilai pick */
 /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai pick */
 /* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+
+int indexOfType_ListOrder(ListLinked l, char type);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
@@ -99,6 +103,7 @@ void deleteAt_ListOrder(ListLinked *l, item *it, int idx);
 /* F.S. nilai info disimpan pada masing masing variabel sesuai indeks ke-idx. */
 /*      Elemen l pada indeks ke-idx dihapus dari l */
 
+void deleteItem_ListOrder(ListLinked *l, item *it, item src);
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 int length_ListOrder(ListLinked l);

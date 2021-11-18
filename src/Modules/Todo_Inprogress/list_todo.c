@@ -50,13 +50,22 @@ char getDrop_ListOrder(ListLinked l, int idx){
     return DROPOFF(current_node->contents);
 }
 
-char getItem_ListOrder(ListLinked l, int idx){
+char getType_ListOrder(ListLinked l, int idx){
+/* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length_ListLinked(l) */
+/* F.S. Mengembalikan posisi drop pesanan list l pada indeks idx */
+    Address current_node = FIRST(l);
+    for (int i = 0; i < idx; i++)
+        current_node = NEXT(current_node);
+    return TYPE(current_node->contents);
+}
+
+item getItem_ListOrder(ListLinked l, int idx){
 /* I.S. l terdefinisi, idx indeks yang valid dalam l, yaitu 0..length_ListLinked(l) */
 /* F.S. Mengembalikan item pesanan list l pada indeks idx */
     Address current_node = FIRST(l);
     for (int i = 0; i < idx; i++)
         current_node = NEXT(current_node);
-    return TYPE(current_node->contents);
+    return copyItem(INFO(current_node));
 }
 
 Time getPerTime_ListOrder(ListLinked l, int idx){
@@ -103,6 +112,26 @@ int indexOfDrop_ListOrder(ListLinked l, char drop){
             ++idx;
         }
         if (DROPOFF(current_node->contents) == drop)
+            return idx;
+    }
+    return IDX_UNDEF;
+}
+
+int indexOfType_ListOrder(ListLinked l, char type){
+/* I.S. l, t_serve terdefinisi */
+/* F.S. Mencari apakah ada elemen list l yang bernilai t_serve */
+/* Jika ada, mengembalikan indeks elemen pertama l yang bernilai t_serve */
+/* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+    Address current_node = FIRST(l);
+    int idx = 0;
+    if (!isEmpty_ListOrder(l))
+    {
+        while ((TYPE(current_node->contents) != type) && (NEXT(current_node) != NULL))
+        {
+            current_node = NEXT(current_node);
+            ++idx;
+        }
+        if (TYPE(current_node->contents) == type)
             return idx;
     }
     return IDX_UNDEF;
@@ -258,7 +287,36 @@ void deleteAt_ListOrder(ListLinked *l, item *it, int idx){
     }
 }
 
-
+void deleteItem_ListOrder(ListLinked *l, item *it, item src){
+/* I.S. list tidak kosong, idx indeks yang valid dalam l, yaitu 0..length_ListLinked(l) */
+/* F.S. nilai info disimpan pada masing masing variabel sesuai indeks ke-idx. */
+/*      Elemen l pada indeks ke-idx dihapus dari l */
+    /*Kamus*/
+    int pos;
+    Address p, loc;
+    /*Algoritma*/
+    p = *l;
+    if (isEqItem(INFO(p), src)){
+        deleteFirst_ListOrder(l, it);
+    }
+    else{
+        pos = 0;
+        p = *l;
+        while (!isEqItem(INFO(p), src)){
+            p = NEXT(p);
+            pos++;
+        }
+        loc = NEXT(p);
+        NEXT(p) = NEXT(loc);
+        TSERVE(*it) = TSERVE(INFO(p));
+        PICKUP(*it) = PICKUP(INFO(p));
+        DROPOFF(*it) = DROPOFF(INFO(p));
+        TYPE(*it) = TYPE(INFO(p));
+        PTIME(*it) = PTIME(INFO(p));
+        *l = NEXT(p);
+        free(loc);
+    }
+}
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 int length_ListOrder(ListLinked l){
