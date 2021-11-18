@@ -142,7 +142,7 @@ Stack advPerishable(Stack *s)
         for (int i = 0; i < IDX_TOP(*s); i++)
         {
             pop(s, &it);
-            if (!SPEED(abilities))
+            if (DONE(abilities) || !SPEED(abilities))
                 PTIME(it) -= numHeavy() + 1;
             if (TYPE(it) != 'P' || PTIME(it) > 0)
                 push(&temp, it);
