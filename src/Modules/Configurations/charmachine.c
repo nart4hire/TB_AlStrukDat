@@ -56,7 +56,7 @@ void adv()
               fclose(tape);
 }
 
-void end()
+void close()
 {
        fclose(tape);
 }
@@ -78,4 +78,9 @@ boolean save(char *file, int length)
 void write(char letter)
 {
        fprintf(pipe, "%c", letter);
+}
+
+void savedat()
+{
+       fclose(pipe);
 }

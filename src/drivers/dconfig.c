@@ -30,10 +30,22 @@ int main(int argc, char const *argv[])
     //     found = saveGame(configs);
     // }
 
-    // ListDin locs = parsePoints(configs);
-    // Matrix map = parseMap(configs, locs), adj = parsePath(configs);
-    // displayList_ListDin(locs);
-    // displayMatrix(map);
-    // displayMatrix(adj);
+    ListDin locs = parsePoints(configs);
+    Matrix map = parseMap(configs, locs), adj = parsePath(configs);
+    Queue ords = parseOrders(configs);
+    ListLinked todo, inpro;
+    Stack bag;
+    ListPos inv;
+    CreateListPos(&inv);
+    CreateStack(&bag);
+    CreateListOrder(&todo);
+    CreateListOrder(&inpro);
+    displayList_ListDin(locs);
+    displayMatrix(map);
+    displayMatrix(adj);
+    displayQueue(ords);
+    printf("%d\n", length_Queue(ords));
+
+    saveGame(configs, &ords, &todo, &inpro, &bag, &inv);
     return 0;
 }

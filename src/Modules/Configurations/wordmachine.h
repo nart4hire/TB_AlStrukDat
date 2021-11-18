@@ -19,6 +19,7 @@ typedef struct {
 extern boolean endLine;
 extern boolean endWord;
 extern Word currentWord;
+extern Word currentPath;
 
 void ignoreBlank();
 /* Mengabaikan satu atau beberapa BLANK
@@ -59,6 +60,10 @@ void endFile();
 boolean startWrite(char *file, int length);
 
 void saveLine(char *saved);
+
+void closeSave();
+
+void copyPath();
 
 void displayCurrentWord(Word currentWord);
 /* Menampilkan currrentWord pada terminal

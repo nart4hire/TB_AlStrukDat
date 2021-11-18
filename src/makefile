@@ -32,9 +32,12 @@ _OBJ = item.o ability.o time.o color.o\
        main.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-_DCONFIG = listdinpos.o matrix.o point.o \
-           charmachine.o wordmachine.o config.o q_pesanan.o \
-           item.o ability.o time.o color.o
+_DCONFIG = item.o ability.o time.o color.o\
+       listdinpos.o matrix.o point.o \
+       charmachine.o wordmachine.o config.o\
+       gadget.o inventoryGadget.o listpos.o \
+       list_todo.o node_todo.o tas.o \
+       q_pesanan.o
 DCONFIG = $(patsubst %,$(ODIR)/%,$(_DCONFIG))
 
 $(ODIR)/%.o: $(BASIC)/%.c

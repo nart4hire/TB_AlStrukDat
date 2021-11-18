@@ -14,6 +14,7 @@
 boolean endLine;
 boolean endWord;
 Word currentWord;
+Word currentPath;
 
 void ignoreBlank()
 {
@@ -137,6 +138,22 @@ void saveLine(char *saved)
     write(NEWLINE);
 }
 
+void closeSave()
+{
+    savedat();
+}
+
+void copyPath()
+{
+    int i = 0;
+    while (currentWord.contents[i] != '\0')
+    {
+        currentPath.contents[i] = currentWord.contents[i];
+        ++i;
+    }
+    currentPath.contents[i] = '\0';
+    currentPath.length = currentWord.length;
+}
 
 void displayCurrentWord(Word currentWord)
 {

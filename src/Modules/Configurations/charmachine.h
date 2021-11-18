@@ -34,4 +34,6 @@ boolean save(char *file, int length);
 
 void write(char letter);
 
+void savedat();
+
 #endif
