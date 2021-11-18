@@ -86,14 +86,11 @@ void move(Matrix adj, ListDin points)
 void pickup(ListLinked *todo, ListLinked *inpro, Stack *bag)
 {
     item it;
-    if (!isFull_Tas(*bag))
-    {
-        deleteAt_ListOrder(todo, &it, indexOfPick_ListOrder(*todo, mobita));
-        if (TYPE(it) == 'H')
-            ActIncHeavy();
-        insertFirst_ListOrder(inpro, it);
-        push(bag, it);
-    }
+    deleteAt_ListOrder(todo, &it, indexOfPick_ListOrder(*todo, mobita));
+    if (TYPE(it) == 'H')
+        ActIncHeavy();
+    insertFirst_ListOrder(inpro, it);
+    push(bag, it);
     printf("Berhasil pickup item!\n");
 }
 
@@ -362,45 +359,77 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             break;
         case 555:
             /* PICK_UP */
-            if (indexOfPick_ListOrder(todo, mobita) != IDX_UNDEF)
+            if (!isFull_Tas(bag))
             {
-                if (indexOfType_ListOrder(todo, 'V') == IDX_UNDEF)
-                    pickup(&todo, &inpro, &bag);
-                else if (getType_ListOrder(todo, indexOfPick_ListOrder(todo, mobita)) != 'V')
+                if (indexOfPick_ListOrder(todo, mobita) != IDX_UNDEF)
                 {
-                    loreStart();
-                    printf("There's a VIP item\n");
-                    loreEnd();
+                    if (isVIP(TOP(bag)))
+                    {
+                        loreStart();
+                        printf("\n\"Nobita tiba-tiba teringat ada teman baiknya Zhizuka yang memesan layanan VIP! Ia tidak mau melayani\n");
+                        printf("pesanan lain selain pesanan VIP.\"\n\n");
+                        loreEnd();
+                        printf("Pesanan VIP harus dilayani terlebih dahulu sebelum melayani pesanan lain.\n\n");
+                    }
+                    else if (indexOfType_ListOrder(todo, 'V') != indexOfPick_ListOrder(todo, mobita))
+                    {
+                        loreStart();
+                        printf("\n\"Nobita tiba-tiba teringat ada teman baiknya Zhizuka yang memesan layanan VIP! Ia tidak mau melayani\n");
+                        printf("pesanan lain selain pesanan VIP.\"\n\n");
+                        loreEnd();
+                        printf("Pesanan VIP harus dilayani terlebih dahulu sebelum melayani pesanan lain.\n");
+                        printf("Tip: Pesanan VIP harus dilayani sesuai urutan masuk.\n\n");
+                    }
+                    else
+                        pickup(&todo, &inpro, &bag);
                 }
                 else
-                    pickup(&todo, &inpro, &bag);
+                {
+                    loreStart();
+                    printf("\n\"Mobita mencari-cari tempat untuk mengambil pesanan, namun ia tidak menemukannya. Setelah ia\n");
+                    printf("melihat daftar pesanannya, ia terkejut karena ternyata ia salah kota.\"\n\n");
+                    loreEnd();
+                    printf("Pesanan tidak ditemukan! Coba bergerak ke kota lain yang bertanda merah pada peta.\n\n");
+                }
             }
             else
             {
                 loreStart();
-                printf("\n\"Mobita mencari-cari tempat untuk mengambil pesanan, namun ia tidak menemukannya. Setelah ia\n");
-                printf("melihat daftar pesanannya, ia terkejut karena ternyata ia salah kota.\"\n\n");
-                printf("Pesanan tidak ditemukan! Coba bergerak ke kota lain yang bertanda merah pada peta.\n\n");
+                printf("\n\"Mobita terlalu semangat dalam pekerjaanya, saking semangat ia lupa kapasitas tasnya. Mobita garuk kepala\n");
+                printf("dengan malu karena terlalu bergesa-gesa.\n\n");
                 loreEnd();
+                printf("Tas sudah penuh! antarlah pesanan untuk mengosongkannya kembali.");
             }
             break;
         case 623:
             /* DROP_OFF */
             if (isEmpty_Stack(bag))
             {
-                printf("No orders taken yet");
+                loreStart();
+                printf("\n\"Mobita terlalu semangat dalam pekerjaanya, saking semangat ia lupa mengambil pesanan apapun. Mobita\n");
+                printf("menggarukkan kepala dengan malu karena terlalu bergesa-gesa.\n\n");
+                loreEnd();
+                printf("\nBelum ada pesanan yang diambil oleh Mobita.\n\n");
             }
             else if (mobita != DROPOFF(TOP(bag)))
             {
-                printf("Current order can not be dropped off here\n");
+                loreStart();
+                printf("\n\"Mobita mencari-cari tempat untuk melakukan dropoff pesanannya, namun ia tidak menemukannya.\n");
+                printf("Setelah ia melihat daftar pesanannya, ia terkejut karena ternyata ia salah kota.\"\n\n");
+                loreEnd();
+                printf("\nPesanan yang dilakukan sekarang tidak bisa di-dropoff di sini.\n\n");
             }
             else if (indexOfType_ListOrder(todo,'V') != IDX_UNDEF)
             {
-                if (TYPE(TOP(bag)) == 'V')
+                if (isVIP(TOP(bag)))
                     dropoff(&inpro, &bag);
                 else
                 {
-                    printf("Not VIP, finish vip first\n");
+                    loreStart();
+                    printf("\n\"Nobita tiba-tiba teringat ada teman baiknya Zhizuka yang memesan layanan VIP! Ia tidak mau melayani\n");
+                    printf("pesanan lain selain pesanan VIP.\"\n\n");
+                    loreEnd();
+                    printf("Pesanan VIP harus dilayani terlebih dahulu sebelum melayani pesanan lain.\n\n");
                 }
             }
             else
@@ -413,16 +442,19 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             /* RETURN */
             if (isEmpty_Stack(bag))
             {
-                printf("Bag empty!");
+                loreStart();
+                printf("\n\"Tas anda kosong melompong, untuk mengembalikan tas harus membayar Doraemonangis sebesar uang sewa, yaitu\n");
+                printf("1 Juta Yen per satuan waktu yang ditempuh.\"\n\n");
+                loreEnd();
             }
             else if (RETURN(abilities) > 0)
                 returnOrder(&todo, &inpro, &bag);
             else
             {
                 loreStart();
-                printf("Mobita has no returns\n");
+                printf("\n\"Mobita tidak bisa mengembalikan barang kepada pemesan jasa karena ia kurang banyak melakukan pesanan VIP\"\n\n");
                 loreEnd();
-                printf("Do VIPS\n");
+                printf("Pesanan VIP memberikan tiket untuk mengembalikan pesanan teratas pada tas. Layani lebih banyak VIP lagi!\n\n");
             }
             break;
         case 222:
@@ -455,10 +487,9 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             printf("\n\"Mobita merasa seperti ada yang kurang dalam tasnya, tapi ia tidak ingat apa. Untungnya\n");
             printf("tas ajaib yang diberikan Doraemonangis dilengkapi fitur pencatatan lengkap.\"\n\n");
             loreEnd();
-            printf("\nIn pro list:\n\n");
-            displayList_ListOrder(inpro);
             printf("\nBag: \n\n");
             displayStack(bag);
+            printf("\n");
             break;
         case 240:
             /* BUY */
@@ -522,17 +553,32 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
                 switch (x)
                 {
                 case 0:
+                    loreStart();
+                    printf("\n\"Mobita ingat pada masa kecilnya saat ia dinasihati Profesor Jati.\n");
+                    printf("Ada waktu dan tempat untuk segala sesuatu, tetapi tidak sekarang.\"\n\n");
+                    loreEnd();
                     done = true;
                     break;
                 case 1:
+                    loreStart();
+                    printf("\"Mobita mengambil perishable dari atas tumpukan kirimannya dan membungkusnya dengan\n");
+                    printf("hati-hati, kain pembungkus itu pun mulai membalikkan waktu item di dalamnya.\"\n\n");
+                    loreEnd();
                     PTIME(TOP(bag)) = getPerTime_ListOrder(inpro, indexOfItem_ListOrder(inpro, TOP(bag)));
                     done = true;
                     break;
                 case 2:
+                    loreStart();
+                    printf("\"Mobita mengambil menyinari tasnya dengan senter pembesar dan menjadi takjub karena\n");
+                    printf("tas itu membesar menjadi dua kali lipat ukurannya yang asli.\"\n\n");
+                    loreEnd();
                     increaseCapacity(stack_capacity);
                     done = true;
                     break;
                 case 3:
+                    loreStart();
+                    printf("\"Mobita mengambil membuka pintu ruang dan waktu dan membayangkan suatu tujuan yaitu...\"\n\n");
+                    loreEnd();
                     do
                     {
                         printf("ENTER CITY CHARACTER: ");
@@ -540,14 +586,26 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
                         if (currentWord.length == 1 && indexOf_ListDin(locs, currentWord.contents[0]) != IDX_UNDEF)
                             mobita = currentWord.contents[0];
                     } while (currentWord.length != 1 || indexOf_ListDin(locs, currentWord.contents[0]) == IDX_UNDEF);
-                    
+                    loreStart();
+                    printf("\"\nRuang pun mulai melentur di sekitarnya dan ia merasa seakan berputar dalam komidi putar.\n");
+                    printf("Tidak sampai sedetik kemudian ia tiba di kota yang ia tuju dengan selamat.\"\n\n");
+                    loreEnd();
                     done = true;
                     break;
                 case 4:
+                    loreStart();
+                    printf("\"Mobita menoleh ke bawah dan melihat jam tangannya yang berputar semakin lambat dan akhirnya\n");
+                    printf("berbalik arah dengan semakin cept. Ia mulai merasakan pelebaran waktu dan di seketika itu,\n");
+                    printf("ia sudah kembali ke masa lalu.\"\n\n");
+                    loreEnd();
                     timeMachine();
                     done = true;
                     break;
                 case 5:
+                    loreStart();
+                    printf("\"Mobita menenyinari paket besar yang ia sedang antarkan dengan senter pengecil dan paket itu \n");
+                    printf("mulai menciut hingga bisa muat di telapak tangannya.\"\n\n");
+                    loreEnd();
                     ActReduct();
                     done = true;
                     break;
@@ -586,7 +644,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             printf("masukkan perintah yang valid untuk melanjutkan permainan.\n\n");
             break;
         }
-        if (running)
+        if (running && !win)
         {
             displayStats(locs, ords, todo);
             printf("ENTER COMMAND: ");

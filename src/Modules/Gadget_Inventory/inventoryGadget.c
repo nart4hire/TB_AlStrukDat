@@ -163,7 +163,6 @@ int inventory(int command, ListPos* l, item it) {
             }
         } 
     } else {
-        printf("Return (Masuk 0)!\n\n");
         gadget = 0;
     }
     return gadget;
