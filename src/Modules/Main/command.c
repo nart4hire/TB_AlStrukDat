@@ -423,8 +423,12 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             break;
         case 875:
             /* IN_PROGRESS */
+            loreStart();
+            printf("\n\"Mobita merasa seperti ada yang kurang dalam tasnya, tapi ia tidak ingat apa. Untungnya\n");
+            printf("tas ajaib yang diberikan Doraemonangis dilengkapi fitur pencatatan lengkap.\"\n\n");
+            loreEnd();
             printf("\nIn pro list:\n\n");
-            displayList_ListOrder(todo);
+            displayList_ListOrder(inpro);
             printf("\nBag: \n\n");
             displayStack(bag);
             break;
