@@ -182,14 +182,16 @@ boolean checkwin(Queue ords, ListLinked todo, ListLinked inpro)
     {
         wipeScreen();
         loreStart();
-        printf("\"Mobita menghela nafa yang panjang dan memulai perjalanannya pulang. Mungkin ia tidak melakukan\n");
+        printf("\"Mobita menghela nafas yang panjang dan memulai perjalanannya pulang. Mungkin ia tidak melakukan\n");
         printf("semua pesanannya dengan sempurna, namun dalam hati kecilnya ia puas karena bisa membantu\n");
         printf("Orang tuanya menyelamatkan bisnis keluarga mereka. Mobita pulang dengan suasana gembira.\"\n\n");
         loreEnd();
         printf("Anda telah menyelesaikan permainan! Anda mendapatkan skor\n");
         printf("Time taken : %d\n", time_game);
         printf("End Money  : %d\n", cash);
-        printf("Score      : %d\n", (time_game * cash));
+        printf("Score      : %d\n\n", (time_game * cash));
+        printf("ENTER ANYTHING TO CONTINUE: ");
+        advWord();
         return true;
     }
     return false;
