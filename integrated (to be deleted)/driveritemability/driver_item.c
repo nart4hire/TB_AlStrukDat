@@ -8,7 +8,7 @@
 int main(){
 
     int masukanuang;
-    int cash;
+
 
 
     scanf("%d", &masukanuang);
