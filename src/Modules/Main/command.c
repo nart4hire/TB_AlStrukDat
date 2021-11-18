@@ -12,9 +12,17 @@ void displayStats(ListDin locations, Queue orders, ListLinked todo)
     printf("Masih ada %d pesanan yang tersisa.\n\n", length_Queue(orders) + length_ListOrder(todo));
 }
 
-void advanceTurn(Queue *orders, ListLinked *todo)
+void advanceTurn(Queue *orders, ListLinked *todo, ListLinked *inpro, Stack *bag)
 {
-    item ord;
+    Stack temp;
+    item ord, trash;
+    UseSpeed();
+    temp = advPerishable(bag);
+    while (!isEmpty_Stack(temp))
+    {
+        pop(&temp, &ord);
+        deleteItem_ListOrder(inpro, &trash, ord);
+    }
     advTime(SPEED(abilities), numHeavy());
     while (!isEmpty_Queue(*orders) && TSERVE(HEAD(*orders)) <= time_game)
     {
@@ -75,9 +83,26 @@ void move(Matrix adj, ListDin points)
     dealocate(&temp);
 }
 
-void pickup()
+void pickup(ListLinked *todo, ListLinked *inpro, Stack *bag)
 {
-    
+    item it;
+    if (!isFull_Tas(*bag))
+    {
+        deleteAt_ListOrder(todo, &it, indexOfPick_ListOrder(*todo, mobita));
+        if (TYPE(it) == 'H')
+            ActIncHeavy();
+        insertFirst_ListOrder(inpro, it);
+        push(bag, it);
+    }
+    printf("Berhasil pickup item!\n");
+}
+
+void returnOrder(ListLinked *todo, ListLinked *inpro, Stack *bag)
+{
+    item it, ori;
+    pop(bag, &it);
+    deleteItem_ListOrder(inpro, &ori, it);
+    insertLast_ListOrder(todo, ori);
 }
 
 void getColor(char **color, Matrix adj, ListDin points, ListLinked todo, ListLinked inpro, char loc)
@@ -233,6 +258,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
     Queue ords;
     ListLinked todo, inpro;
     ListPos inv;
+    Stack bag;
 
     // Reading Configs
     locs = parsePoints(cfg);
@@ -242,10 +268,12 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
     CreateListOrder(&todo);
     CreateListOrder(&inpro);
     CreateListPos(&inv);
+    CreateStack(&bag);
     startTime();
     initTas(3);
     initCash(0);
     initAbilities();
+    RETURN(abilities) = 3;
 
     // Game
     if (!load)
@@ -273,12 +301,23 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
         case 311:
             /* MOVE */
             move(adj, locs);
-            advanceTurn(&ords, &todo);
+            advanceTurn(&ords, &todo, &inpro, &bag);
             break;
         case 555:
             /* PICK_UP */
             if (indexOfPick_ListOrder(todo, mobita) != IDX_UNDEF)
-                pickup();
+            {
+                if (indexOfType_ListOrder(todo, 'V') == IDX_UNDEF)
+                    pickup(&todo, &inpro, &bag);
+                else if (getType_ListOrder(todo, indexOfPick_ListOrder(todo, mobita)) != 'V')
+                {
+                    loreStart();
+                    printf("There's a VIP item\n");
+                    loreEnd();
+                }
+                else
+                    pickup(&todo, &inpro, &bag);
+            }
             else
             {
                 loreStart();
@@ -294,7 +333,15 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             break;
         case 480:
             /* RETURN */
-            printf("Tried to <RETURN>, but command hasn't been implemented yet\n");
+            if (RETURN(abilities) > 0)
+                returnOrder(&todo, &inpro, &bag);
+            else
+            {
+                loreStart();
+                printf("Mobita has no returns\n");
+                loreEnd();
+                printf("Do VIPS\n");
+            }
             break;
         case 222:
             /* MAP */

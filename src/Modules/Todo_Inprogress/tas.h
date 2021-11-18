@@ -38,6 +38,7 @@ boolean isEmpty_Stack(Stack s);
 /* Mengirim true jika s kosong: lihat definisi di atas */
 boolean isFull_Stack(Stack s);
 /* Mengirim true jika tabel penampung nilai s stack penuh */
+boolean isFull_Tas(Stack s);
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
 void push(Stack *s, StackElType val);
@@ -62,6 +63,6 @@ void increaseCapacity(int amount);
 void displayStack(Stack s);
 // void setCapacity(int amount);
 
-void advPerishable(Stack *s);
+Stack advPerishable(Stack *s);
 
 #endif

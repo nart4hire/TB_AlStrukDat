@@ -123,21 +123,35 @@ void displayStack(Stack s){
 // I.S. s tidak mungkin kosong 
 // F.S. val adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 
 
-void advPerishable(Stack *s)
+Stack advPerishable(Stack *s)
 {
-    Stack temp;
+    Stack temp, ret;
+    CreateStack(&ret);
     item it;
-    for (int i = 0; i < IDX_TOP(*s); i++)
+    if (!isEmpty_Stack(*s))
     {
-        pop(s, &it);
-        if (!SPEED(abilities))
-            PTIME(it) -= numHeavy() + 1;
-        if (PTIME(it) > 0)
-            push(&temp, it);
+        for (int i = 0; i < IDX_TOP(*s); i++)
+        {
+            pop(s, &it);
+            if (!SPEED(abilities))
+                PTIME(it) -= numHeavy() + 1;
+            if (PTIME(it) > 0)
+                push(&temp, it);
+            else
+            {
+                loreStart();
+                printf("\"Mobita tiba-tiba merasakan ada yang janggal dalam tasnya. Ia membuka ransel dan\n");
+                printf("melihat barang perishable yang sudah kadaluarsa. Barang yang seharusnya dikirim\n");
+                printf("ke kota %c itu terpaksa dibuang dan Mobita mendapat bintang satu dari konsumen\"\n\n", DROPOFF(it));
+                loreEnd();
+                push(&ret, it);
+            }
+        }
+        while (!isEmpty_Stack(temp))
+        {
+            pop(&temp, &it);
+            push(s, it);
+        }
     }
-    while (!isEmpty_Stack(temp))
-    {
-        pop(&temp, &it);
-        push(s, it);
-    }
+    return ret;
 }
