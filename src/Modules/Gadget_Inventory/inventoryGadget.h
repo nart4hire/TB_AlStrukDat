@@ -29,7 +29,7 @@ void senterPengecil(char jenisItem[], int* increaseTime);
 // dan increaseTime adalah waktu yang ditambahkan ke waktu yang sedang berjalan
 // F.S. Jika jenis item teratas Tas adalah heavy maka effeknya akan dihilangkan
 
-void inventory(int command, ListPos* l, int* gadget);
+int inventory(int command, ListPos* l, item it);
 // I.S. l adalah list inventory gadget dan sebelumnya sudah terdefinisi
 // F.S. jika item ada di inventory gadget maka gadget akan di remove dari l
 // dan gadget berisi nomer jenis gadget (misal 1 adalah nomor untuk gadget jenis kain pembungkus waktu)

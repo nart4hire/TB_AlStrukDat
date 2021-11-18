@@ -61,10 +61,10 @@ void SuccessHeavy(){
     ActSpeedBoost();
 }
 
-void SuccessPerishable(){
+int SuccessPerishable(){
     REDUCT(abilities) = false;
     cash += 400;
-    ActIncCapacity();
+    return ActIncCapacity();
 }
 
 void SuccessVIP(){

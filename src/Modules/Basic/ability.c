@@ -30,17 +30,17 @@ int ActIncCapacity(){
 }
 
 void ActIncHeavy(){
-    ++HEAVY(abilities);
+    HEAVY(abilities) += 1;
 }
 
 void ActIncReturn(){
-    ++RETURN(abilities);
+    RETURN(abilities) += 1;
 }
 
 boolean UseReturn(){
     if (RETURN(abilities) > 0)
     {
-        --RETURN(abilities);
+        RETURN(abilities) -= 1;
         return true;
     }
     return false;

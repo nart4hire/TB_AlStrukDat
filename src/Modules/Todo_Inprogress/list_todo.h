@@ -67,6 +67,7 @@ int indexOfDrop_ListOrder(ListLinked l, char drop);
 
 int indexOfType_ListOrder(ListLinked l, char type);
 
+int indexOfItem_ListOrder(ListLinked l, item it);
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
 void insertFirst_ListOrder(ListLinked *l, item it);

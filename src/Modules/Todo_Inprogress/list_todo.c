@@ -136,6 +136,26 @@ int indexOfType_ListOrder(ListLinked l, char type){
     }
     return IDX_UNDEF;
 }
+
+int indexOfItem_ListOrder(ListLinked l, item it){
+/* I.S. l, t_serve terdefinisi */
+/* F.S. Mencari apakah ada elemen list l yang bernilai t_serve */
+/* Jika ada, mengembalikan indeks elemen pertama l yang bernilai t_serve */
+/* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+    Address current_node = FIRST(l);
+    int idx = 0;
+    if (!isEmpty_ListOrder(l))
+    {
+        while (!isEqItem(INFO(current_node), it) && (NEXT(current_node) != NULL))
+        {
+            current_node = NEXT(current_node);
+            ++idx;
+        }
+        if (isEqItem(INFO(current_node), it))
+            return idx;
+    }
+    return IDX_UNDEF;
+}
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
 void insertFirst_ListOrder(ListLinked *l, item it){
@@ -277,12 +297,11 @@ void deleteAt_ListOrder(ListLinked *l, item *it, int idx){
         }
         loc = NEXT(p);
         NEXT(p) = NEXT(loc);
-        TSERVE(*it) = TSERVE(INFO(p));
-        PICKUP(*it) = PICKUP(INFO(p));
-        DROPOFF(*it) = DROPOFF(INFO(p));
-        TYPE(*it) = TYPE(INFO(p));
-        PTIME(*it) = PTIME(INFO(p));
-        *l = NEXT(p);
+        TSERVE(*it) = TSERVE(INFO(loc));
+        PICKUP(*it) = PICKUP(INFO(loc));
+        DROPOFF(*it) = DROPOFF(INFO(loc));
+        TYPE(*it) = TYPE(INFO(loc));
+        PTIME(*it) = PTIME(INFO(loc));
         free(loc);
     }
 }
@@ -300,21 +319,18 @@ void deleteItem_ListOrder(ListLinked *l, item *it, item src){
         deleteFirst_ListOrder(l, it);
     }
     else{
-        pos = 0;
         p = *l;
         while (!isEqItem(INFO(p), src)){
+            loc = p;
             p = NEXT(p);
-            pos++;
         }
-        loc = NEXT(p);
-        NEXT(p) = NEXT(loc);
+        NEXT(loc) = NEXT(p);
         TSERVE(*it) = TSERVE(INFO(p));
         PICKUP(*it) = PICKUP(INFO(p));
         DROPOFF(*it) = DROPOFF(INFO(p));
         TYPE(*it) = TYPE(INFO(p));
         PTIME(*it) = PTIME(INFO(p));
-        *l = NEXT(p);
-        free(loc);
+        free(p);
     }
 }
 

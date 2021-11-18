@@ -93,31 +93,39 @@ void increaseCapacity(int amount)
 }
 
 void displayStack(Stack s){
-    for (int i = 0; i <= IDX_TOP(s);i++)
+    if (isEmpty_Stack(s))
     {
-        printf("%d. ", i+1);
-        switch (TYPE(ELMT(s, IDX_TOP(s) - i)))
-        {
-        case 'N':
-            printf("Normal Item");
-            break;
-        case 'H':
-            printf("Heavy Item");
-            break;
-        case 'P':
-            printf("Perishable Item");
-            break;
-        case 'V':
-            printf("VIP Item");
-            break;
-        default:
-            break;
-        }
-        printf(" (Tujuan: %c)", TYPE(ELMT(s, IDX_TOP(s) - i)));
-        if (isPerishable(ELMT(s, IDX_TOP(s) - i)))
-            printf(" (Time remaining %d)", PTIME(ELMT(s, IDX_TOP(s) - i)));
-        printf("\n");
+        printf("Bag is empty.\n\n");
     }
+    else
+    {
+        for (int i = 0; i <= IDX_TOP(s);i++)
+        {
+            printf("%d. ", i+1);
+            switch (TYPE(ELMT(s, IDX_TOP(s) - i)))
+            {
+            case 'N':
+                printf("Normal Item");
+                break;
+            case 'H':
+                printf("Heavy Item");
+                break;
+            case 'P':
+                printf("Perishable Item");
+                break;
+            case 'V':
+                printf("VIP Item");
+                break;
+            default:
+                break;
+            }
+            printf(" (Tujuan: %c)", TYPE(ELMT(s, IDX_TOP(s) - i)));
+            if (isPerishable(ELMT(s, IDX_TOP(s) - i)))
+                printf(" (Time remaining %d)", PTIME(ELMT(s, IDX_TOP(s) - i)));
+            printf("\n");
+        }
+    }
+    
 }
 // Menghapus val dari Stack s 
 // I.S. s tidak mungkin kosong 
@@ -127,6 +135,7 @@ Stack advPerishable(Stack *s)
 {
     Stack temp, ret;
     CreateStack(&ret);
+    CreateStack(&temp);
     item it;
     if (!isEmpty_Stack(*s))
     {
@@ -135,7 +144,7 @@ Stack advPerishable(Stack *s)
             pop(s, &it);
             if (!SPEED(abilities))
                 PTIME(it) -= numHeavy() + 1;
-            if (PTIME(it) > 0)
+            if (TYPE(it) != 'P' || PTIME(it) > 0)
                 push(&temp, it);
             else
             {

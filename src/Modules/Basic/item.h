@@ -48,7 +48,7 @@ void SuccessHeavy();
 /*I.S : Tidak ada (diaktifkan ketika berhasil mengantarkan item bertime heavy*/
 /*F.S : Bertambah uang sebesar 400 yen dan Mengaktifkan Ability SpeedBoost */
 
-void SuccessPerishable();
+int SuccessPerishable();
 /*I.S : Tidak ada (diaktifkan ketika berhasil mengantaarkan item bertipe perishable*/
 /*F.S : Bertambah uang sebesar 400 yen dan mengaktifkan item increase capacity*/
 

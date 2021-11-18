@@ -7,3 +7,4 @@ Gadget -> 1(kain), 2(senter pembesar), 3(pintu), 4(mesin), 5(senter pengecil), 0
 penyimpanan: 0 0 0 0 1 -> ada kain di slot 5
 Tas: 3(capacity) (bot stack)3 4 15(top stack) -> urutan pesanan di daftar pesanan
 done tasks: 1 2 7 8 -> urutan pesanan di daftar pesanan
+just put in new orderlist

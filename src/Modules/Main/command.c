@@ -97,10 +97,41 @@ void pickup(ListLinked *todo, ListLinked *inpro, Stack *bag)
     printf("Berhasil pickup item!\n");
 }
 
+void dropoff(ListLinked *inpro, Stack *bag)
+{
+    item it, src;
+    pop(bag, &it);
+    deleteItem_ListOrder(inpro, &src, it);
+    printf("\ndelivered: ");
+    displayItem(src);
+    printf("\n");
+    switch (TYPE(it))
+    {
+    case 'N':
+        SuccessNormal();
+        break;
+    case 'H':
+        SuccessHeavy();
+        break;
+    case 'P':
+        increaseCapacity(SuccessPerishable());
+        break;
+    case 'V':
+        SuccessVIP();
+        break;
+    
+    default:
+        break;
+    }
+}
+
 void returnOrder(ListLinked *todo, ListLinked *inpro, Stack *bag)
 {
     item it, ori;
     pop(bag, &it);
+    if (isHeavy(it))
+        HEAVY(abilities) -= 1;
+    REDUCT(abilities) = false;
     deleteItem_ListOrder(inpro, &ori, it);
     insertLast_ListOrder(todo, ori);
 }
@@ -273,7 +304,6 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
     initTas(3);
     initCash(0);
     initAbilities();
-    RETURN(abilities) = 3;
 
     // Game
     if (!load)
@@ -295,7 +325,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
     command = parseCommand();
     while (running)
     {
-        wipeScreen();
+        // wipeScreen();
         switch (command)
         {
         case 311:
@@ -329,11 +359,35 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             break;
         case 623:
             /* DROP_OFF */
-            printf("Tried to <DROP_OFF>, but command hasn't been implemented yet\n");
+            if (isEmpty_Stack(bag))
+            {
+                printf("No orders taken yet");
+            }
+            else if (mobita != DROPOFF(TOP(bag)))
+            {
+                printf("Current order can not be dropped off here\n");
+            }
+            else if (indexOfType_ListOrder(todo,'V') != IDX_UNDEF)
+            {
+                if (TYPE(TOP(bag)) == 'V')
+                    dropoff(&inpro, &bag);
+                else
+                {
+                    printf("Not VIP, finish vip first\n");
+                }
+            }
+            else
+            {
+                dropoff(&inpro, &bag);
+            }
             break;
         case 480:
             /* RETURN */
-            if (RETURN(abilities) > 0)
+            if (isEmpty_Stack(bag))
+            {
+                printf("Bag empty!");
+            }
+            else if (RETURN(abilities) > 0)
                 returnOrder(&todo, &inpro, &bag);
             else
             {
@@ -369,7 +423,10 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             break;
         case 875:
             /* IN_PROGRESS */
-            printf("Tried to <IN_PROGRESS>, but command hasn't been implemented yet\n");
+            printf("\nIn pro list:\n\n");
+            displayList_ListOrder(todo);
+            printf("\nBag: \n\n");
+            displayStack(bag);
             break;
         case 240:
             /* BUY */
@@ -410,8 +467,64 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             break;
         case 718:
             /* INVENTORY */
-            printf("Tried to <INVENTORY>, but command hasn't been implemented yet\n");
-            break;
+            done = false;
+            do
+            {
+                printf("\nInventory:\n\n");
+                displayInventoryGadget(inv);
+                printf("ENTER GADGET NUMBER: ");
+                advWord();
+                input = parseCommand() - 48;
+                if (input > 5 || input < 0)
+                {
+                    loreStart();
+                    printf("\n\"Mobita kebingungan mencari gadget yang sesuai karena semua gadget terlihat sangat bagus.\n");
+                    printf("Mobita mengalami kegalauan yang mendalam dan merenungi nasib.\"\n\n");
+                    loreEnd();
+                    printf("Masukan pemain tidak sesuai. Tolong beri masukan yang sesuai.\n\n");
+                }
+                else
+                {
+                    x = inventory(input, &inv, TOP(bag));
+                }
+                switch (x)
+                {
+                case 0:
+                    done = true;
+                    break;
+                case 1:
+                    PTIME(TOP(bag)) = getPerTime_ListOrder(inpro, indexOfItem_ListOrder(inpro, TOP(bag)));
+                    done = true;
+                    break;
+                case 2:
+                    increaseCapacity(stack_capacity);
+                    done = true;
+                    break;
+                case 3:
+                    do
+                    {
+                        printf("ENTER CITY CHARACTER: ");
+                        advWord();
+                        if (currentWord.length == 1 && indexOf_ListDin(locs, currentWord.contents[0]) != IDX_UNDEF)
+                            mobita = currentWord.contents[0];
+                    } while (currentWord.length != 1 || indexOf_ListDin(locs, currentWord.contents[0]) == IDX_UNDEF);
+                    
+                    done = true;
+                    break;
+                case 4:
+                    timeMachine();
+                    done = true;
+                    break;
+                case 5:
+                    ActReduct();
+                    done = true;
+                    break;
+                default:
+                    break;
+                }
+                break;
+            } while (!done);
+            
         case 680:
             /* SAVE_GAME */
             printf("Tried to <SAVE_GAME>, but command hasn't been implemented yet\n");
@@ -423,7 +536,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             printf("2. <PICK_UP>     : Mobita mengambil pesanan yang datang pada lokasinya.\n");
             printf("3. <DROP_OFF>    : Mobita mengirimkan pesanan yang ia sudah antar pada lokasinya.\n");
             printf("4. <RETURN>      : Mobita membuka gapura ajaib dan mengembalikan pesanan teratas dalam tas.\n");
-            printf("                   Anda mempunyai sisa %d kali penggunaan <RETURN>.", RETURN(abilities));
+            printf("                   Anda mempunyai sisa %d kali penggunaan <RETURN>.\n", RETURN(abilities));
             printf("5. <MAP>         : Membuka GPS ajaib ala Doraemonangis.\n");
             printf("6. <TO_DO>       : Membuka catatan kiriman ajaib ala Doraemonangis.\n");
             printf("7. <IN_PROGRESS> : Melihat isi tas dan kiriman yang sedang dilaksanakan.\n");
