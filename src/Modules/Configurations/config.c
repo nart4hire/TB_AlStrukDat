@@ -48,7 +48,7 @@ int parseConfig(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             advFile();
         }
         count = atoi(cfg[i-1]);
-        for (int k = 0; k < count; k++)
+        for (int k = 0; k < count - 1; k++)
         {
             j = 0;
             while (currentWord.contents[j] != '\0')
@@ -60,6 +60,14 @@ int parseConfig(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             ++i;
             advFile();
         }
+        j = 0;
+        while (currentWord.contents[j] != '\0')
+        {
+            cfg[i][j] = currentWord.contents[j];
+            ++j;
+        }
+        cfg[i][j] = '\0';
+        ++i;
         if (load)
         {
             // smth
@@ -141,4 +149,22 @@ Queue parseOrders(char cfg[][CAPACITY_WORDMACHINE])
         enqueue(&orders, createItem(tserve, pick, drop, item, perish));
     }
     return orders;
+}
+
+int getSaveArea(char cfg[][CAPACITY_WORDMACHINE])
+{
+    int i = atoi(cfg[2]);
+    int j = atoi(cfg[2 * i + 4]);
+    return (2 * i + 5 + j);
+}
+
+int saveGame(char cfg[][CAPACITY_WORDMACHINE])
+{
+    boolean avail = startWrite(currentWord.contents, currentWord.length);
+    int i = 0;
+    while (cfg[i][0] != '\0')
+    {
+        saveLine(cfg[i++]);
+    }
+    return avail;
 }

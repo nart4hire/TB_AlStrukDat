@@ -179,6 +179,130 @@ void displayMap(Matrix map, Matrix adj, ListDin points, ListLinked todo, ListLin
     printf("%s\n", normal);
 }
 
+int save_game(char cfg[][CAPACITY_WORDMACHINE], Queue *ords, ListLinked *todo, ListLinked *inpro, Stack *bag, ListPos *inv)
+{
+    item it;
+    int idx = getSaveArea(cfg), i, g;
+    char *string;
+    cfg[idx++][0] = mobita;
+
+    sprintf(string, "%d", time_game);
+    i = 0;
+    while (string[i] != '\0')
+        cfg[idx][i] = string[i++];
+    ++idx;
+
+    sprintf(string, "%d", cash);
+    i = 0;
+    while (string[i] != '\0')
+        cfg[idx][i] = string[i++];
+    ++idx;
+        
+    sprintf(string, "%d", stack_capacity);
+    i = 0;
+    while (string[i] != '\0')
+        cfg[idx][i] = string[i++];
+    ++idx;
+        
+    sprintf(string, "%u %u %d %d %d %u", SPEED(abilities), DONE(abilities), RETURN(abilities), TIMER(abilities), HEAVY(abilities), REDUCT(abilities));
+    i = 0;
+    while (string[i] != '\0')
+        cfg[idx][i] = string[i++];
+    ++idx;
+    
+    sprintf(string, "%d", length_Queue(*ords));
+    i = 0;
+    while (string[i] != '\0')
+        cfg[idx][i] = string[i++];
+    ++idx;
+
+    while (!isEmpty_Queue(*ords))
+    {
+        dequeue(ords, &it);
+        if (isPerishable(it))
+            sprintf(string, "%d %c %c %c %d", TSERVE(it), PICKUP(it), DROPOFF(it), TYPE(it), PTIME(it));
+        else
+            sprintf(string, "%d %c %c %c", TSERVE(it), PICKUP(it), DROPOFF(it), TYPE(it));
+        i = 0;
+        while (string[i] != '\0')
+            cfg[idx][i] = string[i++];
+        ++idx;
+    }
+    
+    sprintf(string, "%d", length_ListOrder(*todo));
+    i = 0;
+    while (string[i] != '\0')
+        cfg[idx][i] = string[i++];
+    ++idx;
+
+    while (!isEmpty_ListOrder(*todo))
+    {
+        deleteFirst_ListOrder(todo, &it);
+        if (isPerishable(it))
+            sprintf(string, "%d %c %c %c %d", TSERVE(it), PICKUP(it), DROPOFF(it), TYPE(it), PTIME(it));
+        else
+            sprintf(string, "%d %c %c %c", TSERVE(it), PICKUP(it), DROPOFF(it), TYPE(it));
+        i = 0;
+        while (string[i] != '\0')
+            cfg[idx][i] = string[i++];
+        ++idx;
+    }
+    
+    sprintf(string, "%d", length_ListOrder(*inpro));
+    i = 0;
+    while (string[i] != '\0')
+        cfg[idx][i] = string[i++];
+    ++idx;
+
+    while (!isEmpty_ListOrder(*inpro))
+    {
+        deleteFirst_ListOrder(inpro, &it);
+        if (isPerishable(it))
+            sprintf(string, "%d %c %c %c %d", TSERVE(it), PICKUP(it), DROPOFF(it), TYPE(it), PTIME(it));
+        else
+            sprintf(string, "%d %c %c %c", TSERVE(it), PICKUP(it), DROPOFF(it), TYPE(it));
+        i = 0;
+        while (string[i] != '\0')
+            cfg[idx][i] = string[i++];
+        ++idx;
+    }
+    
+    sprintf(string, "%d", IDX_TOP(*bag) + 1);
+    i = 0;
+    while (string[i] != '\0')
+        cfg[idx][i] = string[i++];
+    ++idx;
+    
+    while (!isEmpty_Stack(*bag))
+    {
+        pop(bag, &it);
+        if (isPerishable(it))
+            sprintf(string, "%d %c %c %c %d", TSERVE(it), PICKUP(it), DROPOFF(it), TYPE(it), PTIME(it));
+        else
+            sprintf(string, "%d %c %c %c", TSERVE(it), PICKUP(it), DROPOFF(it), TYPE(it));
+        i = 0;
+        while (string[i] != '\0')
+            cfg[idx][i] = string[i++];
+        ++idx;
+    }
+
+    i = 0;
+    while (!isEmpty_ListPos(*inv))
+    {
+        deleteLast_ListPos(inv, &g);
+        sprintf(string, "%d ", g);
+        while (string[i] != '\0')
+            cfg[idx][i] = string[i++];
+    }
+
+    idx = getSaveArea(cfg);
+    while (cfg[idx][0] != '\0')
+    {
+        printf("%s", cfg[idx++]);
+    }
+    
+}
+
 int parseCommand() // simple hash penjumlahan char
 {
     int tally = 0;
@@ -300,10 +424,14 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
     CreateListOrder(&inpro);
     CreateListPos(&inv);
     CreateStack(&bag);
-    startTime();
-    initTas(3);
-    initCash(10000);
-    initAbilities();
+    if (!load)
+    {
+        startTime();
+        initTas(3);
+        initCash(0);
+        initAbilities();
+    }
+    
 
     // Game
     if (!load)
@@ -532,6 +660,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
         case 680:
             /* SAVE_GAME */
             printf("Tried to <SAVE_GAME>, but command hasn't been implemented yet\n");
+            save_game(cfg, &ords, &todo, &inpro, &bag, &inv);
             break;
         case 297:
             /* HELP */

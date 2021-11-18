@@ -119,7 +119,7 @@ void displayStack(Stack s){
             default:
                 break;
             }
-            printf(" (Tujuan: %c)", TYPE(ELMT(s, IDX_TOP(s) - i)));
+            printf(" (Tujuan: %c)", DROPOFF(ELMT(s, IDX_TOP(s) - i)));
             if (isPerishable(ELMT(s, IDX_TOP(s) - i)))
                 printf(" (Time remaining %d)", PTIME(ELMT(s, IDX_TOP(s) - i)));
             printf("\n");

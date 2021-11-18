@@ -118,6 +118,25 @@ void copyWordFile()
     currentWord.contents[currentWord.length] = '\0';
 }
 
+boolean startWrite(char *file, int length)
+{
+    boolean exist;
+    exist = save(file, length);
+    if (exist == 0)
+        return 0;
+    return 1;
+}
+
+void saveLine(char *saved)
+{
+    int i = 0;
+    while (saved[i] != '\0')
+    {
+        write(saved[i++]);
+    }
+    write(NEWLINE);
+}
+
 
 void displayCurrentWord(Word currentWord)
 {

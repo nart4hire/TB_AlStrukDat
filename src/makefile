@@ -3,6 +3,7 @@ CC = gcc
 
 ODIR = obj
 BDIR = bin
+DDIR = drivers
 
 MODDIR = Modules
 BASICDIR = Basic
@@ -31,6 +32,11 @@ _OBJ = item.o ability.o time.o color.o\
        main.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
+_DCONFIG = listdinpos.o matrix.o point.o \
+           charmachine.o wordmachine.o config.o q_pesanan.o \
+           item.o ability.o time.o color.o
+DCONFIG = $(patsubst %,$(ODIR)/%,$(_DCONFIG))
+
 $(ODIR)/%.o: $(BASIC)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
@@ -54,6 +60,9 @@ $(ODIR)/%.o: $(TODO)/%.c
 
 main: $(OBJ)
 	$(CC) -o $(BDIR)/$@ $^
+
+dconfig: $(DDIR)/dconfig.c $(DCONFIG)
+	$(CC) -o $(BDIR)/$(DDIR)/$@ $^ $(CFLAGS)
 
 .PHONY: clean
 

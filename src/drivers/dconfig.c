@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "config.h"
 
 int main(int argc, char const *argv[])
@@ -16,10 +17,23 @@ int main(int argc, char const *argv[])
         startWord();
         found = parseConfig(configs, 0);
     }
-    ListDin locs = parsePoints(configs);
-    Matrix map = parseMap(configs, locs), adj = parsePath(configs);
-    displayList_ListDin(locs);
-    displayMatrix(map);
-    displayMatrix(adj);
+    
+    
+    // printf("ENTER CONFIG FILE: ");
+    // startWord();
+    // found = saveGame(configs);
+    // while (!found)
+    // {
+    //     printf("\nYou entered the wrong config file!\n\n");
+    //     printf("ENTER CONFIG FILE: ");
+    //     startWord();
+    //     found = saveGame(configs);
+    // }
+
+    // ListDin locs = parsePoints(configs);
+    // Matrix map = parseMap(configs, locs), adj = parsePath(configs);
+    // displayList_ListDin(locs);
+    // displayMatrix(map);
+    // displayMatrix(adj);
     return 0;
 }

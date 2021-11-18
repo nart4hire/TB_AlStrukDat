@@ -20,4 +20,8 @@ Matrix parsePath(char cfg[][CAPACITY_WORDMACHINE]);
 
 Queue parseOrders(char cfg[][CAPACITY_WORDMACHINE]);
 
+int getSaveArea(char cfg[][CAPACITY_WORDMACHINE]);
+
+int saveGame(char cfg[][CAPACITY_WORDMACHINE]);
+
 #endif

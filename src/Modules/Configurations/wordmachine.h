@@ -56,6 +56,10 @@ void copyWordFile();
 
 void endFile();
 
+boolean startWrite(char *file, int length);
+
+void saveLine(char *saved);
+
 void displayCurrentWord(Word currentWord);
 /* Menampilkan currrentWord pada terminal
    I.S. : currentWord berisi kata yang sudah diakuisisi;

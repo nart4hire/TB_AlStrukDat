@@ -7,6 +7,7 @@
 char currentChar;
 boolean eot;
 
+static FILE *pipe;
 static FILE *tape;
 static int retval;
 
@@ -58,4 +59,23 @@ void adv()
 void end()
 {
        fclose(tape);
+}
+
+boolean save(char *file, int length)
+{
+       char folder[60] = "../Config/";
+       for (int i = 10; i < length + 10; i++)
+       {
+              folder[i] = file[i-10];
+       }
+       folder[length + 10] = '\0';
+       pipe = fopen(folder, "w");
+       if (pipe == NULL)
+              return 0;
+       return 1;
+}
+
+void write(char letter)
+{
+       fprintf(pipe, "%c", letter);
 }

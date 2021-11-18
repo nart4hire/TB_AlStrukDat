@@ -30,4 +30,8 @@ void adv();
 
 void close();
 
+boolean save(char *file, int length);
+
+void write(char letter);
+
 #endif
