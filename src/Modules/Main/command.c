@@ -612,7 +612,6 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
                 default:
                     break;
                 }
-                break;
             } while (!done);
             
         case 680:
@@ -620,6 +619,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             found = saveGame(cfg, &ords, &todo, &inpro, &bag, &inv);
             running = false;
             break;
+
         case 297:
             /* HELP */
             printf("\nKegiatan yang Mobita dapat lakukan:\n");
@@ -635,6 +635,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             printf("9. <INVENTORY>   : Mobita merogoh saku dan melihat gadget apa saja yang ia punya.\n");
             printf("10. <SAVE_GAME>  : Menyimpan kemajuan permainan dan kembali ke menu utama.\n\n");
             break;
+            
         default:
             loreStart();
             printf("\"Perintah yang anda masukkan salah! Mobita terkena status <Kebingungan>.\n");
