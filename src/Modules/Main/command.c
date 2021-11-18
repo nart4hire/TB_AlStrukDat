@@ -180,11 +180,19 @@ boolean checkwin(Queue ords, ListLinked todo, ListLinked inpro)
 {
     if (isEmpty_Queue(ords) && isEmpty_ListOrder(todo) && isEmpty_ListOrder(inpro))
     {
-        printf("You win!\n");
-        printf("Time taken: %d\n", time_game);
-        printf("End Money: %d\n", cash);
+        wipeScreen();
+        loreStart();
+        printf("\"Mobita menghela nafa yang panjang dan memulai perjalanannya pulang. Mungkin ia tidak melakukan\n");
+        printf("semua pesanannya dengan sempurna, namun dalam hati kecilnya ia puas karena bisa membantu\n");
+        printf("Orang tuanya menyelamatkan bisnis keluarga mereka. Mobita pulang dengan suasana gembira.\"\n\n");
+        loreEnd();
+        printf("Anda telah menyelesaikan permainan! Anda mendapatkan skor\n");
+        printf("Time taken : %d\n", time_game);
+        printf("End Money  : %d\n", cash);
+        printf("Score      : %d\n", (time_game * cash));
         return true;
     }
+    return false;
 }
 
 int parseCommand() // simple hash penjumlahan char
@@ -419,19 +427,6 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
                 loreEnd();
                 printf("\nPesanan yang dilakukan sekarang tidak bisa di-dropoff di sini.\n\n");
             }
-            else if (indexOfType_ListOrder(todo,'V') != IDX_UNDEF)
-            {
-                if (isVIP(TOP(bag)))
-                    dropoff(&inpro, &bag);
-                else
-                {
-                    loreStart();
-                    printf("\n\"Nobita tiba-tiba teringat ada teman baiknya Zhizuka yang memesan layanan VIP! Ia tidak mau melayani\n");
-                    printf("pesanan lain selain pesanan VIP.\"\n\n");
-                    loreEnd();
-                    printf("Pesanan VIP harus dilayani terlebih dahulu sebelum melayani pesanan lain.\n\n");
-                }
-            }
             else
             {
                 dropoff(&inpro, &bag);
@@ -635,7 +630,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
             printf("9. <INVENTORY>   : Mobita merogoh saku dan melihat gadget apa saja yang ia punya.\n");
             printf("10. <SAVE_GAME>  : Menyimpan kemajuan permainan dan kembali ke menu utama.\n\n");
             break;
-            
+
         default:
             loreStart();
             printf("\"Perintah yang anda masukkan salah! Mobita terkena status <Kebingungan>.\n");
