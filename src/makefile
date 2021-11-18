@@ -85,7 +85,7 @@ ditem: $(DDIR)/ditem.c $(DRIVE)
 dtas: $(DDIR)/dtas.c $(DRIVE)
 	$(CC) -o $(BDIR)/$(DDIR)/$@ $^ $(CFLAGS)
 
-dtas: $(DDIR)/dtodoinpro.c $(DRIVE)
+dtodoinpro: $(DDIR)/dtodoinpro.c $(DRIVE)
 	$(CC) -o $(BDIR)/$(DDIR)/$@ $^ $(CFLAGS)
 
 .PHONY: clean
