@@ -99,7 +99,7 @@ void dropoff(ListLinked *inpro, Stack *bag)
     item it, src;
     pop(bag, &it);
     deleteItem_ListOrder(inpro, &src, it);
-    printf("\ndelivered: ");
+    printf("\nDelivered: ");
     displayItem(src);
     printf("\n");
     switch (TYPE(it))
@@ -379,7 +379,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
                         loreEnd();
                         printf("Pesanan VIP harus dilayani terlebih dahulu sebelum melayani pesanan lain.\n\n");
                     }
-                    else if (indexOfType_ListOrder(todo, 'V') != indexOfPick_ListOrder(todo, mobita))
+                    else if (indexOfType_ListOrder(todo, 'V') != IDX_UNDEF && indexOfType_ListOrder(todo, 'V') != indexOfPick_ListOrder(todo, mobita))
                     {
                         loreStart();
                         printf("\n\"Nobita tiba-tiba teringat ada teman baiknya Zhizuka yang memesan layanan VIP! Ia tidak mau melayani\n");
