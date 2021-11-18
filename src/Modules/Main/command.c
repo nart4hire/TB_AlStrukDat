@@ -302,7 +302,7 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
     CreateStack(&bag);
     startTime();
     initTas(3);
-    initCash(0);
+    initCash(10000);
     initAbilities();
 
     // Game
