@@ -610,7 +610,8 @@ int Game(char cfg[][CAPACITY_WORDMACHINE], boolean load)
                     break;
                 }
             } while (!done);
-            
+            break;
+
         case 680:
             /* SAVE_GAME */
             found = saveGame(cfg, &ords, &todo, &inpro, &bag, &inv);
